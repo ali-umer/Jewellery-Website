@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background:  radial-gradient(circle at top left, #2c2c2c, #121212);
+  --foreground: #ededed;
+  --gold: #FFD700;
+
 }
 
 @theme inline {
@@ -14,8 +16,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #d7d8e0;
+    --background: radial-gradient(circle at top left, #2c2c2c, #121212);
     --foreground: #ededed;
+    --gold: #FFD700;
   }
 }
 
@@ -23,4 +26,5 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
 }
