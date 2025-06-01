@@ -10,13 +10,10 @@ export default function TopBar() {
         <div className="flex pt-7 pb-7 w-screen bg-[#121212] border-b-1" style={{ borderColor: 'var(--gold)' }}>
             <SearchBar />
 
-            <div className="flex-1 text-center">
+            <div className="flex-1 text-center pt-1">
                 <h1 className="text-4xl tracking-widest font-semibold text-[var(--gold)] uppercase font-serif">
                     Pasha <span className="text-white">Jewellery</span>
                 </h1>
-                <p className="text-sm tracking-wide text-gray-400 italic mt-1">
-                    Timeless beauty in every piece
-                </p>
             </div>
 
             <div className="flex-1 flex justify-end mr-10">
