@@ -17,8 +17,8 @@ export default function SearchBar() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-1/4 px-4 mr-30">
-      <div className="flex items-center rounded-2xl px-4 py-3 transition focus-within:ring-2 focus-within:ring-white border-b-1" style ={{ borderColor: 'var(--gold)'}}>  
+    <form onSubmit={handleSubmit} className="w-70">
+      <div className="flex items-center rounded-2xl px-4 py-3 transition focus-within:ring-2 focus-within:ring-white border-b-1 border-gray-700">  
         <Search className="text-gray-500 dark:text-gray-300 w-5 h-5 mr-3" />
         <input
           type="text"

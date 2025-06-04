@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background:  radial-gradient(circle at top left, #2c2c2c, #121212);
+  --background: radial-gradient(circle at top left, #2c2c2c, #121212);
   --foreground: #ededed;
   --gold: #FFD700;
 
@@ -16,7 +16,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: radial-gradient(circle at top left, #2c2c2c, #121212);
+    --background: #292929;
     --foreground: #ededed;
     --gold: #FFD700;
   }
