@@ -5,7 +5,7 @@ import HamburgerButton from "@/components/HamBurger";
 
 export default function TopBar() {
   return (
-    <div className="flex flex-wrap items-center justify-between w-full px-4 sm:px-6 py-5 bg-[#121212] border-b" style={{ borderColor: 'var(--gold)' }}>
+    <div className="flex flex-wrap items-center justify-between w-full px-4 sm:px-6 py-5 bg-transparent border-b" style={{ borderColor: 'var(--gold)' }}>
       
       <div className="flex items-center">
         <HamburgerButton />

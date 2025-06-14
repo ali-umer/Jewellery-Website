@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: radial-gradient(circle at top left, #2c2c2c, #121212);
+  --background: #121212;
   --foreground: #ededed;
   --gold: #FFD700;
+  --primary: #ffffff;
+  --secondary: #000000;
 
 }
 
@@ -16,9 +18,11 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #292929;
+    --background: #121212;
     --foreground: #ededed;
     --gold: #FFD700;
+    --primary: #ffffff;
+    --secondary: #000000;
   }
 }
 
@@ -27,4 +31,29 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out;
+}
+
+.starry-bg {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  background-image:
+    radial-gradient(white 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 100px 100px, 50px 50px;
+  background-position: 0 0, 25px 25px;
 }
