@@ -6,10 +6,10 @@
 
  .geometric-1 {
      top: 20%;
-     left: 10%;
+     left: 20%;
      width: 80px;
      height: 80px;
-     border: 2px solid var(--primary);
+     background: var(--primary);
      border-radius: 50%;
      animation-delay: 0s;
  }
@@ -32,6 +32,16 @@
      border-right: 30px solid transparent;
      border-bottom: 60px solid var(--primary);
      animation-delay: 4s;
+ }
+
+  .geometric-4 {
+     top: 20%;
+     right: 20%;
+     width: 60px;
+     height: 60px;
+     background: var(--primary);
+     border-radius: 10%;
+     animation-delay: 3s;
  }
 
  @keyframes float {

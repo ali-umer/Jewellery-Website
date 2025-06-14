@@ -4,8 +4,7 @@ import Image from 'next/image';
 
 export default function Card() {
   return (
-    <div className="relative w-80 rounded-3xl overflow-hidden shadow-md bg-gray-100">
-      {/* Background SVG Lines */}
+    <div className="relative w-80 h-80 rounded-3xl overflow-hidden shadow-md bg-gray-100">
       <svg
         className="absolute inset-0 w-full h-full"
         xmlns="http://www.w3.org/2000/svg"
@@ -21,12 +20,6 @@ export default function Card() {
         <circle cx="10" cy="10" r="150" stroke="#D1D5DB" strokeWidth="3" />
       </svg>
 
-      <div className="w-50 h-100 p-4">
-        <div className="rounded-xl overflow-hidden mb-4">
-      
-        </div>
-        <h2 className="text-2xl font-medium text-gray-800">Track your expenses</h2>
-      </div>
     </div>
   );
 }
