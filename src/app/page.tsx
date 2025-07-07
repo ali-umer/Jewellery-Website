@@ -1,5 +1,5 @@
 import TopBar from "@/components/TopBar";
-import StarryComponent from "@/components/StarryComponent";
+import StarryComponent from "@/components/ui/StarryComponent";
 import HeroSection from "@/components/HeroSection";
 import TopSellers from "@/components/TopSellers";
 

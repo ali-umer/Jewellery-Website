@@ -1,4 +1,4 @@
-import FadeInOnView from "./FadeInOnView";
+import FadeInOnView from "./ui/FadeInOnView";
 import "@/styles/geometric.css"
 
 export default function HeroSection() {
