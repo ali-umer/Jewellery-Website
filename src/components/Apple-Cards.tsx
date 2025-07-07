@@ -1,18 +1,33 @@
 "use client";
 
 import React from "react";
-import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
+import { Carousel } from "@/components/ui/apple-cards-carousel";
 
 export default function AppleCards() {
-  const cards = data.map((card, index) => (
-    <Card key={card.src} card={card} index={index} />
-  ));
+const cards = data.map((card, index) => (
+  <div
+    key={card.src}
+    className="relative z-10 flex h-80 w-56 flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900"
+  >
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
+    <div className="relative z-40 p-8">
+      <p className="text-left font-sans text-sm font-medium text-white md:text-base">
+        {card.category}
+      </p>
+      <p className="mt-2 max-w-xs text-left font-sans text-xl font-semibold text-white md:text-3xl">
+        {card.title}
+      </p>
+    </div>
+    <img
+      src={card.src}
+      alt={card.title}
+      className="absolute inset-0 z-10 object-cover h-full w-full transition duration-300"
+    />
+  </div>
+));
 
   return (
     <div className="w-full h-full py-20">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        Get to know your iSad.
-      </h2>
       <Carousel items={cards} />
     </div>
   );
@@ -21,7 +36,7 @@ export default function AppleCards() {
 const DummyContent = () => {
   return (
     <>
-      {[...new Array(3).fill(1)].map((_, index) => {
+      {[...new Array(3)].map((_, index) => {
         return (
           <div
             key={"dummy-content" + index}
@@ -69,7 +84,6 @@ const data = [
     src: "https://images.unsplash.com/photo-1713869791518-a770879e60dc?q=80&w=2333&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     content: <DummyContent />,
   },
-
   {
     category: "Product",
     title: "Maps for your iPhone 15 Pro Max.",
