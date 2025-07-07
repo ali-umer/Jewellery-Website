@@ -1,3 +1,4 @@
+import AppleCards from "./Apple-Cards";
 
 export default function TopSellers() {
     return (
@@ -7,7 +8,7 @@ export default function TopSellers() {
                     TOP SELLERS
                 </h3>
             </div>
-   
+            <AppleCards />
         </div>
 
     );
