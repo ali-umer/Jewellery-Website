@@ -10,14 +10,11 @@ export default function Home() {
     <div className="w-full min-h-screen">
       <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
       <StarryComponent />
-
-
       <TopBar />
       <HeroSection />
       <TopSellers />
 
-
-    </div>
+   </div>
 
 
   );
