@@ -7,9 +7,9 @@ interface QuantityControlProps {
 }
 export default function QuantityControl({ quantity, setQuantity }: QuantityControlProps) {
   return (
-    <div className="relative flex items-center gap-2 py-4 px-2 rounded-xl border border-amber-200 shadow-sm">
+    <div className="relative flex items-center gap-2 py-4 px-2">
      
-      <span className="font-playfair-display font-semibold text-[#6c0a23]  text-base absolute left-6 top-1/2 -translate-y-1/2 drop-shadow">
+      <span className="font-playfair-display font-semibold text-[clamp(1.5rem,2vw,2.2rem)] text-[var(--gold)]  text-base absolute left-6 top-1/2 -translate-y-1/2 drop-shadow">
         Quantity </span>
       
       <div className="flex items-center justify-center w-full ml-32">
@@ -18,7 +18,7 @@ export default function QuantityControl({ quantity, setQuantity }: QuantityContr
               −
             </button>
 
-            <span className="mx-4 text-xl font-bold text-[#6c0a23]  border border-amber-100">
+            <span className="mx-4 text-xl font-bold text-[var(--gold)]">
               {quantity}  </span>
 
             <button onClick={() => setQuantity(quantity + 1)}

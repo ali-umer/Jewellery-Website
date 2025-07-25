@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState} from "react";
+import { useRouter } from "next/navigation";
 import { CardBody, CardContainer } from "@/components/ui/3d-card";
 import Thumbnails from "@/components/Product-Thumbnails";
 import QuickView from "@/components/Qucik-View"; 
@@ -15,14 +16,18 @@ interface ProductCardProps {
 export default function ProductCard({ name="", price="", images=[]}: ProductCardProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showQuickView, setShowQuickView] = useState(false);
+  const router = useRouter();
+  
+  const handleClick = function(){
+    router.push(`/Products/${name}`); 
+  };
 
   return (
     <>
       <CardContainer className="inter-var">
         <CardBody className="relative dark:bg-black group/image border-2 border-gray-400 w-[100%] sm:w-[28rem] h-[38rem] rounded-xl p-0 flex flex-col overflow-hidden">
-
           {/* Image */}
-          <div className="h-[80%] w-full relative overflow-hidden border-b-2 border-gray-300">
+          <div className="h-[80%] w-full relative overflow-hidden border-b-2 border-gray-300"  onClick={() => handleClick()}>
             <img
               src={images[activeIndex]}
               alt={name}
@@ -31,7 +36,9 @@ export default function ProductCard({ name="", price="", images=[]}: ProductCard
 
             <button
               className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold hover:text-amber-700 transition bg-transparent text-white"
-              onClick={() => setShowQuickView(true)}
+                onClick={(e) => {
+                e.stopPropagation();  setShowQuickView(true);
+            }}
             >
               Quick view
             </button>

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import ImagesSection from "@/components/Quick-View/Image-Component";
 import ColorSelector from "@/components/Quick-View/Colors-Component";
-import QuantityControl from "@/components/Quick-View/Details-Component";
+import QuantityControl from "@/components/Quick-View/Quantity-Control";
 import ActionButtons from "@/components/Quick-View/Active-Buttons";
 
 const ProductVariants = {

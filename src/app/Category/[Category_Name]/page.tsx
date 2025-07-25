@@ -21,6 +21,8 @@ export default function CategoryPage() {
               <ProductCardGrid Display={categoryName} />
               
               
+              
+              
     
        </div>
    

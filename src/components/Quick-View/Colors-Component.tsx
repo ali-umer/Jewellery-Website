@@ -10,15 +10,16 @@ export default function ColorSelector({ colors, activeColor, onChange }: ColorSe
   return (
     <div>
       <p className="font-medium mb-2">Color</p>
-      <div className="relative flex flex-wrap gap-2 font-bold text-[#6c0a23]">
+      <div className="relative flex flex-wrap gap-2 font-bold text-[var(--gold)]">
         {colors.map((color) => (
-          <button key={color}  onClick={() => onChange(color)}
-            className={`px-3 py-1 rounded-full text-sm capitalize border ${
-              activeColor === color ? "bg-black text-white" : "bg-gray-100 text-black"
+             <button key={color}  onClick={() => onChange(color)}
+            className={`px-5 py-2 rounded-full text-base capitalize border font-semibold ${
+              activeColor === color ? "bg-[var(--gold)] text-black": "text-[var(--gold)] border-[var(--gold)] hover:bg-[var(--gold)] hover:text-black border-1"
             }`}
           >
             {color}
           </button>
+
         ))}
       </div>
     </div>
