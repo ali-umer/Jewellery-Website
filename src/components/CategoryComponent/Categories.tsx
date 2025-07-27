@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useState,useEffect} from "react";
-import CategoryCard from "./Category-Card";
+import CategoryCard from "./CategoryCard";
 
   const tempData = [
     {

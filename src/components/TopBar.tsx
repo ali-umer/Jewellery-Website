@@ -1,7 +1,7 @@
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/HeaderComponents/SearchBar";
 import CartButton from "@/components/CartButton";
-import Wishlist from "@/components/Wishlist";
-import HamburgerButton from "@/components/HamBurger";
+import Wishlist from "@/components/HeaderComponents/Wishlist";
+import HamburgerButton from "@/components/HeaderComponents/HamBurger";
 
 export default function TopBar() {
   return (

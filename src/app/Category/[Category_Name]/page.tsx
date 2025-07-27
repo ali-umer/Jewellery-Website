@@ -2,8 +2,8 @@
 import { useRouter, useParams } from "next/navigation";
 import StarryComponent from "@/components/ui/StarryComponent";
 import TopBar from "@/components/TopBar";
-import TopSellers from "@/components/Top-Selling-Products";
-import ProductCardGrid from "@/components/Container-Products";
+import TopSellers from "@/components/TopSellingProducts";
+import ProductCardGrid from "@/components/ProductComponents/ContainerProducts";
 
 
 

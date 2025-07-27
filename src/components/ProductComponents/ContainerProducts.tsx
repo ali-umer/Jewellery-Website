@@ -1,34 +1,38 @@
-import ProductCard from "@/components/Product-Card";
+import ProductCard from "@/components/ProductComponents/ProductCard";
 
 const sampleData = [
   {
     name: "Elegant Necklace",
-    price: "$299",
-    images: ["https://images.unsplash.com/photo-1506744038136-46273834b3fb"]
+    price: 299,
+    images: ["https://images.unsplash.com/photo-1506744038136-46273834b3fb"],
+    discount:10
   },
   {
     name: "NY Skyline Print",
-    price: "$120",
+    price: 20,
     images: ["https://images.unsplash.com/photo-1477959858617-67f85cf4f1df"],
+    discount:70
   },
   {
     name: "Lion Portrait",
-    price: "$350",
+    price: 350,
     images: ["https://images.unsplash.com/photo-1456926631375-92c8ce872def"],
+    discount:70
   },
   {
     name: "Healthy Bowl",
-    price: "$85",
+    price: 85,
     images: ["https://images.unsplash.com/photo-1546069901-ba9599a7e63c"],
+    discount:16
   },
   {
     name: "Mountain Art",
-    price: "$199",
+    price: 199,
     images: ["https://images.unsplash.com/photo-1506744038136-46273834b3fb"],
   },
 ];
 
-export default function ProductCardGrid({Display=""}) {
+export default function ProductCardGrid({Display="",}) {
   return (
    <>
     <h3 className="center text-center justify-content-center pt-12  text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-[var(--primary)] tracking-tight font-playfair-display">

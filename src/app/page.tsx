@@ -1,8 +1,8 @@
 import TopBar from "@/components/TopBar";
 import StarryComponent from "@/components/ui/StarryComponent";
-import HeroSection from "@/components/HeroSection";
-import TopSellers from "@/components/Top-Selling-Products";
-import Categories from "@/components/Categories";
+import HeroSection from "@/components/HeaderComponents/HeroSection";
+import TopSellers from "@/components/TopSellingProducts";
+import Categories from "@/components/CategoryComponent/Categories";
 
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
           <StarryComponent />
           <TopBar />
           <HeroSection />
-          <TopSellers />
+          <TopSellers name={"TOP SELLING PRODUCTS"} />
           <Categories />
 
    </div>

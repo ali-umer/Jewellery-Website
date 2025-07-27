@@ -1,10 +1,16 @@
 'use client';
-
+import { useRouter } from 'next/navigation';
 import { ShoppingCart } from 'lucide-react';
 
 export default function CartButton({ count = 0 }: { count: number }) {
+    const router=useRouter();
+
+    const handleClick=()=>{
+        router.push("/cart");
+    }
     return (
-        <button className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+        <button className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                          onClick={()=>handleClick()}>
             <ShoppingCart />
 
             {count >= 0 && (

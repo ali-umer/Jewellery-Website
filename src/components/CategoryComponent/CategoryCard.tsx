@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-export default function CategoryCard({ category }) {
+export default function CategoryCard({ category }: { category: { name: string; src: string; Count?: number } }  ) {
   const router = useRouter(); 
 
   function CategoryPage(Category_Name: string) {

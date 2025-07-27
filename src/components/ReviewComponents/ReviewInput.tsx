@@ -8,10 +8,10 @@ export default function AddReview() {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
 
-  const handleStarClick = (index) => setRating(index + 1);
+  const handleStarClick = (index=0) => setRating(index + 1);
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form reload
+  const handleSubmit =function(e){
+    e.preventDefault(); 
 
     if (reviewText.trim()) {
       alert(`Review Submitted:\n⭐️ ${rating} stars\n💬 "${reviewText}"`);
@@ -24,7 +24,7 @@ export default function AddReview() {
   };
 
   return (
-    <div className="relative mt-4 text-[var(--gold)]">
+    <div className="relative mt-1 text-[var(--gold)] border-black border-2 w-full">
       {/* Toggle Button */}
       <button
         onClick={() => setShowInput((prev) => !prev)}
@@ -39,7 +39,7 @@ export default function AddReview() {
       {showInput && (
         <form
           onSubmit={handleSubmit}
-          className="bg-[#111] rounded-xl p-4 mt-16 text-sm"
+          className="bg-[#111] rounded-xl p-2 mt-16 text-sm"
         >
           {/* Star Rating */}
           <div className="flex mb-3">
@@ -63,7 +63,7 @@ export default function AddReview() {
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
             placeholder="Write your review here..."
-            className="w-full p-1  bg-transparent text-white rounded-md resize-none placeholder:text-gray-400"
+            className="w-full p-1 h-[50%] bg-transparent text-white rounded-md resize-none placeholder:text-gray-400"
             rows={3}
             required
           />
@@ -71,9 +71,9 @@ export default function AddReview() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="mt-3 bg-black border border-[var(--gold)] text-[var(--gold)] px-4 py-1 rounded-md hover:bg-[var(--gold)] hover:text-black transition-all"
+            className="justify-items-center mt-3 bg-black border border-[var(--gold)] text-[var(--gold)] px-4 py-1 rounded-md hover:bg-[var(--gold)] hover:text-black transition-all"
           >
-            Submit Review
+            Submit
           </button>
         </form>
       )}

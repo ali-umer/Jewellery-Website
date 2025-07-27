@@ -1,0 +1,24 @@
+"use client";
+import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import Link from "next/link";
+import TopBar from "@/components/TopBar";
+import StarryComponent from "@/components/ui/StarryComponent";
+import CartPage from "@/components/Cart-Components/Cart-Page";
+
+// Sample Data
+
+// Cart Container Component
+
+ export default function Cart(){
+   return ( <div className="w-full min-h-screen">
+              <canvas id="stars" className="fixed inset-0 "></canvas>
+                 <StarryComponent />
+                  <TopBar />
+                  <CartPage  />      
+                  
+        
+           </div>
+
+   );    
+}

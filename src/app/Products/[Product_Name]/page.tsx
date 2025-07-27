@@ -2,7 +2,7 @@
 import { useRouter, useParams } from "next/navigation";
 import StarryComponent from "@/components/ui/StarryComponent";
 import TopBar from "@/components/TopBar";
-import ProductPage from "@/components/Product-Page";
+import ProductPage from "@/components/ProductComponents/ProductPage";
 
 
 
@@ -24,10 +24,6 @@ export default function CategoryPage() {
           <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
               <StarryComponent />
               <TopBar />
-               <h3 className="center text-center justify-content-center pt-12  text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-[var(--primary)] tracking-tight font-playfair-display">
-                    {Product}
-               </h3>
-
               <ProductPage />
               
               
