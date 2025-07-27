@@ -25,58 +25,67 @@ export default function ProductCard({ name, price, images = [] }: ProductCardPro
   return (
     <>
       <CardContainer className="inter-var">
-        <CardBody className="relative dark:bg-black group w-[100%] sm:w-[28rem] h-[38rem] rounded-xl p-0 flex flex-col overflow-hidden">
-          
-         <div
-          className="h-[80%] w-full relative overflow-hidden border-b-2 border-gray-300"
-          onClick={handleClick} >
 
-          <div className="relative w-full h-full">
-            <Image
-              src={images[activeIndex]}
-              alt={name || "Product Image"}
-              fill
-              className="object-cover rounded-t-xl"
-              priority
-            />
-          </div>
 
-          {/* Quick View Button: initially invisible, appears on hover */}
-          <button
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold 
-                      bg-transparent text-[var(--gold)] opacity-0 group-hover:opacity-100 
-                      transition-opacity"
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowQuickView(true);
-            }}
-          >
-            Quick view
-          </button>
-          </div>
+<CardBody className="relative dark:bg-black group ~sm:w-[28rem] h-[38rem] rounded-xl p-2 flex flex-col overflow-hidden">
 
-          {/* Name + Price + Thumbnails */}
-          <div className="h-[22%] w-full flex flex-col justify-center items-center px-4 py-3 bg-transparent relative">
-            <div className="w-full flex justify-between items-center mb-1">
-              <span className="font-playfair-display text-xl font-bold text-[var(--gold)]">
-                {name}
-              </span>
-              <span className="text-lg font-bold text-[var(--gold)]">
-                ${price?.toFixed(2)}
-              </span>
-            </div>
+  
+  {/* Image Area */}
+  <div
+    className="h-[80%] w-full relative overflow-hidden border-b-2 border-gray-300 rounded-t-xl"
+    onClick={handleClick}
+  >
+    <div className="relative w-full h-full">
+      <Image
+        src={images[activeIndex]}
+        alt={name || "Product Image"}
+        fill
+        className="object-cover rounded-t-xl"
+        priority
+      />
+    </div>
 
-            {images.length > 1 && (
-              <Thumbnails
-                images={images}
-                activeIndex={activeIndex}
-                setActiveIndex={setActiveIndex}
-              />
-            )}
-          </div>
+    {/* Quick View Button */}
+    <button
+      className="absolute bottom-4 left-1/2 -translate-x-1/2 text-2xl font-semibold 
+                bg-transparent text-[var(--gold)] opacity-0 group-hover:opacity-100 
+                transition-opacity"
+      onClick={(e) => {
+        e.stopPropagation();
+        setShowQuickView(true);
+      }}
+    >
+      Quick view
+    </button>
+  </div>
 
-      
-        </CardBody>
+  {/* Info Area */}
+ {/* Info Area */}
+<div className="h-[22%] w-full flex flex-col justify-center items-start px-2 pt-3 pb-2 bg-transparent relative">
+  
+  {/* Title + Price - Now in column */}
+  <div className="w-full flex flex-col items-start mb-2 px-1">
+    <span className="font-playfair-display text-base sm:text-xl font-bold text-[var(--gold)] truncate w-full">
+      {name}
+    </span>
+    <span className="text-sm sm:text-lg font-bold text-[var(--gold)]">
+      ${price?.toFixed(2)}
+    </span>
+  </div>
+
+  {/* Thumbnails (scrollable) */}
+  {images.length > 1 && (
+    <div className="w-full overflow-x-auto flex gap-1 px-0 hide-scrollbar">
+      <Thumbnails
+        images={images}
+        activeIndex={activeIndex}
+        setActiveIndex={setActiveIndex}
+      />
+    </div>
+  )}
+</div>
+</CardBody>
+
       </CardContainer>
 
       {/* Quick View Modal */}

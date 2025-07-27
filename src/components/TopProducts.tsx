@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useEffect, useRef,useState } from "react";
+import React, { useRef } from "react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import ProductCard from "@/components/ProductComponents/ProductCard";
 
 const productData = [
   {
     name: "Elegant Necklace",
     price: 299,
-    images: ["https://images.unsplash.com/photo-1506744038136-46273834b3fb"]
+    images: ["https://images.unsplash.com/photo-1506744038136-46273834b3fb"],
   },
   {
     name: "NY Skyline Print",
@@ -33,52 +34,59 @@ const productData = [
 
 export default function Cards() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [products, setProducts] = useState(productData); 
-
-  useEffect(function(){
-     
-    const fetchProducts = async () => {
-    }
-    fetchProducts();
-  },[]);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const scrollAmount = 320;
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
+      const cardElement = scrollRef.current.querySelector(".snap-start");
+      if (cardElement) {
+        const scrollAmount = cardElement.clientWidth + 8;
+        scrollRef.current.scrollBy({
+          left: direction === "left" ? -scrollAmount : scrollAmount,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
   return (
-    <div className="relative w-full px-6 py-10">
-      {/* Arrows */}
-      <button
-        onClick={() => scroll("left")}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow hover:scale-110"
-      >
-        ◀
-      </button>
+    <div className="relative w-full py-6">
+      {/* Scrollable Cards */}
+      <div className="relative">
+        <div
+          ref={scrollRef}
+          className="flex gap-2 overflow-x-scroll snap-x snap-mandatory scroll-smooth hide-scrollbar"
+        >
+          {productData.map((product, index) => (
+            <div
+              key={index}
+              className="snap-start flex-shrink-0 w-full sm:w-[28rem]"
+            >
+              <ProductCard
+                name={product.name}
+                price={product.price}
+                images={product.images}
+              />
+            </div>
+          ))}
+        </div>
 
-      <button
-        onClick={() => scroll("right")}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow hover:scale-110"
-      >
-        ▶
-      </button>
-
-    
-      <div
-        ref={scrollRef}
-        className="flex md:flex-col-4 sm:flex-col-1 gap-3 overflow-x-scroll snap-x snap-mandatory scroll-smooth hide-scrollbar"
-      >
-            {productData.map((product, index) => (
-              <div key={index} className="snap-start">
-                <ProductCard name={product.name} price={product.price} images={product.images} />
-              </div>
-            ))}
+        {/* Buttons positioned tightly to scroll area */}
+        <div className="absolute top-1/2 left-1 z-10 -translate-y-1/2">
+          <button
+            onClick={() => scroll("left")}
+            className="bg-white p-2 rounded-full shadow hover:scale-110"
+          >
+            <ChevronLeft size={24} />
+          </button>
+        </div>
+        <div className="absolute top-1/2 right-1 z-10 -translate-y-1/2">
+          <button
+            onClick={() => scroll("right")}
+            className="bg-white p-2 rounded-full shadow hover:scale-110"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
       </div>
     </div>
   );
