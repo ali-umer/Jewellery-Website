@@ -55,7 +55,7 @@ export default function Categories() {
   }, []);
 
   return (
-       <div id="products" className="flex flex-wrap items-center justify-center scroll gap-2 md:gap-10 md:ml-20 md:mr-20">
+       <div id="products" className="flex flex-wrap items-center justify-center scroll gap-2 mt-5 md:gap-10 md:ml-20 md:mr-20">
           <div className="w-full text-center px-4">
               <h3 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-[var(--primary)] tracking-tight font-playfair-display">
                   CATEGORIES

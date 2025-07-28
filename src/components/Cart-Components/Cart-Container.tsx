@@ -7,7 +7,7 @@ export default function CartContainer({ items, onDelete }) {
   return (
     <div className="space-y-4">
       {items.map((item) => (
-        <CartRow key={item.id} item={item} onDelete={onDelete} />
+        < CartRow key={item.id} item={item} onDelete={onDelete} />
       ))}
     </div>
   );

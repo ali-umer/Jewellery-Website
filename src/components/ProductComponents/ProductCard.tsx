@@ -24,10 +24,10 @@ export default function ProductCard({ name, price, images = [] }: ProductCardPro
 
   return (
     <>
-      <CardContainer className="inter-var">
+      <CardContainer className="inter-var w-[85%] sm:w-[28rem]">
 
 
-<CardBody className="relative dark:bg-black group ~sm:w-[28rem] h-[38rem] rounded-xl p-2 flex flex-col overflow-hidden">
+<CardBody className="relative group sm:w-[28rem] h-[38rem] rounded-xl p-2 flex flex-col overflow-hidden">
 
   
   {/* Image Area */}
@@ -53,7 +53,9 @@ export default function ProductCard({ name, price, images = [] }: ProductCardPro
       onClick={(e) => {
         e.stopPropagation();
         setShowQuickView(true);
+
       }}
+    
     >
       Quick view
     </button>
@@ -91,15 +93,15 @@ export default function ProductCard({ name, price, images = [] }: ProductCardPro
       {/* Quick View Modal */}
       {showQuickView && (
         <div className="fixed inset-0 z-50 bg-black/60 flex justify-center items-center p-4">
-          <div className="bg-white max-w-4xl w-full rounded-xl relative">
+          <div className="bg-transparent max-w-4xl w-full rounded-xl relative">
             <button
-              className="absolute top-4 right-4 text-black hover:text-red-600 text-xl font-bold"
+              className="absolute top-4 right-2 text-black text-xl font-bold"
               onClick={() => setShowQuickView(false)}
             >
               &times;
             </button>
 
-            <QuickView name={name} price={price} />
+            <QuickView name={name} price={price} handleView={setShowQuickView}  />
           </div>
         </div>
   

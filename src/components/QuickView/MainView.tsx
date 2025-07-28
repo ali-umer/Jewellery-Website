@@ -22,35 +22,39 @@ const ProductVariants = {
 
 const Colors = Object.keys(ProductVariants);
 
-export default function QuickView({ name="", price=0,discount=10}) {
+export default function QuickView({ name = "", price = 0, discount = 10,handleView }) {
   const [quantity, setQuantity] = useState(1);
   const [colors, setColors] = useState(Colors);
   const [activeColor, setActiveColor] = useState(Colors[0]);
   const [activeImages, setActiveImages] = useState([]);
 
-  function handleColorChange(color=colors[0]) {
+  function handleColorChange(color = colors[0]) {
     setActiveColor(color);
     setActiveImages(ProductVariants[color] ?? []);
   }
 
   return (
-  <div className="flex flex-col bg-red-900  md:flex-row p-6 rounded-lg max-w-5xl mx-auto shadow-md gap-between gap-2">
-    <ImagesSection images={activeImages} />
+    <div className="flex flex-col md:flex-row p-4 md:p-6 rounded-lg max-w-5xl mx-auto shadow-md gap-2 
+                    bg-red-900 w-[95%] md:w-auto min-h-screen md:min-h-fit relative">
 
-    <div className="md:w-1/2 p-6 space-y-6 bg-transparent rounded-xl shadow-lg border border-amber-100 flex flex-col justify-center">
-      <DetailsSection name={name} price={price} discount={discount} />
+      {/* Cross button */}
+      <button
+        className="absolute top-4 right-4 text-white bg-black bg-opacity-30 hover:bg-opacity-50 
+                   p-2 rounded-full z-50"
+        onClick={() => handleView(false)}
+      >
+        ✕
+      </button>
 
-      <div>
-        <ColorSelector
-          colors={colors}
-          activeColor={activeColor}
-          onChange={handleColorChange}
-        />
+      <ImagesSection images={activeImages} />
+
+      <div className="md:w-[54%] p-6 space-y-3 bg-transparent rounded-xl shadow-lg border border-amber-100 flex flex-col justify-center">
+        <DetailsSection name={name} price={price} discount={discount} />
+        <ColorSelector colors={colors} activeColor={activeColor} onChange={handleColorChange} />
+        <QuantityControl quantity={quantity} setQuantity={setQuantity} QuickView={true} />
+        <ActionButtons />
       </div>
-
-      <QuantityControl quantity={quantity} setQuantity={setQuantity} QuickView={true} />
-      <ActionButtons/>
     </div>
-  </div>
-);
+  );
 }
+

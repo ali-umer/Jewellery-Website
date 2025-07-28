@@ -51,7 +51,7 @@ export default function ProductPage() {
   } = useProductController({ product, productVariants: ProductVariants });
 
   return (
-    <div className="min-h-screen bg-transparent py-6 px-4 sm:px-6 md:px-8 text-[var(--gold)]">
+    <div className="min-h-screen bg-transparent py-2 px-4 sm:px-6 md:px-8 text-[var(--gold)]">
       <div className="max-w-[1300px] mx-auto flex flex-col md:flex-row md:gap-8 gap-6 justify-center w-full">
         {/* Image Section */}
         <div className="md:w-1/2 w-full border-black border-2 rounded-2xl relative overflow-hidden">
@@ -85,7 +85,7 @@ export default function ProductPage() {
       </div>
 
       {/* Suggestions / Scroller Section */}
-      <div className="mt-8 max-w-[1300px] mx-auto px-2">
+      <div className="mt-4 max-w-[1300px] mx-auto px-2">
         <TopSellers name="Suggestions" />
       </div>
     </div>

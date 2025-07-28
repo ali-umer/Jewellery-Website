@@ -39,7 +39,7 @@ export default function CartPage() {
   return (
     
     
-    <div className="w-[75%] bg-transparent border-black border-2 mt-16 p-8 mx-auto text-yellow-400 bg-black min-h-screen">
+    <div className="w-[75%] bg-transparent border-black border-2 mt-16 p-8 mx-auto text-[var(--gold)] min-h-screen">
       {cartItems.length === 0 ? (
         <p className="text-gray-600">Your cart is empty.</p>  ) : (
         <>

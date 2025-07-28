@@ -57,9 +57,7 @@ export default function Cards() {
           className="flex gap-2 overflow-x-scroll snap-x snap-mandatory scroll-smooth hide-scrollbar"
         >
           {productData.map((product, index) => (
-            <div
-              key={index}
-              className="snap-start flex-shrink-0 w-full sm:w-[28rem]"
+            <div key={index} className="snap-start flex-shrink-0 w-[100%] md:w-[28rem]"
             >
               <ProductCard
                 name={product.name}
@@ -70,22 +68,22 @@ export default function Cards() {
           ))}
         </div>
 
-        {/* Buttons positioned tightly to scroll area */}
+       
         <div className="absolute top-1/2 left-1 z-10 -translate-y-1/2">
-          <button
-            onClick={() => scroll("left")}
-            className="bg-white p-2 rounded-full shadow hover:scale-110"
+          <button  onClick={() => scroll("left")}
+            className="bg-transparent p-2 rounded-full shadow hover:scale-110"
           >
             <ChevronLeft size={24} />
           </button>
         </div>
         <div className="absolute top-1/2 right-1 z-10 -translate-y-1/2">
-          <button
-            onClick={() => scroll("right")}
-            className="bg-white p-2 rounded-full shadow hover:scale-110"
+
+          <button onClick={() => scroll("right")}
+            className="bg-transparent p-2 rounded-full shadow hover:scale-110"
           >
             <ChevronRight size={24} />
           </button>
+
         </div>
       </div>
     </div>

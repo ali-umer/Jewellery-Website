@@ -19,11 +19,6 @@ export default function CategoryPage() {
               <StarryComponent />
               <TopBar />
               <ProductCardGrid Display={categoryName} />
-              
-              
-              
-              
-    
        </div>
    
   );
