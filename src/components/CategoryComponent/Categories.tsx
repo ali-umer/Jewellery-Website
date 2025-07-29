@@ -55,7 +55,7 @@ export default function Categories() {
   }, []);
 
  return (
-  <div id="products" className="flex flex-wrap items-center justify-center gap-4 mt-5 md:gap-10 px-4 overflow-x-hidden">
+  <div id="products" className="flex flex-wrap items-center justify-center gap-4 mt-10 md:gap-10 px-4 overflow-x-hidden">
     <div className="w-full text-center mb-8"> {/* Increased bottom margin */}
       <h3 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-[var(--primary)]">
         CATEGORIES

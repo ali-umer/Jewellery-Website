@@ -15,8 +15,7 @@ export default function TopBar() {
         />
       </div>
       <div className="flex items-center md:gap-4">
-        <Wishlist />
-        <CartButton count={3} />
+        
         <HamburgerButton />
 
       </div>

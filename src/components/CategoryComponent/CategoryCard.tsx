@@ -13,7 +13,7 @@ export default function CategoryCard({ category }: { category: { name: string; s
 
   return (
     <div 
-      className="relative rounded-2xl shadow-lg overflow-hidden flex flex-col h-[400px] w-full cursor-pointer transition-transform duration-200 hover:scale-105"
+      className="relative rounded-2xl shadow-lg overflow-hidden flex flex-col h-[400px] w-full cursor-pointer transition-transform duration-200 hover:scale-105 hover:border-1 border-[var(--gold)]"
       onClick={() => CategoryPage(category.name)}
     >
       <div className="relative w-full h-full"> {/* Container for Image */}

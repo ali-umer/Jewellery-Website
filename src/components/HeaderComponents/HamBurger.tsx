@@ -1,55 +1,89 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState}from 'react';
+import { useRouter,usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import SearchBar from './SearchBar';
+import Wishlist from './Wishlist';
+import CartButton from "@/components/CartButton"
+
 
 export default function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Disable scroll when menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleCart = () => {
+    router.push('/cart');
+    setIsOpen(false);
+  };  
+
+const handleCategory = () => {
+     if (pathname !== '/') {
+          router.push('/');
+          window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth' });
+    }else{
+       window.scrollTo({top: document.body.scrollHeight,behavior: 'smooth' });
     }
-  }, [isOpen]);
+     setIsOpen(false);
+  };
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition ml-5"
-        aria-label="Open menu"
-      >
-        <Menu />
-      </button>
+  
+      <div className="md:hidden">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="p-2 rounded-md transition ml-5"
+          aria-label="Open menu"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+      </div>
 
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-opacity-40 backdrop-blur-sm z-40" 
-          onClick={() => setIsOpen(false)}
-        />
+    
+      <div className="hidden md:flex items-center gap-4">
+        <Wishlist />
+        <CartButton count={3} handleCart={handleCart} />
+        <SearchBar />
+      </div>
+
+     
+      {isOpen && ( <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm z-40"
+          onClick={() => setIsOpen(false)}/>
       )}
 
-
-      <div
-        className={`fixed top-0 left-0 h-full w-80 bg-[#121212] z-50 transform transition-transform duration-300 ease-in-out ${
+      
+      <div className={`fixed top-0 left-0 h-full w-80 bg-[#121212] z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } shadow-xl`}
       >
-        <div className="p-4 flex justify-between items-center border-b border-gray-200">
-          <h2 className="text-lg font-semibold">Menu</h2>
-          <button onClick={() => setIsOpen(false)} aria-label="Close menu">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
 
-        <nav className="p-4 space-y-4 mt-5">
-        <SearchBar/>
-         
-        </nav>
+   
+        <div className="p-4 space-y-6 mt-5">
+          <SearchBar />
+          
+          
+          <div className="flex flex-col space-y-4">
+        
+          <button className="flex items-center justify-between p-2 rounded transition" onClick={()=>handleCategory()}>
+              <span className="text-var(--gold)">Categories</span>
+            </button>
+          </div>
+
+          
+          <div className="pt-8 border-t border-gray-700">
+            <div className="flex flex-col space-y-4">
+              
+                <Wishlist mobile />
+              <CartButton count={3} mobile handleCart={handleCart} />
+              
+            </div>
+          </div>
+
+          
+        </div>
       </div>
     </>
   );

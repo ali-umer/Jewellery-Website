@@ -1,11 +1,10 @@
-'use client';
-
 import { Heart } from 'lucide-react';
 
-export default function WishlistButton() {
-    return (
-        <button className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
-            <Heart className="w-6 h-6 text-white" />
-        </button>
-    );
+export default function WishlistButton({ mobile = false }: { mobile?: boolean }) {
+  return (
+    <button className={`relative flex items-center gap-2 text-white ${mobile ?  'w-full' : ''}`}>
+      <Heart className="w-5 h-5" />
+      {mobile && <span className="text-sm">Wishlist</span>}
+    </button>
+  );
 }

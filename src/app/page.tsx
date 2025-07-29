@@ -9,20 +9,18 @@ import Cards from "@/components/TopProducts";
 export default function Home() {
 
   return (
-    <div className="w-full min-h-screen ">
-      <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
+  <div className="flex flex-col min-h-screen w-full">
+    <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
           <StarryComponent />
           <TopBar />
           <HeroSection />
           <TopSellers name="TOP SELLING PRODUCTS" />
+
+
           
-
-         <div className="mt-4">
-             <Categories />
-         </div>
-
-   </div>
-
-
-  );
+            <Categories />
+          
+         
+  </div>
+);
 }

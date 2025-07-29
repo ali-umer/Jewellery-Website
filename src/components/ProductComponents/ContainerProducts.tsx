@@ -42,7 +42,7 @@ const sampleData = [
 
       <div className="w-full px-2 py-6 overflow-x-hidden">
         <div className="mx-auto max-w-screen-2xl px-4">
-          <div className="grid grid-cols-1 min-[500px]:grid-cols-2 min-[800px]:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+          <div className="grid grid-cols-1 min-[500px]:grid-cols-2 min-[800px]:grid-cols-3 lg:grid-cols-4 gap-2 justify-items-center">
             {sampleData.map((product, index) => (
               <div key={index} className="w-full max-w-[28rem]"> {/* Constrained width */}
                 <ProductCard
