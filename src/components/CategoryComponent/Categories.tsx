@@ -54,23 +54,25 @@ export default function Categories() {
     fetchProducts();
   }, []);
 
-  return (
-       <div id="products" className="flex flex-wrap items-center justify-center scroll gap-2 mt-5 md:gap-10 md:ml-20 md:mr-20">
-          <div className="w-full text-center px-4">
-              <h3 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-[var(--primary)] tracking-tight font-playfair-display">
-                  CATEGORIES
-              </h3>
-          </div>
-           
-      <div className="w-full h-full py-4 px-4 justify-items-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+ return (
+  <div id="products" className="flex flex-wrap items-center justify-center gap-4 mt-5 md:gap-10 px-4 overflow-x-hidden">
+    <div className="w-full text-center mb-8"> {/* Increased bottom margin */}
+      <h3 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-[var(--primary)]">
+        CATEGORIES
+      </h3>
+    </div>
+    
+    <div className="w-full max-w-screen-xl mx-auto">
+      <div className="w-full h-full py-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-14 justify-center min-w-0"> {/* Increased gaps */}
           {products.map((product, idx) => (
-            <CategoryCard category={product} key={idx} />
+            <div key={idx} className="min-w-0 h-full"> 
+              <CategoryCard category={product} />
+            </div>
           ))}
         </div>
       </div>
-
     </div>
-  );
+  </div>
+);
 }
-
