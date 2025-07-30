@@ -1,5 +1,5 @@
 "use client";
-import CartRow from "@/components/Cart-Components/Cart-Row";
+import CartRow from "@/components/CartComponents/Cart-Row";
 import React from "react";
 
 

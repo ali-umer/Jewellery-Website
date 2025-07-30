@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import CartContainer from "@/components/Cart-Components/Cart-Container";
+import CartContainer from "@/components/CartComponents/Cart-Container";
 
 const cartItemsData = [
   {

@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeaderComponents/HeroSection";
 import TopSellers from "@/components/TopSellingProducts";
 import Categories from "@/components/CategoryComponent/Categories";
 import Cards from "@/components/TopProducts";
+import Footer from "@/components/Footer/Footer";
 
 
 export default function Home() {
@@ -19,6 +20,8 @@ export default function Home() {
 
           
             <Categories />
+
+            <Footer />
           
          
   </div>

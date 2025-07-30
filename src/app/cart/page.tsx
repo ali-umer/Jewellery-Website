@@ -4,7 +4,7 @@ import { Trash2 } from "lucide-react";
 import Link from "next/link";
 import TopBar from "@/components/TopBar";
 import StarryComponent from "@/components/ui/StarryComponent";
-import CartPage from "@/components/Cart-Components/Cart-Page";
+import CartPage from "@/components/CartComponents/Cart-Page";
 
 // Sample Data
 
