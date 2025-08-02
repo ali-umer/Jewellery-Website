@@ -34,6 +34,10 @@ const sampleData = [
 
 
  export default function ProductCardGrid({ Display = "" }) {
+
+  
+
+
   return (
     <>
       <h3 className="text-center pt-12 text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-[var(--primary)] tracking-tight font-playfair-display">

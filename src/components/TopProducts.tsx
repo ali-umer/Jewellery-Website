@@ -1,38 +1,52 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef,useEffect,useState } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import ProductCard from "@/components/ProductComponents/ProductCard";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-const productData = [
-  {
-    name: "Elegant Necklace",
-    price: 299,
-    images: ["https://images.unsplash.com/photo-1506744038136-46273834b3fb"],
-  },
-  {
-    name: "NY Skyline Print",
-    price: 120,
-    images: ["https://images.unsplash.com/photo-1477959858617-67f85cf4f1df"],
-  },
-  {
-    name: "Lion Portrait",
-    price: 50,
-    images: ["https://images.unsplash.com/photo-1456926631375-92c8ce872def"],
-  },
-  {
-    name: "Healthy Bowl",
-    price: 85,
-    images: ["https://images.unsplash.com/photo-1546069901-ba9599a7e63c"],
-  },
-  {
-    name: "Mountain Art",
-    price: 199,
-    images: ["https://images.unsplash.com/photo-1506744038136-46273834b3fb"],
-  },
-];
+
+type Product = {
+  id: number;
+  Name: string;
+  Price: number;
+  Stock:number;
+  Description:string;
+ Images:string[];
+};
+
+
+
+
 
 export default function Cards() {
+
+  const [productData,setProductData]=useState<Product[]>([]);
+
+    useEffect(() => {
+    const fetchProducts = async () => {
+    
+        const querySnapshot = await getDocs(collection(db, "Products"));
+        const products: Product[] = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          products.push({ id: data.id,Name: data.Name,Price: data.Price,Stock: data.Stock, Description: data.Description,
+            Images: data.Images,
+          });
+        });
+
+        setProductData(products);
+      
+    };
+
+    fetchProducts();
+  }, []);
+  
+
+
+
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -60,9 +74,9 @@ export default function Cards() {
             <div key={index} className="snap-start flex-shrink-0 w-[100%] md:w-[28rem]"
             >
               <ProductCard
-                name={product.name}
-                price={product.price}
-                images={product.images}
+                name={product.Name}
+                price={product.Price}
+                images={product.Images}
               />
             </div>
           ))}
