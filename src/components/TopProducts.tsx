@@ -3,8 +3,8 @@
 import React, { useRef,useEffect,useState } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import ProductCard from "@/components/ProductComponents/ProductCard";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { supabase } from "@/lib/supabaseClient"
+
 
 
 type Product = {
@@ -24,31 +24,22 @@ export default function Cards() {
 
   const [productData,setProductData]=useState<Product[]>([]);
 
-    useEffect(() => {
-    const fetchProducts = async () => {
-    
-        const querySnapshot = await getDocs(collection(db, "Products"));
-        const products: Product[] = [];
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          products.push({ id: data.id,Name: data.Name,Price: data.Price,Stock: data.Stock, Description: data.Description,
-            Images: data.Images,
-          });
-        });
+  useEffect(() => {
+  const fetchProducts = async () => {
+    const { data, error } = await supabase
+                                .from("Products")
+                                .select("id, Name, Description, Stock, Price, Images");
 
-        setProductData(products);
-      
-    };
+    if (data) {
+      setProductData(data as Product[]); 
+    }
+  };
 
-    fetchProducts();
-  }, []);
-  
-
-
+  fetchProducts();
+}, []);
 
 
   const scrollRef = useRef<HTMLDivElement>(null);
-
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const cardElement = scrollRef.current.querySelector(".snap-start");
@@ -74,6 +65,7 @@ export default function Cards() {
             <div key={index} className="snap-start flex-shrink-0 w-[100%] md:w-[28rem]"
             >
               <ProductCard
+                key={product.id}
                 name={product.Name}
                 price={product.Price}
                 images={product.Images}
