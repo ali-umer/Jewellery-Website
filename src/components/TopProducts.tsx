@@ -65,7 +65,7 @@ export default function Cards() {
             <div key={index} className="snap-start flex-shrink-0 w-[100%] md:w-[28rem]"
             >
               <ProductCard
-                key={product.id}
+                 Id={product.id}
                 name={product.Name}
                 price={product.Price}
                 images={product.Images}

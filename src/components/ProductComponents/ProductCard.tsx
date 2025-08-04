@@ -7,13 +7,13 @@ import { CardBody, CardContainer } from "@/components/ui/3d-card";
 import QuickView from "@/components/QuickView/MainView";
 
 interface ProductCardProps {
-  key: number
+  Id: number
   name: string;
   price: number;
   images: string[];
 }
 
-export default function ProductCard({key, name, price, images = [] }: ProductCardProps) {
+export default function ProductCard({Id, name, price, images = [] }: ProductCardProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showQuickView, setShowQuickView] = useState(false);
 
@@ -70,7 +70,7 @@ export default function ProductCard({key, name, price, images = [] }: ProductCar
             >
               &times;
             </button>
-            <QuickView key={key} name={name} price={price} handleView={setShowQuickView} />
+            <QuickView Id={Id} name={name} price={price} discount={0}  handleView={setShowQuickView} />
           </div>
         </div>
       )}

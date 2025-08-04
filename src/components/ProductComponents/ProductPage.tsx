@@ -9,37 +9,7 @@ import ProductDetail from "@/components/QuickView/ProductDetails";
 import AddReview from "@/components/ReviewComponents/ReviewInput";
 import ReviewContainer from "../ReviewComponents/ReviewContainer";
 import TopSellers from "@/components/TopSellingProducts";
-import useProductController from "@/hooks/Product-Controller";
-
-const product = {
-  title: "Handcrafted Gemstone Pendant",
-  description:
-    "An elegant, handmade pendant crafted with care. Perfect for gifting or personal wear.",
-  price: 3800,
-  colors: ["ruby", "sapphire", "gold", "opal", "pearl"],
-};
-
-const ProductVariants = {
-  ruby: ["https://images.unsplash.com/photo-1477959858617-67f85cf4f1df"],
-  sapphire: ["https://images.unsplash.com/photo-1477959858617-67f85cf4f1df"],
-  gold: [
-    "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df",
-    "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df",
-  ],
-  opal: [
-    "https://images.unsplash.com/photo-1589987603086-2c1e071f8c0c",
-    "https://images.unsplash.com/photo-1617042352135-4894d6ec94b8",
-  ],
-  pearl: [
-    "https://images.unsplash.com/photo-1616628182507-54d5b6e3c800",
-    "https://images.unsplash.com/photo-1617042339973-e1d939ed8d8c",
-  ],
-};
-
-const productVariants = Object.keys(ProductVariants).reduce((acc = [], color = "") => {
-  acc[color] = ProductVariants[color];
-  return acc;
-}, {});
+import useProductController from "@/hooks/use-Product-Controller";
 
 export default function ProductPage() {
   const {
@@ -48,7 +18,7 @@ export default function ProductPage() {
     selectedColor,
     setSelectedColor,
     activeImages,
-  } = useProductController({ product, productVariants: ProductVariants });
+  } = useProductController({ product_id:0});
 
   return (
     <div className="min-h-screen bg-transparent py-2 px-4 sm:px-6 md:px-8 text-[var(--gold)]">
@@ -79,12 +49,12 @@ export default function ProductPage() {
         </div>
       </div>
 
-      {/* Reviews Section */}
+    
       <div className="mt-10 max-w-[1300px] mx-auto px-2">
         <ReviewContainer />
       </div>
 
-      {/* Suggestions / Scroller Section */}
+    
       <div className="mt-4 max-w-[1300px] mx-auto px-2">
         <TopSellers name="Suggestions" />
       </div>

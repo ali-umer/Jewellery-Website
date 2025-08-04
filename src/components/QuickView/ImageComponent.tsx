@@ -1,6 +1,6 @@
-"use client";
-
-import React, { useState, useRef, useEffect } from "react";
+"use client"
+import { useImageSelector } from "@/hooks/image-view-controller";
+import {SimpleImageCard} from "@/components/QuickView/ImageCard";
 import Image from "next/image";
 
 interface ImagesSectionProps {
@@ -8,59 +8,29 @@ interface ImagesSectionProps {
 }
 
 export default function ImagesSection({ images }: ImagesSectionProps) {
-   const [activeIndex, setActiveIndex] = useState(0);
-   const thumbsRef = useRef<(HTMLImageElement | null)[]>([]);
-
-  const handleSelect = (index: number) => {
-    setActiveIndex(index);
-    thumbsRef.current[index]?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowDown") {
-        setActiveIndex((prev) => {
-          const next = (prev + 1) % images.length;
-          thumbsRef.current[next]?.scrollIntoView({ behavior: "smooth", block: "center" });
-          return next;
-        });
-      } else if (e.key === "ArrowUp") {
-        setActiveIndex((prev) => {
-          const next = (prev - 1 + images.length) % images.length;
-          thumbsRef.current[next]?.scrollIntoView({ behavior: "smooth", block: "center" });
-          return next;
-        });
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [images.length]);
+  const { activeIndex, handleSelect, thumbsRef } = useImageSelector(images);
+   console.log("Images are " , images);
 
   return (
     <div className="flex w-full justify-center items-center h-full gap-4">
-      
-        <div className="flex flex-col gap-2 overflow-y-auto h-[38rem] pr-2">
-                { images.length > 1
-                      &&  images.map((img, idx) => (
-                  <div
-                    key={idx}
-                    onClick={() => handleSelect(idx)}
-                    ref={(el) => (thumbsRef.current[idx] = el || null)}
-                    className={`relative w-16 h-16 rounded border-2 cursor-pointer ${
-                      idx === activeIndex ? "border-black" : "border-gray-300"
-                    }`}
+       <div className="flex flex-col gap-2 overflow-y-auto h-[38rem] pr-2">
+                { images.length > 1 && 
+                 images.map((img, idx) => (
+                  <div  key={idx}
+                        onClick={() => handleSelect(idx)}
+                        ref={(el) => {thumbsRef.current[idx] = el; }}
+                       className={`relative w-16 h-16 rounded border-2 cursor-pointer ${
+                          idx === activeIndex ? "border-black" : "border-gray-300"
+                        }`}
                   >
+                  
                     <Image
-                      src={img}
-                      alt={`Thumbnail ${idx + 1}`}
-                      fill
-                      className="object-cover rounded"
-                      sizes="64px"
-                    />
+                          src={img}  
+                          alt={`Thumbnail ${idx + 1}`}
+                          fill
+                          className="object-cover rounded"
+                          sizes="64px"
+                        />
                   </div>
                 ))}
       </div>
@@ -70,14 +40,3 @@ export default function ImagesSection({ images }: ImagesSectionProps) {
 }
 
 
-
-
-function SimpleImageCard({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className="w-full sm:w-[28rem] h-[38rem] rounded-xl border border-gray-300 overflow-hidden bg-white">
-      <div className="relative w-full h-full">
-        <Image src={src} alt={alt} fill className="object-cover" />
-      </div>
-    </div>
-  );
-}
