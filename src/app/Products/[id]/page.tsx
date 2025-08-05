@@ -1,22 +1,20 @@
 "use client";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams} from "next/navigation";
 import StarryComponent from "@/components/ui/StarryComponent";
 import TopBar from "@/components/TopBar";
 import ProductPage from "@/components/ProductComponents/ProductPage";
+import {useProduct} from "@/hooks/use-product";
 
-
-
-  const product = {
-    title: "Elegant Necklace",
-    price: "299",
-    colors: ["#FF5733", "#33FF57", "#3357FF"],
-    images: ["image1.jpg", "image2.jpg"], 
-  };
 
 export default function CategoryPage() {
-  const router = useRouter();
   const params = useParams();
-  const Product = (params.Product_Name)?.toString().replaceAll('%20', ' ');
+  const id = parseInt(params.id as string, 10); 
+  
+  const { product, loading, error } = useProduct(id);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!product) return <p>No product found.</p>;
 
 
   return (
@@ -24,7 +22,7 @@ export default function CategoryPage() {
           <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
               <StarryComponent />
               <TopBar />
-              <ProductPage />
+              <ProductPage Id={product.id} name={product.Name} price={product.Price} description={product.Description} />
               
               
     

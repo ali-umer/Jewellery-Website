@@ -11,34 +11,46 @@ import ReviewContainer from "../ReviewComponents/ReviewContainer";
 import TopSellers from "@/components/TopSellingProducts";
 import useProductController from "@/hooks/use-Product-Controller";
 
-export default function ProductPage() {
-  const {
+
+
+interface ProductPageProps {
+  Id: number;
+  name: string;
+  price: number;
+  description: string;
+}
+
+export default function ProductPage({ Id, name, price, description }: ProductPageProps) {
+
+   const {
     quantity,
     setQuantity,
-    selectedColor,
-    setSelectedColor,
+    colors,  
+    activeColor,
+    setActiveColor,
     activeImages,
-  } = useProductController({ product_id:0});
+    isLoading
+  } = useProductController({ product_id: 2 });
 
   return (
     <div className="min-h-screen bg-transparent py-2 px-4 sm:px-6 md:px-8 text-[var(--gold)]">
       <div className="max-w-[1300px] mx-auto flex flex-col md:flex-row md:gap-8 gap-6 justify-center w-full">
-        {/* Image Section */}
+        
         <div className="md:w-1/2 w-full border-black border-2 rounded-2xl relative overflow-hidden">
           <ImagesSection images={activeImages} />
         </div>
 
-        {/* Details Section */}
+        
         <div className="md:w-1/2 w-full flex flex-col border-black border-2 rounded-2xl justify-between gap-6">
           <ProductDetail
-            name={product.title}
-            price={product.price}
-            description={product.description}
+            name={name}
+            price={price}
+            description={description}
           />
           <ColorSelector
-            colors={product.colors}
-            activeColor={selectedColor}
-            onChange={setSelectedColor}
+            colors={colors}
+            activeColor={activeColor}
+            onChange={setActiveColor}
           />
           <QuantityControl
             quantity={quantity}

@@ -50,6 +50,7 @@ const sampleData = [
             {sampleData.map((product, index) => (
               <div key={index} className="w-full max-w-[28rem]"> {/* Constrained width */}
                 <ProductCard
+                   Id={0}
                   name={product.name}
                   price={product.price}
                   images={product.images}

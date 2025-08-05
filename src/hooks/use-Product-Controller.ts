@@ -1,65 +1,74 @@
+// hooks/useQuickViewController.ts
 "use client";
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-interface ColorCombination {
-  color: string;
-  image_url: string;
-}
-
 interface UseProductControllerProps {
   product_id: number;
 }
 
+interface VariantData {
+  Color: string;
+  Images: string[];
+}
+
 export default function useProductController({ product_id }: UseProductControllerProps) {
   const [quantity, setQuantity] = useState<number>(1);
-  const [selectedColor, setSelectedColor] = useState<string>("");
-  const [activeImages, setActiveImages] = useState<string[]>([]);
   const [productVariants, setProductVariants] = useState<Record<string, string[]>>({});
+  const [activeColor, setActiveColor] = useState<string>("");
+  const [activeImages, setActiveImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // Simple color change handler that matches your example
+  function handleColorChange(color: string = Object.keys(productVariants)[0]) {
+    setActiveColor(color);
+    setActiveImages(productVariants[color] ?? []);
+  }
 
   useEffect(() => {
     const fetchVariants = async () => {
       setIsLoading(true);
-
+      
       const { data, error } = await supabase
         .from("Colors-Image")
         .select("Color, Images")
         .eq("Product_Id", product_id);
 
-      const variants: Record<string, string[]> = {};
+      if (error) {
+        console.error("Error fetching variants:", error);
+        setIsLoading(false);
+        return;
+      }
 
-      (data as { Color: string; Images: string }[]).forEach(({ Color, Images }) => {
-        if (!variants[Color]) variants[Color] = [];
-        variants[Color].push(Images);
+      // Transform data to match your desired structure
+      const variants: Record<string, string[]> = {};
+      
+      data.forEach(({ Color, Images }) => {
+        if (Array.isArray(Images)) {
+          variants[Color] = Images;
+        } 
+       
       });
 
-      const defaultColor = Object.keys(variants)[0] ?? "";
       setProductVariants(variants);
-      setSelectedColor(defaultColor);
-      setActiveImages(variants[defaultColor] ?? []);
-      console.log(data);
-      setIsLoading(false); 
+      const colors = Object.keys(variants);
+      setActiveColor(colors[0] || "");
+      setActiveImages(variants[colors[0]] || []);
+      setIsLoading(false);
     };
 
     fetchVariants();
   }, [product_id]);
 
-  useEffect(() => {
-    setActiveImages(productVariants[selectedColor] ?? []);
-  }, [selectedColor, productVariants]);
-
-  const colors = Object.keys(productVariants);
-
+  const colors= Object.keys(productVariants);
   return {
     quantity,
     setQuantity,
-    selectedColor,
-    setSelectedColor,
-    setActiveImages,
-    activeImages,
     colors,
+    activeColor,
+    setActiveColor: handleColorChange,
+    activeImages,
     isLoading,
   };
 }

@@ -24,7 +24,7 @@ export default function ProductCard({Id, name, price, images = [] }: ProductCard
 
      
           <div className="relative h-[80%] w-full overflow-hidden rounded-t-xl">
-            <Link  href={`/Products/${encodeURIComponent(name)}`} className="block h-full w-full relative"
+            <Link  href={`/Products/${Id}`} className="block h-full w-full relative"
             >
               <Image  src={images[activeIndex]}  alt={name || "Product Image"}
                 fill  className="object-cover rounded-t-xl"

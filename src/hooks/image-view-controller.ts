@@ -2,11 +2,19 @@
 
 import { useState, useRef, useEffect } from "react";
 
-export function useImageSelector(images: string[]) {
+export function useImageSelector(images: string[] = []) {
   const [activeIndex, setActiveIndex] = useState(0);
   const thumbsRef = useRef<(HTMLImageElement | null)[]>([]);
 
+  // Reset activeIndex when images array changes
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [images]);
+
   const handleSelect = (index: number) => {
+    if (images.length === 0) return;
+    if (index < 0 || index >= images.length) return;
+    
     setActiveIndex(index);
     thumbsRef.current[index]?.scrollIntoView({
       behavior: "smooth",
@@ -15,17 +23,27 @@ export function useImageSelector(images: string[]) {
   };
 
   useEffect(() => {
+    if (images.length === 0) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowDown") {
+        e.preventDefault();
         setActiveIndex((prev) => {
           const next = (prev + 1) % images.length;
-          thumbsRef.current[next]?.scrollIntoView({ behavior: "smooth", block: "center" });
+          thumbsRef.current[next]?.scrollIntoView({ 
+            behavior: "smooth", 
+            block: "center" 
+          });
           return next;
         });
       } else if (e.key === "ArrowUp") {
+        e.preventDefault();
         setActiveIndex((prev) => {
           const next = (prev - 1 + images.length) % images.length;
-          thumbsRef.current[next]?.scrollIntoView({ behavior: "smooth", block: "center" });
+          thumbsRef.current[next]?.scrollIntoView({ 
+            behavior: "smooth", 
+            block: "center" 
+          });
           return next;
         });
       }
@@ -35,5 +53,10 @@ export function useImageSelector(images: string[]) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [images.length]);
 
-  return { activeIndex, setActiveIndex, handleSelect, thumbsRef };
+  return { 
+    activeIndex: images.length > 0 ? activeIndex : 0, 
+    setActiveIndex, 
+    handleSelect, 
+    thumbsRef 
+  };
 }
