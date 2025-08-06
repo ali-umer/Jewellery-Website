@@ -6,6 +6,8 @@ import ProductPage from "@/components/ProductComponents/ProductPage";
 import {useProduct} from "@/hooks/use-product";
 
 
+
+
 export default function CategoryPage() {
   const params = useParams();
   const id = parseInt(params.id as string, 10); 

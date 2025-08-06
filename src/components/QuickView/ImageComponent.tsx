@@ -9,8 +9,8 @@ interface ImagesSectionProps {
 
 export default function ImagesSection({ images }: ImagesSectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const thumbsRef = useRef<(HTMLDivElement | null)[]>([]); // ref to divs, not images
-  console.log("Image in th imageSection", images);
+  const thumbsRef = useRef<(HTMLDivElement | null)[]>([]); 
+  
  
   const handleSelect = (index: number) => {
     setActiveIndex(index);
@@ -46,7 +46,7 @@ export default function ImagesSection({ images }: ImagesSectionProps) {
       <div className="flex flex-col gap-2 overflow-y-auto h-[38rem] pr-2">
         {images.length > 1 &&
           images.map((img, idx) => {
-            console.log("Img from the array is   :", img); // log each image
+
             return (
               <div
                 key={idx}

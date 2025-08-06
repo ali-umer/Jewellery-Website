@@ -20,7 +20,6 @@ export default function useProductController({ product_id }: UseProductControlle
   const [activeImages, setActiveImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // Simple color change handler that matches your example
   function handleColorChange(color: string = Object.keys(productVariants)[0]) {
     setActiveColor(color);
     setActiveImages(productVariants[color] ?? []);
@@ -41,7 +40,6 @@ export default function useProductController({ product_id }: UseProductControlle
         return;
       }
 
-      // Transform data to match your desired structure
       const variants: Record<string, string[]> = {};
       
       data.forEach(({ Color, Images }) => {

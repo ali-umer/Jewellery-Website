@@ -1,5 +1,3 @@
-"use client";
-
 import ImagesSection from "@/components/QuickView/ImageComponent";
 import ColorSelector from "@/components/QuickView/ColorsComponent";
 import QuantityControl from "@/components/QuickView/QuantityControl";
@@ -16,18 +14,17 @@ interface QuickViewProps {
 }
 
 export default function QuickView({ productId, name, price, discount, handleView }: QuickViewProps) {
-  const {
-  quantity,
-  setQuantity,
-  colors,  // ✅ Already returns Object.keys() in the hook
-  activeColor,
-  setActiveColor,
-  activeImages,
-  isLoading
-} = useProductController({ product_id: 2 });
+      const {
+      quantity,
+      setQuantity,
+      colors,
+      activeColor,
+      setActiveColor,
+      activeImages,
+      isLoading
+    } = useProductController({ product_id: productId });
 
   if (isLoading) return <div className="p-10 text-white">Loading product...</div>;
-  console.log("🔥 Active images in QuickView:", activeImages);
 
   return (
     <div className="flex flex-col md:flex-row p-4 md:p-6 rounded-lg max-w-5xl mx-auto shadow-md gap-2 

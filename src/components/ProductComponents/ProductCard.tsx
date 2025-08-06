@@ -13,8 +13,7 @@ interface ProductCardProps {
   images: string[];
 }
 
-export default function ProductCard({Id, name, price, images = [] }: ProductCardProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
+export default function ProductCard({Id, name, price, images}: ProductCardProps) {
   const [showQuickView, setShowQuickView] = useState(false);
 
   return (
@@ -26,11 +25,12 @@ export default function ProductCard({Id, name, price, images = [] }: ProductCard
           <div className="relative h-[80%] w-full overflow-hidden rounded-t-xl">
             <Link  href={`/Products/${Id}`} className="block h-full w-full relative"
             >
-              <Image  src={images[activeIndex]}  alt={name || "Product Image"}
+            {images?.length > 0 &&  <Image src={images[0]}  alt={name || "Product Image"}
                 fill  className="object-cover rounded-t-xl"
                 priority
                 sizes="(max-width: 500px) 100vw, (max-width: 800px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              />
+              /> 
+            }
             </Link>
 
            
@@ -70,7 +70,7 @@ export default function ProductCard({Id, name, price, images = [] }: ProductCard
             >
               &times;
             </button>
-            <QuickView Id={Id} name={name} price={price} discount={0}  handleView={setShowQuickView} />
+            <QuickView productId={Id} name={name} price={price} discount={0}  handleView={setShowQuickView} />
           </div>
         </div>
       )}
