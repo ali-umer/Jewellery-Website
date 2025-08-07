@@ -22,7 +22,7 @@ export default function QuickView({ productId, name, price, discount, handleView
       setActiveColor,
       activeImages,
       isLoading
-    } = useProductController({ product_id: productId });
+    } = useProductController({ product_id: 2 });
 
   if (isLoading) return <div className="p-10 text-white">Loading product...</div>;
 

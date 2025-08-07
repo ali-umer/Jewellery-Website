@@ -10,7 +10,6 @@ interface ImagesSectionProps {
 export default function ImagesSection({ images }: ImagesSectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const thumbsRef = useRef<(HTMLDivElement | null)[]>([]); 
-  
  
   const handleSelect = (index: number) => {
     setActiveIndex(index);

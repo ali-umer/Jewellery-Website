@@ -1,51 +1,18 @@
 "use client";
 
-import { Star,ChevronLeft, ChevronRight } from "lucide-react";
+import {ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState,useEffect } from "react";
 import ReviewCard from "@/components/ReviewComponents/ReviewCard";
-const reviews = [
-  {
-    name: "Alice Smith",
-    rating: 5,
-    text: "This product exceeded my expectations. It’s durable, elegant, and works exactly as advertised. The delivery was fast too.",
-  },
-  {
-    name: "John Doe",
-    rating: 4,
-    text: "Very good experience overall. Quality was top-notch. Just a minor packaging issue but nothing serious.",
-  },
-  {
-    name: "Emma Johnson",
-    rating: 5,
-    text: "Outstanding service! I’ve never had such a smooth transaction before. Highly recommend to anyone looking for reliability.",
-  },
-  {
-    name: "Liam Brown",
-    rating: 3,
-    text: "It's decent for the price. Some parts feel a bit cheap but gets the job done.",
-  }, {
-    name: "Alice Smith",
-    rating: 5,
-    text: "This product exceeded my expectations. It’s durable, elegant, and works exactly as advertised. The delivery was fast too.",
-  },
-  {
-    name: "John Doe",
-    rating: 4,
-    text: "Very good experience overall. Quality was top-notch. Just a minor packaging issue but nothing serious.",
-  },
-  {
-    name: "Emma Johnson",
-    rating: 5,
-    text: "Outstanding service! I’ve never had such a smooth transaction before. Highly recommend to anyone looking for reliability.",
-  }
-];
+import {useReviewController} from "@/hooks/ReviewContainer";
 
 
 
 export default function ReviewContainer() {
+
+  const { reviews, loading }=useReviewController(2);
+  
   const [page, setPage] = useState(0);
 
-  // Detect responsive cards per page
   const getCardsPerPage = () => {
     if (typeof window === 'undefined') return 1;
     if (window.innerWidth >= 1024) return 3;
@@ -66,6 +33,10 @@ export default function ReviewContainer() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [cardsPerPage]);
+
+  
+   if(loading)
+     return (<p>Your Loading</p>)
 
   const totalPages = Math.ceil(reviews.length / cardsPerPage);
   const start = page * cardsPerPage;
@@ -94,7 +65,7 @@ export default function ReviewContainer() {
       
       <div className="grid gap-2 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center w-full">
         {visibleReviews.map((review, idx) => (
-          <ReviewCard key={start + idx} {...review} />
+          <ReviewCard key={start + idx} name={review.Name} rating={review.rating} text={review.Text} />
         ))}
       </div>
 

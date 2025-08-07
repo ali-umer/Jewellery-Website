@@ -32,6 +32,11 @@ export default function ProductPage({ Id, name, price, description }: ProductPag
     isLoading
   } = useProductController({ product_id: 2 });
 
+  
+  console.log("Active Images in Product Page are " ,activeImages);
+
+  
+
   return (
     <div className="min-h-screen bg-transparent py-2 px-4 sm:px-6 md:px-8 text-[var(--gold)]">
       <div className="max-w-[1300px] mx-auto flex flex-col md:flex-row md:gap-8 gap-6 justify-center w-full">

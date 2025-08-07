@@ -24,7 +24,7 @@ export default function CategoryPage() {
           <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
               <StarryComponent />
               <TopBar />
-              <ProductPage Id={product.id} name={product.Name} price={product.Price} description={product.Description} />
+              <ProductPage Id={product.id} name={product.Name} price={product.Price} description={product.Description}  />
               
               
     
