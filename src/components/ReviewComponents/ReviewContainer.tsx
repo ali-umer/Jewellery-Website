@@ -3,7 +3,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
 import ReviewCard from "@/components/ReviewComponents/ReviewCard";
-import { useReviewController } from "@/hooks/use-Review-Controller";
+import { useReviewController } from "@/hooks/Backend/use-Review-Controller";
 import { useReview } from "@/components/ui/ReviewManage"; 
 
 export default function ReviewContainer() {

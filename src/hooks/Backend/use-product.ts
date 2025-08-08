@@ -9,6 +9,7 @@ interface Product {
   Stock: number;
   Price: number;
   Images: string[];
+  Category_ID:number;
 }
 
 export function useProduct(id: number | null) {
@@ -25,7 +26,7 @@ export function useProduct(id: number | null) {
 
       const { data, error } = await supabase
         .from("Products")
-        .select("id, Name, Description, Stock, Price, Images")
+        .select("id, Name, Description, Stock, Price, Images,Category_ID")
         .eq("id", id)
         .single();
 

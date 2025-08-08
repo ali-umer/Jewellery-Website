@@ -1,7 +1,7 @@
 "use client"
 import {useRef,useEffect} from "react";
 import ProductCard from "@/components/ProductComponents/ProductCard";
-import { useCategoryProducts } from "@/hooks/use-Category-Products";
+import { useCategoryProducts } from "@/hooks/Backend/use-Category-Products";
 import {useIntersectionObserver} from "@/components/ui/InffiniteScroll"
 
 interface ProductCardGridProps {

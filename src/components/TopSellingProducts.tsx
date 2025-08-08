@@ -1,15 +1,20 @@
+"use client";
 import Cards from "@/components/TopProducts";
 import React from "react";
 
-export default function TopSellers({name="TOP SELLING PRODCUTS"}:{name:string}) {
+export default function TopSellers({name,ProductId,CategoryId}:{name:string,ProductId:number,CategoryId:number}) {
     return (
         <>
-        <div id="products" className="flex flex-wrap items-center justify-center h-screen scroll gap-5 md:gap-10 md:ml-20 md:mr-20">
+        <div id="products" className="flex flex-wrap items-center justify-center h-screen scroll gap-5 md:gap-8 md:ml-20 md:mr-20">
             <div className="w-full text-center px-4">
                 <h3 className="text-[clamp(2rem,5vw,3.5rem)] font-light leading-tight text-[var(--primary)] tracking-tight font-playfair-display">
                     {name}
                 </h3>
-            <Cards />
+
+            { name !== "TOP SELLING PRODCUTS" ? ( <Cards ProductId={ProductId} CategoryId={CategoryId} />) 
+               : 
+               (<Cards ProductId={-1} CategoryId={-1} />)}
+                                                        
             </div>
      </div>
 

@@ -15,10 +15,8 @@ export default function Home() {
           <StarryComponent />
           <TopBar />
           <HeroSection />
-          <TopSellers name="TOP SELLING PRODUCTS" />
+          <TopSellers name="TOP SELLING PRODCUTS" ProductId={-1} CategoryId={-1}  />{ /* these 2 props pass just to make sure no error,nothing means with logic, help with resuabiity of component */ }
 
-
-          
             <Categories />
 
             <Footer />

@@ -3,7 +3,7 @@ import ColorSelector from "@/components/QuickView/ColorsComponent";
 import QuantityControl from "@/components/QuickView/QuantityControl";
 import ActionButtons from "@/components/QuickView/ActiveButtons";
 import DetailsSection from "@/components/QuickView/ProductDetails";
-import useProductController from "@/hooks/use-Product-Controller";
+import useProductController from "@/hooks/Controllers/use-Product-Controller";
 
 interface QuickViewProps {
   productId: number;

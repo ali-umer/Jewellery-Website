@@ -3,7 +3,7 @@ import { useRouter, useParams} from "next/navigation";
 import StarryComponent from "@/components/ui/StarryComponent";
 import TopBar from "@/components/TopBar";
 import ProductPage from "@/components/ProductComponents/ProductPage";
-import {useProduct} from "@/hooks/use-product";
+import {useProduct} from "@/hooks/Backend/use-product";
 
 
 
@@ -24,7 +24,7 @@ export default function CategoryPage() {
           <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
               <StarryComponent />
               <TopBar />
-              <ProductPage Id={product.id} name={product.Name} price={product.Price} description={product.Description}  />
+              <ProductPage Id={product.id} name={product.Name} price={product.Price} description={product.Description} CategoryId={product.Category_ID}  />
               
               
     

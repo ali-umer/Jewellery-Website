@@ -2,7 +2,7 @@
 
 import React from "react";
 import CategoryCard from "./CategoryCard";
-import { useCategoryController } from "@/hooks/use-Category-Controller";
+import { useCategoryController } from "@/hooks/Backend/use-Category-Controller";
 
 
 export default function Categories() {

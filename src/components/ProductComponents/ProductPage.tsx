@@ -9,7 +9,7 @@ import ProductDetail from "@/components/QuickView/ProductDetails";
 import AddReview from "@/components/ReviewComponents/ReviewInput";
 import ReviewContainer from "../ReviewComponents/ReviewContainer";
 import TopSellers from "@/components/TopSellingProducts";
-import useProductController from "@/hooks/use-Product-Controller";
+import useProductController from "@/hooks/Controllers/use-Product-Controller";
 import { useIntersectionObserver } from "@/components/ui/InffiniteScroll"; 
 
 interface ProductPageProps {
@@ -17,9 +17,10 @@ interface ProductPageProps {
   name: string;
   price: number;
   description: string;
+  CategoryId:number;
 }
 
-export default function ProductPage({ Id, name, price, description }: ProductPageProps) {
+export default function ProductPage({ Id, name, price, description ,CategoryId}: ProductPageProps) {
   const {
     quantity,
     setQuantity,
@@ -28,7 +29,7 @@ export default function ProductPage({ Id, name, price, description }: ProductPag
     setActiveColor,
     activeImages,
     isLoading
-  } = useProductController({ product_id: 2 });
+  } = useProductController({ product_id: Id });
 
   const reviewRef = useRef<HTMLDivElement>(null);
   const [showReview, setShowReview] = useState(false);
@@ -72,7 +73,7 @@ export default function ProductPage({ Id, name, price, description }: ProductPag
       </div>
 
       <div className="mt-4 max-w-[1300px] mx-auto px-2">
-        <TopSellers name="Suggestions" />
+        <TopSellers name="Suggestions" ProductId={Id} CategoryId={CategoryId} />
       </div>
     </div>
   );

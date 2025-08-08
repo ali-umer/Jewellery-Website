@@ -3,40 +3,16 @@
 import React, { useRef,useEffect,useState } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import ProductCard from "@/components/ProductComponents/ProductCard";
-import { supabase } from "@/lib/supabaseClient"
+import { useSuggestion } from "@/hooks/Backend/use-Suggestion";
 
 
 
-type Product = {
-  id: number;
-  Name: string;
-  Price: number;
-  Stock:number;
-  Description:string;
- Images:string[];
-};
-
-
-
-
-
-export default function Cards() {
-
-  const [productData,setProductData]=useState<Product[]>([]);
-
-  useEffect(() => {
-  const fetchProducts = async () => {
-    const { data, error } = await supabase
-                                .from("Products")
-                                .select("id, Name, Description, Stock, Price, Images");
-
-    if (data) {
-      setProductData(data as Product[]); 
-    }
-  };
-
-  fetchProducts();
-}, []);
+export default function Cards({ProductId,CategoryId}:{ProductId:number,CategoryId:number}) {
+  
+  const  suggestedProducts  = useSuggestion(
+    ProductId === -1 ? null :  ProductId ,
+    CategoryId === -1? null: CategoryId 
+  );
 
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -61,7 +37,7 @@ export default function Cards() {
           ref={scrollRef}
           className="flex gap-2 overflow-x-scroll snap-x snap-mandatory scroll-smooth hide-scrollbar"
         >
-          {productData.map((product, index) => (
+          {suggestedProducts.map((product, index) => (
             <div key={index} className="snap-start flex-shrink-0 w-[100%] md:w-[28rem]"
             >
               <ProductCard
