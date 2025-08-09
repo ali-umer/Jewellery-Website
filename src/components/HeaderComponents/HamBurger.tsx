@@ -20,14 +20,9 @@ export default function HamburgerMenu() {
   };  
 
 const handleCategory = () => {
-     if (pathname !== '/') {
-          router.push('/');
-          window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth' });
-    }else{
-       window.scrollTo({top: document.body.scrollHeight,behavior: 'smooth' });
-    }
-     setIsOpen(false);
-  };
+ 
+};
+
 
   return (
     <>

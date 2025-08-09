@@ -1,3 +1,4 @@
+"use client"
 import { Heart } from 'lucide-react';
 
 export default function WishlistButton({ mobile = false }: { mobile?: boolean }) {

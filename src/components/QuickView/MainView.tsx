@@ -4,6 +4,7 @@ import QuantityControl from "@/components/QuickView/QuantityControl";
 import ActionButtons from "@/components/QuickView/ActiveButtons";
 import DetailsSection from "@/components/QuickView/ProductDetails";
 import useProductController from "@/hooks/Controllers/use-Product-Controller";
+import {addToCart} from "@/hooks/Backend/use-Cart-Insert";
 
 interface QuickViewProps {
   productId: number;
@@ -24,6 +25,11 @@ export default function QuickView({ productId, name, price, discount, handleView
       isLoading
     } = useProductController({ product_id: 2 });
 
+     const handleCart=function(){
+        addToCart(productId,activeColor,quantity);
+     }
+ 
+
   if (isLoading) return <div className="p-10 text-white">Loading product...</div>;
 
   return (
@@ -41,13 +47,13 @@ export default function QuickView({ productId, name, price, discount, handleView
 
      
 
-      <ImagesSection images={activeImages} />
+        <ImagesSection images={activeImages} />
 
         <div className="md:w-[54%] p-6 space-y-3 bg-transparent rounded-xl shadow-lg border border-amber-100 flex flex-col justify-center">
         <DetailsSection name={name} price={price} discount={discount} />
         <ColorSelector colors={colors} activeColor={activeColor} onChange={setActiveColor} />
         <QuantityControl quantity={quantity} setQuantity={setQuantity} QuickView={true} />
-        <ActionButtons />
+        <ActionButtons handleCart={handleCart} />
       </div>
     </div>
   );

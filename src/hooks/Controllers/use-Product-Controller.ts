@@ -30,7 +30,7 @@ export default function useProductController({ product_id }: UseProductControlle
       setIsLoading(true);
       
       const { data, error } = await supabase
-        .from("Colors-Image")
+        .from("Colors_Image")
         .select("Color, Images")
         .eq("Product_Id", product_id);
 

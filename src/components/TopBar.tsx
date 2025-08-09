@@ -1,6 +1,5 @@
+"use client"
 import SearchBar from "@/components/HeaderComponents/SearchBar";
-import CartButton from "@/components/CartButton";
-import Wishlist from "@/components/HeaderComponents/Wishlist";
 import HamburgerButton from "@/components/HeaderComponents/HamBurger";
 
 export default function TopBar() {
