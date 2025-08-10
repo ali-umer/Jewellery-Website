@@ -3,8 +3,7 @@ import { supabase } from "@/lib/supabaseClient";
 
 
 export const deleteCartItem= async function(cartId:number){
-
-     console.log("Hello from the Cart Reducer",cartId);
+    console.log("Hello from the Cart Reducer",cartId);
 
    const { data, error } = await supabase
                             .from("Cart")

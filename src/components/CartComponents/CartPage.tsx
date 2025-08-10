@@ -1,12 +1,12 @@
 "use client";
-import CartContainer from "@/components/CartComponents/Cart-Container";
-import {deleteCartItem} from "@/hooks/Backend/use-Cart-Delete";
+import CartContainer from "@/components/CartComponents/CartContainer";
+
 import { useCart } from "@/hooks/Backend/use-Cart";
 
 
 
 export default function CartPage() {
-  const{cartItems,loading}=useCart();
+  const{cartItems,fetchCartItems,loading}=useCart();
  
    if(loading)
      return <p> Loading</p>
@@ -23,7 +23,7 @@ export default function CartPage() {
       {cartItems.length === 0 ? (
         <p className="text-gray-600">Your cart is empty.</p>  ) : (
         <>
-          <CartContainer items={cartItems} onDelete={deleteCartItem} />
+          <CartContainer items={cartItems}/>
           <div className="text-right mt-8 border-t border-var[(--gold)]" >
             <h2 className="text-2xl font-semibold">
               Total: {totalPrice}

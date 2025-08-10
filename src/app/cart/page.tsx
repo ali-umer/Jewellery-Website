@@ -1,10 +1,7 @@
 "use client";
-import { useState } from "react";
-import { Trash2 } from "lucide-react";
-import Link from "next/link";
 import TopBar from "@/components/TopBar";
 import StarryComponent from "@/components/ui/StarryComponent";
-import CartPage from "@/components/CartComponents/Cart-Page";
+import CartPage from "@/components/CartComponents/CartPage";
 
 // Sample Data
 

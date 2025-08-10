@@ -90,5 +90,5 @@ export const useCart = () => {
     console.log(cartItems);
   }, []);
 
-  return { cartItems, loading};
+  return { cartItems,fetchCartItems,loading};
 };
