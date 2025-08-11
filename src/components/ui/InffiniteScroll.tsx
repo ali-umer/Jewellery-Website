@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 export function useIntersectionObserver(
   ref: React.RefObject<Element>,
   callback: () => void,
+  threshold:number=1,
   delay: number = 1000
 ) {
   const triggered = useRef(false);
@@ -23,7 +24,7 @@ export function useIntersectionObserver(
           }, delay);
         }
       },
-      { threshold: 1 } // Trigger only when 100% visible
+      { threshold: threshold } // Trigger only when 100% visible
     );
 
     observer.observe(currentRef);

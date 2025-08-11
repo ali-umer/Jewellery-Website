@@ -12,12 +12,13 @@ export default function ProductCardGrid({ Display = "" }: ProductCardGridProps) 
   const { products, getMore } = useCategoryProducts(2 ,1);
 
      const lastRef = useRef<HTMLDivElement | null>(null);
-     useIntersectionObserver(lastRef as React.RefObject<Element>, getMore, 1000);
+     useIntersectionObserver(lastRef as React.RefObject<Element>, getMore, 1);
 
 
       useEffect(()=>{
         getMore();
       },[]);
+      
   return (
     <>
       <h3 className="text-center pt-12 text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight text-[var(--primary)] tracking-tight font-playfair-display">
