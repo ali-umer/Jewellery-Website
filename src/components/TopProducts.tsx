@@ -43,6 +43,7 @@ export default function Cards({ProductId,  CategoryId,}: {  ProductId: number;Ca
     }
   };
 
+
   return (
     <div className="w-full py-6">
       <div className="flex items-center gap-2">

@@ -15,8 +15,11 @@ interface ProductCardProps {
   Discount?:number;
 }
 
-export default function ProductCard({ Id, name, price, images,Discount=10}: ProductCardProps) {
+export default function ProductCard({ Id, name, price, images,Discount=0}: ProductCardProps) {
   const [showQuickView, setShowQuickView] = useState(false);
+
+      console.log("Images in the Product Card " ,images );
+    
 
   return (
     <>
