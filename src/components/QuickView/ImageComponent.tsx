@@ -43,7 +43,7 @@ export default function ImagesSection({ images }: ImagesSectionProps) {
   return (
     <div className="flex w-full justify-center items-center h-full gap-4">
       <div className="flex flex-col gap-2 overflow-y-auto h-[38rem] pr-2">
-        {images.length > 1 &&
+        {images && images.length > 1 &&
           images.map((img, idx) => {
 
             return (

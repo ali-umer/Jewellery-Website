@@ -6,39 +6,49 @@ import ColorSelector from "@/components/QuickView/ColorsComponent";
 import QuantityControl from "@/components/QuickView/QuantityControl";
 import ActionButtons from "@/components/QuickView/ActiveButtons";
 import ProductDetail from "@/components/QuickView/ProductDetails";
-import AddReview from "@/components/ReviewComponents/ReviewInput";
+import { addToCart } from "@/hooks/Backend/use-Cart-Insert";
 import ReviewContainer from "../ReviewComponents/ReviewContainer";
 import TopSellers from "@/components/TopSellingProducts";
 import useProductController from "@/hooks/Controllers/use-Product-Controller";
-import { useIntersectionObserver } from "@/components/ui/InffiniteScroll"; 
+import { useIntersectionObserver } from "@/components/ui/InffiniteScroll";
+import {Loader} from "@/components/loading";
 
 interface ProductPageProps {
   Id: number;
   name: string;
   price: number;
   description: string;
-  CategoryId:number;
+  CategoryId: number;
 }
 
-export default function ProductPage({ Id, name, price, description ,CategoryId}: ProductPageProps) {
-  const {
-    quantity,
-    setQuantity,
-    colors,
-    activeColor,
-    setActiveColor,
-    activeImages,
-    isLoading
-  } = useProductController({ product_id: Id });
+export default function ProductPage({  Id,  name,  price,  description, CategoryId,}: ProductPageProps) {
+
+  const { quantity,setQuantity, colors,activeColor,setActiveColor,activeImages,isLoading,} = useProductController({ product_id: Id });
+
+  const [showReview, setShowReview] = useState(false);
+  const [showSuggestion, setShowSuggestion] = useState(false);
 
   const reviewRef = useRef<HTMLDivElement>(null);
-  const [showReview, setShowReview] = useState(false);
+  const suggestionRef = useRef<HTMLDivElement>(null);
 
-  const handleIntersect = useCallback(() => {
+  const handleReviewIntersect = useCallback(() => {
     setShowReview(true);
   }, []);
 
-  useIntersectionObserver(reviewRef as React.RefObject<Element>, handleIntersect);
+  const handleSuggestionIntersect = useCallback(() => {
+    setShowSuggestion(true);
+  }, []);
+
+  useIntersectionObserver(reviewRef as React.RefObject<Element>, handleReviewIntersect, 0.5);
+  useIntersectionObserver(suggestionRef as React.RefObject<Element>, handleSuggestionIntersect,1);  
+
+  const handleCart = function () {
+    addToCart(Id, activeColor, quantity);
+  };
+
+   if (isLoading) {
+    return (  <Loader />   );
+  }
 
   return (
     <div className="min-h-screen bg-transparent py-2 px-4 sm:px-6 md:px-8 text-[var(--gold)]">
@@ -48,11 +58,7 @@ export default function ProductPage({ Id, name, price, description ,CategoryId}:
         </div>
 
         <div className="md:w-1/2 w-full flex flex-col border-black border-2 rounded-2xl justify-between gap-6">
-          <ProductDetail
-            name={name}
-            price={price}
-            description={description}
-          />
+          <ProductDetail name={name} price={price} description={description} />
           <ColorSelector
             colors={colors}
             activeColor={activeColor}
@@ -63,17 +69,20 @@ export default function ProductPage({ Id, name, price, description ,CategoryId}:
             setQuantity={setQuantity}
             QuickView={false}
           />
-          <ActionButtons ViewDetails={false} />
+          <ActionButtons handleCart={handleCart} ViewDetails={false} />
         </div>
       </div>
 
-     
+      
       <div className="mt-10 max-w-[1300px] mx-auto px-2" ref={reviewRef}>
         {showReview && <ReviewContainer />}
       </div>
 
-      <div className="mt-4 max-w-[1300px] mx-auto px-2">
-        <TopSellers name="Suggestions" ProductId={Id} CategoryId={CategoryId} />
+      
+      <div className="mt-4 max-w-[1300px] mx-auto px-2" ref={suggestionRef}>
+        {showSuggestion && (
+          <TopSellers name="Suggestions" ProductId={Id} CategoryId={CategoryId} />
+        )}
       </div>
     </div>
   );

@@ -1,12 +1,10 @@
 "use client";
-import { useRouter, useParams} from "next/navigation";
+import {useParams} from "next/navigation";
 import StarryComponent from "@/components/ui/StarryComponent";
 import TopBar from "@/components/TopBar";
 import ProductPage from "@/components/ProductComponents/ProductPage";
 import {useProduct} from "@/hooks/Backend/use-product";
-
-
-
+import {Loader} from "@/components/loading";
 
 export default function CategoryPage() {
   const params = useParams();
@@ -14,10 +12,11 @@ export default function CategoryPage() {
   
   const { product, loading, error } = useProduct(id);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading){
+      return ( <Loader /> )
+   }
   if (error) return <p>Error: {error}</p>;
   if (!product) return <p>No product found.</p>;
-
 
   return (
     <div className="w-full min-h-screen">
@@ -25,10 +24,7 @@ export default function CategoryPage() {
               <StarryComponent />
               <TopBar />
               <ProductPage Id={product.id} name={product.Name} price={product.Price} description={product.Description} CategoryId={product.Category_ID}  />
-              
-              
-    
-       </div>
+  </div>
    
   );
 }

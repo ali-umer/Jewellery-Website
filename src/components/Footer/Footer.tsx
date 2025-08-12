@@ -1,20 +1,23 @@
-import Link from "next/link";
+import Image from "next/image"
 import { NavigateFooter } from "@/components/Footer/Navigate";
 import {SocialMedia} from "@/components/Footer/SocialMedia"
 
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white px-6 md:px-20 py-20 text-[17px] leading-relaxed">
+    <footer className="bg-[#121212] text-white px-6 md:px-20 py-20 text-[17px] leading-relaxed">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 mb-12">
       
         <div className="flex flex-col items-start gap-3">
-          <img
-            src="heading.png"
-            alt="Jewellery Logo"
-            className="mt-2 w-90 h-10"
-          />
-        </div>
+            <Image
+              src="/heading.png"
+              alt="Jewellery Logo"
+              width={90}
+              height={40}
+               className="mt-2 w-90 h-10"
+              priority
+            />
+       </div>
 
 
         

@@ -1,5 +1,3 @@
-"use client"
-import SearchBar from "@/components/HeaderComponents/SearchBar";
 import HamburgerButton from "@/components/HeaderComponents/HamBurger";
 
 export default function TopBar() {
