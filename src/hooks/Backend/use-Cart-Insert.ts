@@ -7,7 +7,7 @@ const { data: colorImage, error: colorError } = await supabase
               .from("Colors_Image")
               .select("id")
               .eq("Product_Id", productId)
-              .eq("Color", "Yellow")
+              .eq("Color", color)
               .single();
 
 if (colorError) {
