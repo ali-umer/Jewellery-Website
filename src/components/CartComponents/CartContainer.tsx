@@ -1,17 +1,14 @@
 "use client";
-import CartItem from "@/components/CartComponents/CartRow";
+import {CartCard} from "@/components/CartComponents/cartCard";
+
 import React from "react";
 
-
-export default function CartContainer({ items}) {
-  
-  return (
-    <div className="space-y-4">
+export default function CartContainer({ items,RemoveItem }) {
+  return ( 
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {items.map((item) => (
-         <CartItem key={item.Cart_Id} item={item} />
+        <CartCard key={item.Cart_Id} item={item} RemoveItem={RemoveItem} />
       ))}
     </div>
   );
 }
-
-

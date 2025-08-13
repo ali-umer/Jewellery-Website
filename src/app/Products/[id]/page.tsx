@@ -3,8 +3,7 @@ import {useParams} from "next/navigation";
 import StarryComponent from "@/components/ui/StarryComponent";
 import TopBar from "@/components/TopBar";
 import ProductPage from "@/components/ProductComponents/ProductPage";
-import {useProduct} from "@/hooks/Backend/use-product";
-import {Loader} from "@/components/loading";
+
 
 export default function Page() {
   const params = useParams();
