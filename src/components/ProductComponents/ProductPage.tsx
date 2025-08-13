@@ -13,19 +13,13 @@ import useProductController from "@/hooks/Controllers/use-Product-Controller";
 import { useIntersectionObserver } from "@/components/ui/InffiniteScroll";
 import {Loader} from "@/components/loading";
 
-interface ProductPageProps {
-  Id: number;
-  name: string;
-  price: number;
-  description: string;
-  CategoryId: number;
-}
 
-export default function ProductPage({  Id,  name,  price,  description, CategoryId,}: ProductPageProps) {
+export default function ProductPage({Id}: {Id:number}) {
 
-  const { quantity,setQuantity, colors,activeColor,setActiveColor,activeImages,isLoading,} = useProductController({ product_id: Id });
+  const { quantity,setQuantity, colors,activeColor,setActiveColor,activeImages,isLoading,product} 
+          = useProductController({ product_id: Id, type:"ProductPage" });
 
-  const [showReview, setShowReview] = useState(false);
+  const [showReview, setShowReview] = useState(true);
   const [showSuggestion, setShowSuggestion] = useState(false);
 
   const reviewRef = useRef<HTMLDivElement>(null);
@@ -39,7 +33,7 @@ export default function ProductPage({  Id,  name,  price,  description, Category
     setShowSuggestion(true);
   }, []);
 
-  useIntersectionObserver(reviewRef as React.RefObject<Element>, handleReviewIntersect, 0.5);
+  useIntersectionObserver(reviewRef as React.RefObject<Element>, handleReviewIntersect, 0.1);
   useIntersectionObserver(suggestionRef as React.RefObject<Element>, handleSuggestionIntersect,1);  
 
   const handleCart = function () {
@@ -58,7 +52,7 @@ export default function ProductPage({  Id,  name,  price,  description, Category
         </div>
 
         <div className="md:w-1/2 w-full flex flex-col border-black border-2 rounded-2xl justify-between gap-6">
-          <ProductDetail name={name} price={price} description={description} />
+         { product &&  <ProductDetail name={product.name} price={product.price} description={product.description} /> }
           <ColorSelector
             colors={colors}
             activeColor={activeColor}
@@ -75,13 +69,13 @@ export default function ProductPage({  Id,  name,  price,  description, Category
 
       
       <div className="mt-10 max-w-[1300px] mx-auto px-2" ref={reviewRef}>
-        {showReview && <ReviewContainer />}
+        {showReview && <ReviewContainer Id={Id}/>}
       </div>
 
       
       <div className="mt-4 max-w-[1300px] mx-auto px-2" ref={suggestionRef}>
         {showSuggestion && (
-          <TopSellers name="Suggestions" ProductId={Id} CategoryId={CategoryId} />
+         product && <TopSellers name="Suggestions" ProductId={Id} CategoryId={product.categoryId} /> 
         )}
       </div>
     </div>

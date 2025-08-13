@@ -23,7 +23,7 @@ export default function QuickView({ productId, name, price, discount, handleView
       setActiveColor,
       activeImages,
       isLoading
-    } = useProductController({ product_id: 2 });
+    } = useProductController({ product_id: productId,type:"QuickView"});
 
      const handleCart=function(){
         addToCart(productId,activeColor,quantity);

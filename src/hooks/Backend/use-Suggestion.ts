@@ -6,7 +6,6 @@ interface Product {
   id: number;
   Name: string;
   Description: string;
-  Stock: number;
   Price: number;
   Images: string[];
   Category_ID: number;
@@ -24,7 +23,6 @@ useEffect(() => {
         id,
         Name,
         Description,
-        Stock,
         Price,
         Category_ID,
         Colors_Image!inner (
@@ -50,7 +48,7 @@ useEffect(() => {
     const { data, error } = await query;
     
     if (error) {
-      console.log("Error Product Suggestions not found", error.message);
+      console.log("Error Product Suggestions not found", error);
       return;
     }
     
@@ -60,7 +58,6 @@ useEffect(() => {
       id: prod.id,
       Name: prod.Name,
       Description: prod.Description,
-      Stock: prod.Stock,
       Price: prod.Price,
       Category_ID: prod.Category_ID,
       Images:prod.Colors_Image?.[0]?.Images || []

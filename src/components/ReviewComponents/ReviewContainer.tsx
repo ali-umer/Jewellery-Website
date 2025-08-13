@@ -6,8 +6,8 @@ import ReviewCard from "@/components/ReviewComponents/ReviewCard";
 import { useReviewController } from "@/hooks/Backend/use-Review-Controller";
 import { useReview } from "@/components/ui/ReviewManage"; 
 
-export default function ReviewContainer() {
-  const { reviews, loading } = useReviewController(2);
+export default function ReviewContainer({Id}:{Id:number}) {
+  const { reviews, loading } = useReviewController(Id);
 
   const {
     page,

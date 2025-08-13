@@ -9,21 +9,16 @@ import {Loader} from "@/components/loading";
 export default function Page() {
   const params = useParams();
   const id = parseInt(params.id as string, 10); 
-  
-  const { product, loading, error } = useProduct(id);
 
-  if (loading){
-      return ( <Loader /> )
-   }
-  if (error) return <p>Error: {error}</p>;
-  if (!product) return <p>No product found.</p>;
+
+
 
   return (
     <div className="w-full min-h-screen">
           <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
               <StarryComponent />
               <TopBar />
-              <ProductPage Id={product.id} name={product.Name} price={product.Price} description={product.Description} CategoryId={product.Category_ID}  />
+              <ProductPage Id={id} />
   </div>
    
   );
