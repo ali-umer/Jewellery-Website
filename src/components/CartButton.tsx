@@ -3,6 +3,7 @@ import { ShoppingCart } from 'lucide-react';
 
 
 export default function CartButton({ count = 0,mobile = false, handleCart,}: { count?: number; mobile?: boolean;handleCart: () => void;}) {
+ 
   return (
     <button   className={`relative flex items-center gap-2 text-white ${mobile ? 'w-full' : ''}`} 
             onClick={handleCart}  >

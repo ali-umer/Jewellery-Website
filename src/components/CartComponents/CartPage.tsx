@@ -23,7 +23,6 @@ export default function CartPage() {
     setCartItems((prev) => prev.filter((item) => item.Cart_Id !== id));
   }
 
-
   return (  
 
     <div className="w-[95%] md:w-[75%] bg-transparent border-black border-2 mt-16 p-8 mx-auto text-[var(--gold)] max-h-screen">
