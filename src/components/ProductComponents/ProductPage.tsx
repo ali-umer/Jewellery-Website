@@ -52,7 +52,7 @@ export default function ProductPage({Id}: {Id:number}) {
         </div>
 
         <div className="md:w-1/2 w-full flex flex-col border-black border-2 rounded-2xl justify-between gap-6">
-         { product &&  <ProductDetail name={product.name} price={product.price} description={product.description} /> }
+         { product &&  <ProductDetail name={product.name} price={product.price} description={product.description} productCard={false} /> }
           <ColorSelector
             colors={colors}
             activeColor={activeColor}

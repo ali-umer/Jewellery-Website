@@ -39,7 +39,6 @@ const handleCategory = () => {
 
     
       <div className="hidden md:flex items-center gap-4">
-        <Wishlist />
         <CartButton count={3} handleCart={handleCart} />
         <SearchBar />
       </div>
@@ -70,8 +69,6 @@ const handleCategory = () => {
           
           <div className="pt-8 border-t border-gray-700">
             <div className="flex flex-col space-y-4">
-              
-                <Wishlist mobile />
               <CartButton count={3} mobile handleCart={handleCart} />
               
             </div>

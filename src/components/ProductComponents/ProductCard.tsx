@@ -6,6 +6,7 @@ import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import QuickView from "@/components/QuickView/MainView";
 import {DiscountTag} from "@/components/discountTag";
+import ProductDetail from "../QuickView/ProductDetails";
 
 interface ProductCardProps {
   Id: number;
@@ -58,14 +59,7 @@ export default function ProductCard({ Id, name, price, images,Discount=0}: Produ
             </CardItem>
 
             <div className="h-[20%] w-full flex flex-col justify-center items-start px-2 pt-3 pb-2 bg-transparent relative">
-              <div className="w-full flex flex-col items-start mb-2 px-1">
-                <span className="font-playfair-display text-base sm:text-xl font-bold text-[var(--gold)] truncate w-full">
-                  {name}
-                </span>
-                <span className="text-sm sm:text-lg font-bold text-[var(--gold)]">
-                  ${price?.toFixed(2)}
-                </span>
-              </div>
+             <ProductDetail name={name} price={price} discount={10} description={"Kaise ho bhai boht maza aya"} productCard={true}/>
             </div>
           </CardBody>
         </CardContainer>
