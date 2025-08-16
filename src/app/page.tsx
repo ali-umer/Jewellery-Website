@@ -6,7 +6,9 @@ import HeroSection from "@/components/HeaderComponents/HeroSection";
 import TopSellers from "@/components/TopSellingProducts";
 import Categories from "@/components/CategoryComponent/Categories";
 import Footer from "@/components/Footer/Footer";
-import {useIntersectionObserver} from "@/components/ui/InffiniteScroll"
+import {useIntersectionObserver} from "@/components/ui/InffiniteScroll";
+import ProductForm from "@/components/adminComponent/inputProduct";
+import ProductColorManager from "@/components/adminComponent/colorParent";
 
 
 
@@ -25,7 +27,9 @@ useIntersectionObserver(footerRef as React.RefObject<Element>, () => setShowFoot
   return (
     <div className="flex flex-col min-h-screen w-full">
       <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
+     < ProductForm />
 
+{/*
       <StarryComponent />
       <TopBar />
       <HeroSection />
@@ -44,6 +48,7 @@ useIntersectionObserver(footerRef as React.RefObject<Element>, () => setShowFoot
       <div className="pt-10" ref={footerRef}>
         {showFooter && <Footer />}
       </div>
+      */}
     </div>
   );
 }
