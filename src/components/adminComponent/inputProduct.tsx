@@ -39,7 +39,7 @@ export default function ProductForm() {
         description: formData.description,
         categoryName: "Necklace",
         price: formData.price || 0,
-        discount: formData.discount || 0,
+        discount: formData.discount || 0
       });
 
       setCreatedProductId(productId);
@@ -141,7 +141,7 @@ export default function ProductForm() {
           className="mt-8"
         >
           <h3 className="text-xl font-semibold text-yellow-500 mb-4">
-            Add Color Variants
+            Add Variation
           </h3>
           <ProductColorManager 
             id={createdProductId} 

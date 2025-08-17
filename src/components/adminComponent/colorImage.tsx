@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 interface ColorImageProps {
   color: {
     id: string;
-    name: string;
-    value: string;
+    name: string ;
     stock: number;
     images: File[];
   };
+  onNameChange: (colorId: string, newName: string) => void;
   onStockChange: (colorId: string, newStock: number) => void;
   onImagesChange: (colorId: string, newImages: File[]) => void;
   onRemoveColor: (colorId: string) => void;
@@ -20,6 +20,7 @@ interface ColorImageProps {
 
 export const ColorImage = ({
   color,
+  onNameChange,
   onStockChange,
   onImagesChange,
   onRemoveColor,
@@ -27,7 +28,8 @@ export const ColorImage = ({
   const [localStock, setLocalStock] = useState(color.stock || 0);
 
   const handleFileUpload = (files: File[]) => {
-    onImagesChange(color.id, files);
+    // merge with existing images instead of replacing
+    onImagesChange(color.id, [...color.images, ...files]);
   };
 
   const handleRemoveImage = (index: number) => {
@@ -42,35 +44,36 @@ export const ColorImage = ({
   };
 
   return (
-    <div className="w-full p-4 mb-6 border rounded-lg bg-white">
+    <div className="w-full p-4 mb-6 border rounded-lg bg-black">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-3">
-          <div
-            className="w-8 h-8 rounded-full border"
-            style={{ backgroundColor: color.value }}
-          />
-          <h3 className="font-semibold">{color.name}</h3>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-sm">Stock:</span>
+          <div className="flex flex-col">
             <input
-              type="number"
-              min="0"
-              value={localStock}
-              onChange={handleStockChange}
-              className="w-20 px-2 py-1 border rounded-md text-sm"
+              type="text"
+              value={color.name}
+              onChange={(e) => onNameChange(color.id, e.target.value)}
+              placeholder="Variety Name"
+              className="w-40 px-2 py-1 border rounded-md text-sm text-[var(--gold)]"
             />
           </div>
+        
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              value={localStock}
+              onChange={handleStockChange}
+              placeholder="Stock"
+              className="w-20 px-2 py-1 border rounded-md text-[var(--gold)] text-sm placeholder-[var(--gold)]"
+            />
+          </div>
+
           <button
             onClick={() => onRemoveColor(color.id)}
-            className="p-2 text-red-500 hover:text-red-600 rounded-full hover:bg-red-50 transition"
+            className="p-2 text-[var(--gold)] rounded-full"
           >
             <Trash2 className="h-5 w-5" />
           </button>
-        </div>
+        
       </div>
 
       {/* Images */}
@@ -95,17 +98,19 @@ export const ColorImage = ({
               </div>
             ))}
           </div>
-        ) : (
-          <div
-            className={cn(
-              "w-full border-2 border-dashed rounded-lg p-4 text-center",
-              "border-neutral-300 bg-neutral-50"
-            )}
-          >
-            <FileUpload onChange={handleFileUpload} />
-          </div>
-        )}
+        ) : null}
+
+        {/* Always show uploader to allow adding more files */}
+        <div
+          className={cn(
+            "w-full border-2 border-dashed rounded-lg p-4 text-center h-full",
+            "border-neutral-300 bg-neutral-50"
+          )}
+        >
+          <FileUpload onChange={handleFileUpload}/>
+        </div>
       </div>
     </div>
   );
 };
+[]

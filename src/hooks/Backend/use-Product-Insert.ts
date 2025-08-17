@@ -13,9 +13,8 @@ export function useAddProduct() {
     name: string;
     price: number;
     description: string;
-    stock: number;
     categoryName: string;
-    Discount:number;
+    discount:number;
   }) => {
     setLoading(true);
     setError(null);
@@ -39,8 +38,7 @@ export function useAddProduct() {
           Name: productData.name,
           Price: productData.price,
           Description: productData.description,
-          Stock: productData.stock,
-          Discount:productData.Discount,
+          Discount:productData.discount,
           Category_ID: category.id
         })
         .select("id")
@@ -111,15 +109,15 @@ const insertColorsWithImages = async (
 
         imageUrls.push(publicUrl);
       }
-
-      // Insert single record with all image URLs
+const isDefault = colors[0] === color;
       console.log('Preparing to insert to database with URLs:', imageUrls);
       const { error: insertError } = await supabase
         .from("Colors_Image")
         .insert({
           Color: color.Color,
           Product_Id: productId,
-          Images: imageUrls
+          Images: imageUrls,
+          Default:isDefault
         });
 
       if (insertError) {
