@@ -9,7 +9,7 @@ import Footer from "@/components/Footer/Footer";
 import {useIntersectionObserver} from "@/components/ui/InffiniteScroll";
 import ProductForm from "@/components/adminComponent/inputProduct";
 import ProductColorManager from "@/components/adminComponent/colorParent";
-
+import EditProductForm from "@/components/adminComponent/editProductDetails"
 
 
 
@@ -27,7 +27,7 @@ useIntersectionObserver(footerRef as React.RefObject<Element>, () => setShowFoot
   return (
     <div className="flex flex-col min-h-screen w-full">
       <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
-     < ProductForm />
+     <EditProductForm productId={2}  />
    
 {/*
       <StarryComponent />
