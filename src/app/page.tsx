@@ -12,6 +12,7 @@ import ProductColorManager from "@/components/adminComponent/colorParent";
 
 
 
+
 export default function Home() {
   const [showCategory, setShowCategory] = useState(false);
   const [showFooter, setShowFooter] = useState(false);
@@ -23,12 +24,11 @@ useIntersectionObserver(categoryRef as React.RefObject<Element>, () => setShowCa
 useIntersectionObserver(footerRef as React.RefObject<Element>, () => setShowFooter(true), 0.5);
 
 
-
   return (
     <div className="flex flex-col min-h-screen w-full">
       <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
      < ProductForm />
-
+   
 {/*
       <StarryComponent />
       <TopBar />
