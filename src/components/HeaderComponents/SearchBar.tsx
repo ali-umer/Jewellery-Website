@@ -16,13 +16,14 @@ export default function SearchBar({ mode = "default" }: SearchBarProps) {
 
   const { results, loading, error } = useSearch(query);
 
-  const inputClasses =
-    mode === "default" ? "w-72" : "w-[28rem] md:w-[32rem]";
+  // unified width for both search + edit section
+  const containerWidth =
+    mode === "default" ? "max-w-md" : "max-w-2xl md:max-w-3xl";
 
   return (
     <>
       {/* Search input + dropdown */}
-      <div className={`relative ${inputClasses}`}>
+      <div className={`relative w-full ${containerWidth} mx-auto`}>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="flex items-center rounded-2xl px-4 py-3 border border-gray-300 focus-within:ring-2 focus-within:ring-[var(--gold)]">
             <Search className="text-gray-500 w-5 h-5 mr-3" />
@@ -56,10 +57,8 @@ export default function SearchBar({ mode = "default" }: SearchBarProps) {
 
       {/* Show edit section only after selecting product */}
       {mode === "edit" && editingId && (
-        <div className="mt-8 w-full max-w-4xl mx-auto">
-          <EditSectionTabs
-            productId={editingId}
-                     />
+        <div className={`mt-8 w-full ${containerWidth} mx-auto`}>
+          <EditSectionTabs productId={editingId} />
         </div>
       )}
     </>

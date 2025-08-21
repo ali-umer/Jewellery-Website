@@ -47,7 +47,7 @@ export function useAddProduct() {
       if (insertError) throw insertError;
 
       setData(insertedProduct);
-      return insertedProduct.id; // Return the product ID for further use
+      return Number(insertedProduct.id); // Return the product ID for further use
     } catch (err: any) {
       setError(err.message || "Something went wrong");
       throw err; // Re-throw the error to handle it in the component

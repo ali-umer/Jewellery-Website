@@ -3,13 +3,14 @@
 import { useState } from "react";
 import EditProductForm from "./editProductDetails";
 import ProductColorManager from "./colorParent";
+import {updateColorVariant} from "@/hooks/Backend/update-Color-Variant"
+import ColorParent from "./editVariety";
 
 interface EditSectionTabsProps {
   productId: number; 
-  insertColorsWithImages: (productId: number, colors: any) => Promise<void>; 
 }
 
-export default function EditSectionTabs({ productId, insertColorsWithImages }: EditSectionTabsProps) {
+export default function EditSectionTabs({ productId}: EditSectionTabsProps) {
   const [activeTab, setActiveTab] = useState<"details" | "images">("details");
 
   return (
@@ -40,12 +41,8 @@ export default function EditSectionTabs({ productId, insertColorsWithImages }: E
       <div className="w-full">
         {activeTab === "details" ? (
           <EditProductForm productId={productId} />
-        ) : (
-          <ProductColorManager 
-            id={productId} 
-            submit={insertColorsWithImages} 
-          />
-        )}
+        ) : (<ColorParent productId={productId} /> )
+        }
       </div>
     </div>
   );
