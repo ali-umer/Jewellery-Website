@@ -5,14 +5,18 @@ import { Loader } from "@/components/loading";
 import UserMessage from "@/components/userMessages";
 import CartContainer from "@/components/CartComponents/CartContainer";
 import { useAuthCheck } from "@/hooks/Backend/login-Checker"; 
-
+import { useRouter, usePathname } from "next/navigation";
 
 export default function CartPage() {
   const { cartItems, setCartItems, loading, error } = useCart();
-  const authChecked = useAuthCheck("/login"); // 👈 just call the hook
+  const authChecked = useAuthCheck(); 
+  const router = useRouter();
+  const pathname = usePathname();
 
+  // 🚀 If not logged in, redirect to login with return URL
   if (!authChecked) {
-    return <Loader />;
+    router.push(`/login?redirectTo=${encodeURIComponent(pathname)}`);
+    return null; // prevent UI flicker
   }
 
   if (loading) {

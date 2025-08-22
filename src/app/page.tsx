@@ -7,6 +7,7 @@ import TopSellers from "@/components/TopSellingProducts";
 import Categories from "@/components/CategoryComponent/Categories";
 import Footer from "@/components/Footer/Footer";
 import {useIntersectionObserver} from "@/components/ui/InffiniteScroll";
+import SignOutButton from "@/components/signOut";
 
 
 
@@ -28,6 +29,7 @@ return (
          
       <TopBar />
       <HeroSection />
+      <SignOutButton />
  
       <TopSellers
         name="TOP SELLING PRODUCTS"

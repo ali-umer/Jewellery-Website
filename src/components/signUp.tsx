@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
 import { signUpUser } from "@/hooks/Backend/sign-Up";
 import BottomGradient from "./ui/bottomGradient";
+import Link from "next/link";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -130,6 +131,13 @@ export default function Signup() {
           <BottomGradient />
         </button>
       </form>
+
+        <div className="mt-4 text-center text-sm text-white">
+       Already have an account?{" "}
+        <Link href="/login" className="text-amber-500 hover:underline">
+          Login In
+        </Link>
+      </div>
     </div>
   );
 }
