@@ -12,7 +12,7 @@ const { data: colorImage, error: colorError } = await supabase
 
 if (colorError) {
   console.log(colorError);
-  return;
+  return colorError?false:true;
 }
 
 const { data, error } = await supabase
@@ -21,6 +21,8 @@ const { data, error } = await supabase
     Product_Color_Id: colorImage.id,
     Quantity: quantity
   });
+
+ return error?false:true
 
 };
 
@@ -33,5 +35,7 @@ const { data, error } = await supabase
                     .update({ Quantity: quantity })
                     .eq("id", Cart_Id)
                     .single();
+
+     return error?false:true;               
 
 }

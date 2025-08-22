@@ -7,6 +7,7 @@ import { InputStringField } from '@/components/adminComponent/inputString';
 import { InputNumberField } from '@/components/adminComponent/inputNumber';
 import { useAddProduct } from '@/hooks/Backend/use-Product-Insert';
 import ProductColorManager from "@/components/adminComponent/colorParent";
+import UserMessage from '../userMessages';
 
 export default function ProductForm() {
   const [formData, setFormData] = useState({ 
@@ -134,10 +135,14 @@ export default function ProductForm() {
 
       {/* Show color/image manager only after successful product creation */}
       {success && createdProductId && (
+        <>
+        setTimeout((){
+       <UserMessage message={"Must add Pictures in Variety Section for your Product"} success={true} />
+        }, 2000);
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.4 }}
           className="mt-8"
         >
           <h3 className="text-xl font-semibold text-yellow-500 mb-4">
@@ -148,6 +153,7 @@ export default function ProductForm() {
             submit={insertColorsWithImages} 
           />
         </motion.div>
+        </>
       )}
     </div>
   );

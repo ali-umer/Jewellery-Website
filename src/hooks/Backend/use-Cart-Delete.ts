@@ -15,5 +15,7 @@ export const deleteCartItem= async function(cartId:number){
           } else {
             console.log("Item deleted:", data);
           }
+
+     return error?false:true;    
 }
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { UpdateQuantity } from "@/hooks/Backend/use-Cart-Insert";
+import UserMessage from "../userMessages";
 
 interface QuantityControlProps {
   cartId: number;
@@ -53,7 +54,13 @@ export function QuantityControl({
   };
 
   const handleSave = async () => {
-    await UpdateQuantity(cartId, quantity);
+   const result= await UpdateQuantity(cartId, quantity);
+   if(result){
+    <UserMessage message={"Successsfully updated th quantity"} success={true} />
+  }else{
+     <UserMessage message={"Failed! Quantity not Updated"} success={false} />
+      return;
+   }
     setOriginalQuantity(quantity);
     setShowSave(false);
   };

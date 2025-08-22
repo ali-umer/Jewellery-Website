@@ -104,5 +104,5 @@ export const useCart = () => {
     fetchCartItems();
   }, []);
 
-  return { cartItems, setCartItems, loading};
+  return { cartItems, setCartItems, loading,error};
 };

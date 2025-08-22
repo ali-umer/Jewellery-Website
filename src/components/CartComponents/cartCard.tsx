@@ -5,6 +5,7 @@ import { ProductDetails } from "@/components/CartComponents/ProductDetails";
 import { QuantityControl } from "@/components/CartComponents/QuantityControl";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
+import UserMessage from "../userMessages";
 
 interface CartItemProps {
   item: {
@@ -25,7 +26,8 @@ function CartCardComponent({ item, RemoveItem }: CartItemProps) {
 
   const handleDelete = () => {
     console.log("Delete button clicked for Cart_Id:", item.Cart_Id);
-    deleteCartItem(item.Cart_Id);
+    const result=deleteCartItem(item.Cart_Id)
+ 
     RemoveItem(item.Cart_Id);
   };
 

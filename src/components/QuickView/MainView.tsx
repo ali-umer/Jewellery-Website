@@ -6,6 +6,7 @@ import DetailsSection from "@/components/QuickView/ProductDetails";
 import useProductController from "@/hooks/Controllers/use-Product-Controller";
 import {addToCart} from "@/hooks/Backend/use-Cart-Insert";
 import {Loader} from "@/components/loading";
+import UserMessage from "../userMessages";
 
 interface QuickViewProps {
   productId: number;
@@ -25,9 +26,15 @@ export default function QuickView({ productId, name, price, discount, handleView
       activeImages,
       isLoading
     } = useProductController({ product_id: productId,type:"QuickView"});
+    
 
-     const handleCart=function(){
-        addToCart(productId,activeColor,quantity);
+     const handleCart= async function(){
+      const res=await addToCart(productId,activeColor,quantity);
+        if(res){
+          return ( <UserMessage message={`SUccessfully! ${name} moved in your Cart`} success={false} />)
+        }else{
+           return ( <UserMessage message={`Failed! ${name} not moved in your Cart`} success={false} /> )
+        }
      }
  
 

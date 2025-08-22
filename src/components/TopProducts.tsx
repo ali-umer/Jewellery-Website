@@ -4,10 +4,12 @@ import React, { useRef, useEffect, useState } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import ProductCard from "@/components/ProductComponents/ProductCard";
 import { useSuggestion } from "@/hooks/Backend/use-Suggestion";
+import { Loader } from "./loading";
+import UserMessage from "./userMessages";
 
 export default function Cards({ProductId,  CategoryId,}: {  ProductId: number;CategoryId: number;}) 
 {
-  const suggestedProducts = useSuggestion(
+  const {suggestedProducts,loading,error} = useSuggestion(
     ProductId === -1 ? null : ProductId,
     CategoryId === -1 ? null : CategoryId
   );
@@ -22,6 +24,13 @@ export default function Cards({ProductId,  CategoryId,}: {  ProductId: number;Ca
     else if (width >= 640) initialCount = 3;
     setVisibleCount(initialCount);
   }, []);
+
+  if(loading){
+    <Loader />
+  }else if(error){
+    <UserMessage message={"Something Went Wrong! Try Later"} success={false} />
+  }
+  
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
