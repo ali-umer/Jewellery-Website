@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import ImagesSection from "@/components/QuickView/ImageComponent";
 import ColorSelector from "@/components/QuickView/ColorsComponent";
 import QuantityControl from "@/components/QuickView/QuantityControl";
@@ -11,16 +11,25 @@ import ReviewContainer from "../ReviewComponents/ReviewContainer";
 import TopSellers from "@/components/TopSellingProducts";
 import useProductController from "@/hooks/Controllers/use-Product-Controller";
 import { useIntersectionObserver } from "@/components/ui/InffiniteScroll";
-import {Loader} from "@/components/loading";
+import { Loader } from "@/components/loading";
+import AddReview from "@/components/ReviewComponents/ReviewInput";
+import { Eligibility } from "@/hooks/Backend/manage-reviews";
 
+export default function ProductPage({ Id }: { Id: number }) {
+  const {
+    quantity,
+    setQuantity,
+    colors,
+    activeColor,
+    setActiveColor,
+    activeImages,
+    isLoading,
+    product,
+  } = useProductController({ product_id: Id, type: "ProductPage" });
 
-export default function ProductPage({Id}: {Id:number}) {
-
-  const { quantity,setQuantity, colors,activeColor,setActiveColor,activeImages,isLoading,product} 
-          = useProductController({ product_id: Id, type:"ProductPage" });
-
-  const [showReview, setShowReview] = useState(true);
+  const [showReview, setShowReview] = useState(false); // start as false
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [isEligible, setIsEligible] = useState<boolean | null>(null);
 
   const reviewRef = useRef<HTMLDivElement>(null);
   const suggestionRef = useRef<HTMLDivElement>(null);
@@ -34,14 +43,21 @@ export default function ProductPage({Id}: {Id:number}) {
   }, []);
 
   useIntersectionObserver(reviewRef as React.RefObject<Element>, handleReviewIntersect, 0.1);
-  useIntersectionObserver(suggestionRef as React.RefObject<Element>, handleSuggestionIntersect,1);  
+  useIntersectionObserver(suggestionRef as React.RefObject<Element>, handleSuggestionIntersect, 1);
+
+  // Only fetch eligibility when showReview becomes true
+  useEffect(() => {
+    if (showReview) {
+      Eligibility(Id).then((result) => setIsEligible(result));
+    }
+  }, [showReview, Id]);
 
   const handleCart = function () {
     addToCart(Id, activeColor, quantity);
   };
 
-   if (isLoading) {
-    return (  <Loader />   );
+  if (isLoading) {
+    return <Loader />;
   }
 
   return (
@@ -52,31 +68,38 @@ export default function ProductPage({Id}: {Id:number}) {
         </div>
 
         <div className="md:w-1/2 w-full flex flex-col border-black border-2 rounded-2xl justify-between gap-6">
-         { product &&  <ProductDetail name={product.name} price={product.price} description={product.description} productCard={false} /> }
+          {product && (
+            <ProductDetail
+              name={product.name}
+              price={product.price}
+              description={product.description}
+              productCard={false}
+            />
+          )}
           <ColorSelector
             colors={colors}
             activeColor={activeColor}
             onChange={setActiveColor}
           />
-          <QuantityControl
-            quantity={quantity}
-            setQuantity={setQuantity}
-            QuickView={false}
-          />
+          <QuantityControl quantity={quantity} setQuantity={setQuantity} QuickView={false} />
           <ActionButtons handleCart={handleCart} ViewDetails={false} />
         </div>
       </div>
 
-      
       <div className="mt-10 max-w-[1300px] mx-auto px-2" ref={reviewRef}>
-        {showReview && <ReviewContainer Id={Id}/>}
+        {showReview && <ReviewContainer Id={Id} />}
+        {showReview  && <AddReview Id={Id} />}
       </div>
 
-      
       <div className="mt-4 max-w-[1300px] mx-auto px-2" ref={suggestionRef}>
-        {showSuggestion && (
-         product && <TopSellers name="Suggestions" ProductId={Id} CategoryId={product.categoryId} /> 
-        )}
+        {showSuggestion &&
+          product && (
+            <TopSellers
+              name="Suggestions"
+              ProductId={Id}
+              CategoryId={product.categoryId}
+            />
+          )}
       </div>
     </div>
   );

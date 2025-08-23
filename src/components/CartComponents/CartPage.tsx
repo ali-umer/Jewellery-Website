@@ -6,18 +6,20 @@ import UserMessage from "@/components/userMessages";
 import CartContainer from "@/components/CartComponents/CartContainer";
 import { useAuthCheck } from "@/hooks/Backend/login-Checker"; 
 import { useRouter, usePathname } from "next/navigation";
+import Checkout from "./checkout";
 
 export default function CartPage() {
   const { cartItems, setCartItems, loading, error } = useCart();
   const authChecked = useAuthCheck(); 
   const router = useRouter();
   const pathname = usePathname();
-
+/*
   // 🚀 If not logged in, redirect to login with return URL
   if (!authChecked) {
     router.push(`/login?redirectTo=${encodeURIComponent(pathname)}`);
     return null; // prevent UI flicker
   }
+    */
 
   if (loading) {
     return <Loader />;
@@ -53,6 +55,8 @@ export default function CartPage() {
           <div className="text-right mt-8 border-t border-var[(--gold)]">
             <h2 className="text-2xl font-semibold">Total: {totalPrice}</h2>
           </div>
+           <Checkout />
+
         </>
       )}
     </div>

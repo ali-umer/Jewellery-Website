@@ -10,5 +10,6 @@ export default function CartContainer({ items,RemoveItem }) {
         <CartCard key={item.Cart_Id} item={item} RemoveItem={RemoveItem} />
       ))}
     </div>
+    
   );
 }

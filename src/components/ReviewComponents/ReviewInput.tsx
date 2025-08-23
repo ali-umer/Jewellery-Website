@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import { Star } from "lucide-react";
+import { addReview } from "@/hooks/Backend/add-a-review";
 
-export default function AddReview() {
+export default function AddReview({Id}:{Id:number}) {
   const [showInput, setShowInput] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
@@ -10,17 +11,21 @@ export default function AddReview() {
 
   const handleStarClick = (index=0) => setRating(index + 1);
 
-  const handleSubmit =function(e){
-    e.preventDefault(); 
+  const handleSubmit = async function(e:React.FormEvent) {
+     e.preventDefault();
+     const success= await addReview({ productId: Id, rating, reviewText });
 
-    if (reviewText.trim()) {
-      alert(`Review Submitted:\n⭐️ ${rating} stars\n💬 "${reviewText}"`);
-      // Reset state
-      setShowInput(false);
-      setReviewText("");
-      setRating(0);
-      setTempRating(0);
-    }
+      if (success) {
+        alert("Review submitted successfully!");
+        setReviewText("");
+        setRating(0);
+        setShowInput(false);
+      } 
+      else {
+        alert("Failed to submit review. Please try again.");
+      }
+    
+
   };
 
   return (
