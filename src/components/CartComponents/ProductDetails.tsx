@@ -19,12 +19,12 @@ export function ProductDetails({name,price,discount=0,description,}: ProductDeta
         <div className="mt-2">
               <span className="text-sm text-gray-400 line-through">Rs. {price}</span>
               <span className="text-medium text-amber-50 font-medium ml-2">
-                Rs. {discountedPrice.toFixed(2)}
+                Rs. {discountedPrice.toFixed(0)}
               </span>
               <span className="ml-2 text-green-400 text-sm">(-{discount}%)</span>
         </div>
       ) : (
-        <p className="text-medium text-amber-50 font-medium mt-2">Rs. {price}</p>
+        <p className="text-medium text-amber-50 font-medium mt-2">Rs. {price.toFixed(1)}</p>
       )}
     </div>
   );

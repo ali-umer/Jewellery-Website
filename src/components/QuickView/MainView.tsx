@@ -9,7 +9,7 @@ import useProductController from "@/hooks/Controllers/use-Product-Controller";
 import { addToCart } from "@/hooks/Backend/use-Cart-Insert";
 import { Loader } from "@/components/loading";
 import UserMessage from "../userMessages";
-import { useAuthCheck } from "@/hooks/Backend/login-Checker";
+import  {checkAuth}  from "@/hooks/Backend/login-Checker";
 import { usePathname, useRouter } from "next/navigation"; 
 import { useState } from "react";
 import Link from "next/link";
@@ -41,7 +41,7 @@ export default function QuickView({
 
   const pathname = usePathname();
   const router = useRouter();
-  const authChecked = useAuthCheck();
+  
 
   const [userMessage, setUserMessage] = useState<{
     text: string;
@@ -49,7 +49,8 @@ export default function QuickView({
   } | null>(null);
 
   const handleCart = async () => {
-    if (!authChecked) {
+    const result=await checkAuth();
+    if (result) {
       router.push(`/login?redirectTo=${encodeURIComponent(pathname)}`);
       return;
     }

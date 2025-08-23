@@ -1,19 +1,12 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-export function useAuthCheck() {
-  const [authChecked, setAuthChecked] = useState(false);
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getSession();
-      setAuthChecked(!!data.session);
-    };
-
-    checkUser();
-  }, []);
-
-  return authChecked;
+export async function checkAuth(): Promise<boolean> {
+  try {
+    const { data } = await supabase.auth.getSession();
+    return !!data.session;
+  } catch (error) {
+    console.error("Error checking auth:", error);
+    return false;
+  }
 }
+

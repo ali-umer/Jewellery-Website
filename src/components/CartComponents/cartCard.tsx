@@ -18,9 +18,10 @@ interface CartItemProps {
     Discount?: number;
   };
   RemoveItem: (id: number) => void;
+  priceChange: () => void;
 }
 
-function CartCardComponent({ item, RemoveItem }: CartItemProps) {
+function CartCardComponent({ item, RemoveItem,priceChange }: CartItemProps) {
   const [quantity, setQuantity] = useState(item.Quantity);
   console.log("Rendering CartCard for:", item.Cart_Id);
 
@@ -29,6 +30,12 @@ function CartCardComponent({ item, RemoveItem }: CartItemProps) {
     const result=deleteCartItem(item.Cart_Id)
  
     RemoveItem(item.Cart_Id);
+  };
+
+  const handleQuantity = (newQuantity: number) => {
+    setQuantity(newQuantity);
+    item.Quantity = newQuantity;
+    priceChange();
   };
 
   return (
@@ -63,14 +70,12 @@ function CartCardComponent({ item, RemoveItem }: CartItemProps) {
         <QuantityControl
           cartId={item.Cart_Id}
           initialQuantity={quantity}
-          onQuantityChange={(q) => setQuantity(q)}
+          onQuantityChange={(q) => handleQuantity(q)}
         />
 
         <div className="text-lg font-semibold">
           Rs.{" "}
-          {item.Discount
-            ? (item.Price - item.Price * (item.Discount / 100)) * quantity
-            : item.Price * quantity}
+        ({item.Discount ? (item.Price - item.Price * (item.Discount / 100)) * quantity  : item.Price * quantity}).toFixed(0)
         </div>
       </div>
     </div>

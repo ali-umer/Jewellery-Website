@@ -4,8 +4,8 @@ import { useState}from 'react';
 import { useRouter,usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import SearchBar from './SearchBar';
-import Wishlist from './Wishlist';
 import CartButton from "@/components/CartButton"
+import Profile from './Profile';
 
 
 export default function HamburgerMenu() {
@@ -40,9 +40,9 @@ const handleCategory = () => {
     
       <div className="hidden md:flex items-center gap-4">
         <CartButton count={3} handleCart={handleCart} />
-        <SearchBar />
+        <SearchBar />    
+        <Profile />
       </div>
-
      
       {isOpen && ( <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm z-40"
           onClick={() => setIsOpen(false)}/>
@@ -70,6 +70,13 @@ const handleCategory = () => {
           <div className="pt-8 border-t border-gray-700">
             <div className="flex flex-col space-y-4">
               <CartButton count={3} mobile handleCart={handleCart} />
+              
+            </div>
+          </div>
+
+             <div className="pt-8 border-t border-gray-700">
+            <div className="flex flex-col space-y-4">
+             < Profile />
               
             </div>
           </div>
