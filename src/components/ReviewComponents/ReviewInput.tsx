@@ -1,50 +1,48 @@
 "use client";
 import { useState } from "react";
-import { Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { addReview } from "@/hooks/Backend/add-a-review";
+import UserMessage from "@/components/userMessages";
 
-export default function AddReview({Id}:{Id:number}) {
+export default function AddReview({ Id }: { Id: number }) {
   const [showInput, setShowInput] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
+  const [userMessage, setUserMessage] = useState("");
 
-  const handleStarClick = (index=0) => setRating(index + 1);
+  const handleStarClick = (index = 0) => setRating(index + 1);
 
-  const handleSubmit = async function(e:React.FormEvent) {
-     e.preventDefault();
-     const success= await addReview({ productId: Id, rating, reviewText });
+  const handleSubmit = async function (e: React.FormEvent) {
+    e.preventDefault();
+    const success = await addReview({ productId: Id, rating, reviewText });
 
-      if (success) {
-        alert("Review submitted successfully!");
-        setReviewText("");
-        setRating(0);
-        setShowInput(false);
-      } 
-      else {
-        alert("Failed to submit review. Please try again.");
-      }
-    
-
+    if (success) {
+      setUserMessage("Review submitted successfully!");
+      setReviewText("");
+      setRating(0);
+      setShowInput(false);
+    } else {
+      alert("Failed to submit review. Please try again.");
+    }
   };
 
   return (
-    <div className="relative mt-1 text-[var(--gold)] border-black border-2 w-full">
-      {/* Toggle Button */}
+    <div className="flex items-start w-full md:w-[75%] text-[var(--gold)] relative mt-4">
       <button
         onClick={() => setShowInput((prev) => !prev)}
-        className="w-20 h-14 rounded-full bg-black text-[var(--gold)] text-2xl flex items-center justify-center absolute right-4 top-0 z-10 border-2 border-gray hover:bg-gray-900 transition"
+        className="text-[var(--gold)] mr-4 mt-2"
         title="Toggle Review Input"
         type="button"
       >
-        {showInput ? "−" : "+"}
+        {showInput ? <ChevronLeft size={28} /> : <ChevronRight size={28} />}
       </button>
 
       {/* Review Form */}
       {showInput && (
         <form
           onSubmit={handleSubmit}
-          className="bg-[#111] rounded-xl p-2 mt-16 text-sm"
+          className="bg-white rounded-xl p-4 w-full text-black shadow-md"
         >
           {/* Star Rating */}
           <div className="flex mb-3">
@@ -57,7 +55,7 @@ export default function AddReview({Id}:{Id:number}) {
                 className={`w-6 h-6 cursor-pointer transition-all duration-150 ${
                   (tempRating || rating) > i
                     ? "fill-yellow-400 stroke-yellow-400"
-                    : "stroke-gray-500"
+                    : "stroke-gray-400"
                 }`}
               />
             ))}
@@ -68,19 +66,26 @@ export default function AddReview({Id}:{Id:number}) {
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
             placeholder="Write your review here..."
-            className="w-full p-1 h-[50%] bg-transparent text-white rounded-md resize-none placeholder:text-gray-400"
-            rows={3}
+            className="w-full p-2 bg-white border border-gray-300 text-black rounded-md resize-none placeholder:text-gray-400"
+            rows={4}
             required
           />
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="justify-items-center mt-3 bg-black border border-[var(--gold)] text-[var(--gold)] px-4 py-1 rounded-md hover:bg-[var(--gold)] hover:text-black transition-all"
+            className="mt-3 bg-black border border-[var(--gold)] text-[var(--gold)] px-4 py-1 rounded-md hover:bg-[var(--gold)] hover:text-black transition-all"
           >
             Submit
           </button>
         </form>
+      )}
+
+      {/* User Message */}
+      {userMessage && (
+        <div className="ml-4 mt-2 w-full">
+          <UserMessage message={userMessage} success={true} />
+        </div>
       )}
     </div>
   );

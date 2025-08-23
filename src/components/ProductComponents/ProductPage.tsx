@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useCallback, useEffect } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import ImagesSection from "@/components/QuickView/ImageComponent";
 import ColorSelector from "@/components/QuickView/ColorsComponent";
 import QuantityControl from "@/components/QuickView/QuantityControl";
@@ -14,6 +14,7 @@ import { useIntersectionObserver } from "@/components/ui/InffiniteScroll";
 import { Loader } from "@/components/loading";
 import AddReview from "@/components/ReviewComponents/ReviewInput";
 import { Eligibility } from "@/hooks/Backend/manage-reviews";
+import { H3Icon } from "@heroicons/react/20/solid";
 
 export default function ProductPage({ Id }: { Id: number }) {
   const {
@@ -27,7 +28,7 @@ export default function ProductPage({ Id }: { Id: number }) {
     product,
   } = useProductController({ product_id: Id, type: "ProductPage" });
 
-  const [showReview, setShowReview] = useState(false); // start as false
+  const [showReview, setShowReview] = useState(false);
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [isEligible, setIsEligible] = useState<boolean | null>(null);
 
@@ -45,20 +46,18 @@ export default function ProductPage({ Id }: { Id: number }) {
   useIntersectionObserver(reviewRef as React.RefObject<Element>, handleReviewIntersect, 0.1);
   useIntersectionObserver(suggestionRef as React.RefObject<Element>, handleSuggestionIntersect, 1);
 
-  // Only fetch eligibility when showReview becomes true
-  useEffect(() => {
-    if (showReview) {
-      Eligibility(Id).then((result) => setIsEligible(result));
+  const checkEligibility = async () => {
+    if (isEligible === null) {
+      const result = await Eligibility(Id);
+      setIsEligible(result);
     }
-  }, [showReview, Id]);
+  };
 
-  const handleCart = function () {
+  const handleCart = () => {
     addToCart(Id, activeColor, quantity);
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  if (isLoading) return <Loader />;
 
   return (
     <div className="min-h-screen bg-transparent py-2 px-4 sm:px-6 md:px-8 text-[var(--gold)]">
@@ -86,20 +85,36 @@ export default function ProductPage({ Id }: { Id: number }) {
         </div>
       </div>
 
+      {/* Reviews Section */}
       <div className="mt-10 max-w-[1300px] mx-auto px-2" ref={reviewRef}>
         {showReview && <ReviewContainer Id={Id} />}
-        {showReview  && <AddReview Id={Id} />}
+
+        {/* Provide Feedback */}
+        <div className="mt-6">
+          <h3
+            className="text-2xl sm:text-3xl font-bold mb-4 cursor-pointer"
+            onClick={checkEligibility}
+          >
+            Provide Your Feedback &larr;
+          </h3>
+
+          {isEligible === null ? null : isEligible ? (
+            <AddReview Id={Id} />
+          ) : (
+            <p className="text-base sm:text-lg text-red-500">Buy the Product First</p>
+          )}
+        </div>
       </div>
 
+      {/* Suggestions Section */}
       <div className="mt-4 max-w-[1300px] mx-auto px-2" ref={suggestionRef}>
-        {showSuggestion &&
-          product && (
-            <TopSellers
-              name="Suggestions"
-              ProductId={Id}
-              CategoryId={product.categoryId}
-            />
-          )}
+        {showSuggestion && product && (
+          <TopSellers
+            name="Suggestions"
+            ProductId={Id}
+            CategoryId={product.categoryId}
+          />
+        )}
       </div>
     </div>
   );

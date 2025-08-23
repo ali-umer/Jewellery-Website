@@ -21,6 +21,7 @@ export async function addReview({ productId, rating, reviewText }: ReviewData): 
       .from('Reviews')
       .insert({
         Writer_Id:user.id,
+        Name:user.user_metadata?.display_name ,
         Product_Id: productId,
         Rating: rating,
         Text: reviewText,

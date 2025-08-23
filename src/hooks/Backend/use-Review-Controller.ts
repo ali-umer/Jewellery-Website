@@ -12,7 +12,7 @@ export const useReviewController = (productId: number) => {
 
       const { data, error } = await supabase
         .from('Reviews')
-        .select('*')
+        .select('Name, Rating, Text')
         .eq('Product_Id', productId)
         .order('created_at', { ascending: false });
 

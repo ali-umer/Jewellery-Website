@@ -6,7 +6,7 @@ import ReviewCard from "@/components/ReviewComponents/ReviewCard";
 import { useReviewController } from "@/hooks/Backend/use-Review-Controller";
 import { useReview } from "@/components/ui/ReviewManage"; 
 
-export default function ReviewContainer({Id}:{Id:number}) {
+export default function ReviewContainer({ Id }: { Id: number }) {
   const { reviews, loading } = useReviewController(Id);
 
   const {
@@ -18,15 +18,19 @@ export default function ReviewContainer({Id}:{Id:number}) {
     prevPage
   } = useReview(reviews); // ← use the hook
 
-  if (loading) return <p>Your Loading</p>;
+  if (loading) return <p>Loading...</p>;
+
+  if (reviews.length === 0) return null;
 
   return (
     <div className="relative py-4 px-4 sm:px-6 md:px-10 lg:px-20">
-      <div className="relative flex items-center justify-center mx-auto max-w-5xl ">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4">Customer's Love</h2>
+
+      <div className="relative flex items-center justify-center mx-auto max-w-5xl">
         {page > 0 && (
           <button
             onClick={prevPage}
-            className="absolute border-amber-400 hover:border-2 left-[-40px] p-2 rounded-full bg-transparent disabled:opacity-40"
+            className="absolute left-[-40px] p-2 rounded-full bg-transparent border-amber-400 hover:border-2 disabled:opacity-40"
           >
             <ChevronLeft size={24} />
           </button>
@@ -46,7 +50,7 @@ export default function ReviewContainer({Id}:{Id:number}) {
         {page < totalPages - 1 && (
           <button
             onClick={nextPage}
-            className="border-var[(--gold)] hover:border-2 absolute right-[-40px] p-2 rounded-full bg-transparent disabled:opacity-40"
+            className="absolute right-[-40px] p-2 rounded-full bg-transparent border-[var(--gold)] hover:border-2 disabled:opacity-40"
           >
             <ChevronRight size={24} />
           </button>
