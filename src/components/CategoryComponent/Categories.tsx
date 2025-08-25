@@ -22,7 +22,7 @@ export default function Categories() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-14 justify-center min-w-0"> {/* Increased gaps */}
           {Category.map((Category, idx) => (
             <div key={idx} className="min-w-0 h-full"> 
-              <CategoryCard Name={Category.Name} Products={Category.Products} src={Category.Image} />
+              <CategoryCard Name={Category.Name} src={Category.Image} />
             </div>
           ))}
         </div>

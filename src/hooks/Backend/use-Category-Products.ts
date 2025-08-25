@@ -6,6 +6,7 @@ type Product = {
   id: number;
   Name: string;
   Price: number;
+  Discount:number;
   Description: string;
   Images: string[];
 };
@@ -14,7 +15,7 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
   const [products, setProducts] = useState<Product[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-  const pageRef = useRef(1); 
+  const pageRef = useRef(1);
 
   const fetchProducts = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -25,38 +26,63 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
     const to = from + pageSize - 1;
 
     const { data, error } = await supabase
-                                .from("Products")
-                                .select("*")
-                                .eq("Category_ID", categoryId)
-                                .range(from, to);
+      .from("Products")
+      .select(
+        `
+        id,
+        Name,
+        Price,
+        Discount,
+        Description,
+        Colors_Image:Colors_Image!inner (
+          Images,
+          Default
+        )
+        `
+      )
+      .eq("Category_ID", categoryId)
+      .eq("Colors_Image.Default", true)
+      .range(from, to);
+
+    console.log("Fetched products:", data);
 
     if (error) {
-    setLoading(false);
-    return;
+      console.error(error);
+      setLoading(false);
+      return;
     }
 
     if (data && data.length > 0) {
-      setProducts((prev) => [...prev, ...data]);
-      pageRef.current += 1;
-    }
       
-    if (data.length < pageSize) {
-        setHasMore(false); 
+      const mapped = data.map((p: any): Product => ({
+        id: p.id,
+        Name: p.Name,
+        Price: p.Price,
+        Description: p.Description,
+        Discount:p.Discount,
+        Images: p.Colors_Image?.map((c: any) => c.Images).flat() || [],
+      }));
+
+      setProducts((prev) => [...prev, ...mapped]);
+      pageRef.current += 1;
+
+      if (data.length < pageSize) {
+        setHasMore(false);
+      }
+    } else {
+      setHasMore(false);
     }
 
     setLoading(false);
- }, [categoryId,hasMore, loading]);
+  }, [categoryId, hasMore, loading, pageSize]);
 
-
+  // Reset when category changes
   useEffect(() => {
-                setProducts([]);
-                setHasMore(true);
-                setLoading(false);
-                pageRef.current = 1;
-            },[categoryId]);
-
-   
-            
+    setProducts([]);
+    setHasMore(true);
+    setLoading(false);
+    pageRef.current = 1;
+  }, [categoryId]);
 
   return {
     products,

@@ -12,13 +12,11 @@ import {useIntersectionObserver} from "@/components/ui/InffiniteScroll";
 
 export default function Home() {
   const [showCategory, setShowCategory] = useState(false);
-  const [showFooter, setShowFooter] = useState(false);
 
   const categoryRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
+ 
 
 useIntersectionObserver(categoryRef as React.RefObject<Element>, () => setShowCategory(true), 0.5);
-useIntersectionObserver(footerRef as React.RefObject<Element>, () => setShowFooter(true), 0.5);
 
 return (
 <>
@@ -36,9 +34,8 @@ return (
       </div>
 
     
-      <div className="pt-10" ref={footerRef}>
-        {showFooter && <Footer />}
-      </div>
+     
+       
 </>
   );
 }

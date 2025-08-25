@@ -1,22 +1,14 @@
-"use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function CategoryCard({ Name,Products,src}: { Name: string; Products:number; src: string  }) {
-  const router = useRouter();
-   
-  function CategoryPage(Category_Name: string) {
-    router.push(`/Category/${Category_Name}`);
-  }
-
+export default function CategoryCard({ Name,src}: { Name: string;src: string  }) {
+  
   return (
-    <div 
-      className="relative rounded-2xl shadow-lg overflow-hidden flex flex-col h-[400px] w-full cursor-pointer transition-transform duration-200 hover:scale-105 hover:border-1 border-[var(--gold)]"
-      onClick={() => CategoryPage(Name)}
-    >
-      <div className="relative w-full h-full"> {/* Container for Image */}
+    <Link href={`/Category/${Name}`} className="relative rounded-2xl shadow-lg overflow-hidden flex flex-col h-[400px] w-full cursor-pointer transition-transform duration-200 hover:scale-105 hover:border-1 border-[var(--gold)]">
+
+      <div className="relative w-full h-full"> 
         <Image
           src={src || ""}
           alt={Name}
@@ -30,10 +22,7 @@ export default function CategoryCard({ Name,Products,src}: { Name: string; Produ
         <span className="text-[var(--gold)] text-2xl font-semibold">
           {Name}
         </span>
-        <span className="text-[var(--gold)] text-base mt-1">
-          {Products ? `${Products} products` : ""}
-        </span>
-      </div>
-    </div>
+       </div>
+    </Link>
   );
 }

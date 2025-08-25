@@ -10,11 +10,11 @@ export default function Footer() {
       
         <div className="flex flex-col items-start gap-3">
             <Image
-              src="/heading.png"
+              src="/logo.png"
               alt="Jewellery Logo"
-              width={90}
-              height={40}
-               className="mt-2 w-90 h-10"
+              width={240}
+              height={160}
+               className="mt-2 w-50 h-40"
               priority
             />
        </div>

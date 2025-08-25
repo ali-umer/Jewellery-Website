@@ -65,13 +65,13 @@ export default function Signup() {
     <div className="relative mx-auto mt-20 w-full max-w-md rounded-2xl bg-transparent p-6 shadow-xl ring-1 ring-[var(--gold)]">
       {/* ✅ Centered Logo */}
       <div className="flex justify-center mb-6">
-        <Image
-          src="/logo.png"
-          alt="Signup Logo"
-          width={180}
-          height={140}
-          className="rounded-full"
-        />
+         <Image
+                 src="/PashaLogo.png"
+                 alt="Login Logo"
+                 width={400}
+                 height={200}
+                 className="rounded-full"
+               />
       </div>
 
       {error && <UserMessage success={false} message={error} />}

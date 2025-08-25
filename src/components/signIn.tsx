@@ -51,10 +51,10 @@ export default function SignIn() {
       {/* Logo */}
       <div className="flex justify-center mb-6">
         <Image
-          src="/logo.png"
+          src="/PashaLogo.png"
           alt="Login Logo"
-          width={180}
-          height={140}
+          width={400}
+          height={200}
           className="rounded-full"
         />
       </div>

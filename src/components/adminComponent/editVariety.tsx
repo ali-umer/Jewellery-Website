@@ -89,18 +89,15 @@ const [message, setMessage] = useState<{ message: string; success: boolean } | n
 
     for (const color of dirtyColors) {
       if (color.isDeleted) {
-        // If it's a new one, just drop it locally
+        
         if (color.isNew) {
           setColors(prev => prev.filter(c => c.id !== color.id));
         } else {
-          const res=await deleteColorVariant(productId, color.id);
-          if(res){
-            setColors([]);
-            setMessage({ message: "Product Upadtedd successfully", success: true });
-          }
+           await deleteColorVariant(productId, color.id);
+  
         }
       } else if (color.isNew) {
-        // Add to DB
+      
         const added = await addColorVariant(
           productId,
           color.name,
@@ -108,24 +105,13 @@ const [message, setMessage] = useState<{ message: string; success: boolean } | n
           color.images as File[]
         );
 
-        // Replace temp ID with DB id
-        setColors(prev =>
-          prev.map(c =>
-            c.id === color.id
-              ? { ...c, id: added?.variantId, isNew: false, dirty: false }
-              : c
-          )
-        );
       } else {
-        // Update existing
         await updateColorVariant(productId, color);
-        setColors(prev =>
-          prev.map(c =>
-            c.id === color.id ? { ...c, dirty: false } : c
-          )
-        );
       }
     }
+
+    setMessage({ message: "Changes saved successfully!", success: true });
+    setColors([]);
   };
 
   return (

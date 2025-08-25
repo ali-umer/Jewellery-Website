@@ -6,6 +6,7 @@ import ProductForm from "./inputProduct";
 import EditProductForm from "./editProductDetails"; 
 import SearchBar from "../HeaderComponents/SearchBar";
 
+
 export default function CircleButtonGroup() {
   const options = ["New Product", "Edit Product", "Delete Product"];
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
@@ -17,6 +18,7 @@ export default function CircleButtonGroup() {
 
   return (
     <div className="w-full flex flex-col items-center justify-center min-h-[50vh] pt-16 md:pt-0">
+   
       <div className="flex flex-col md:flex-row items-center justify-center relative">
         {options.map((label, i) => (
           <div key={i} className="flex flex-col md:flex-row items-center relative">

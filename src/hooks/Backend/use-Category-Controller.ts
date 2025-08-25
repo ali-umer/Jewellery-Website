@@ -5,7 +5,6 @@ import { supabase } from "@/lib/supabaseClient";
 interface Category {
   id: string;
   Name: string;
-  Products: number;
   Image: string;
 }
 
@@ -19,7 +18,7 @@ export function useCategoryController() {
             setLoading(true);
             const { data, error } = await supabase
                 .from("Category")
-                .select("Name,Products,Image");
+                .select("Name,Image");
 
       if (error) {
         setError(error.message);

@@ -4,6 +4,7 @@ import "./globals.css";
 import TopBar from "@/components/TopBar";
 import StarryComponent from "@/components/ui/StarryComponent";
 import { CartProvider } from "@/hooks/Controllers/cartContext";
+import Footer from "@/components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,7 +42,7 @@ export default function RootLayout({
             <TopBar />
           {children}
         </CartProvider>
-       
+       <Footer />
          
         </div>
       </body>
