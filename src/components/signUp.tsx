@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -7,6 +7,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { signUpUser } from "@/hooks/Backend/sign-Up";
 import BottomGradient from "./ui/bottomGradient";
 import Link from "next/link";
+import UserMessage from "@/components/userMessages";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -16,13 +18,15 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
-      
       return;
     }
 
@@ -33,16 +37,29 @@ export default function Signup() {
       const { success, error } = await signUpUser(email, password, name);
       if (!success) {
         setError(error?.message || "Something went wrong");
+        setSuccess(false);
       } else {
         console.log("✅ User signed up successfully!");
+        setSuccess(true);
       }
     } catch (err) {
       console.error(err);
       setError("Unexpected error occurred.");
+      setSuccess(false);
     } finally {
       setLoading(false);
     }
   };
+
+  // 🔑 Auto-redirect on successful signup
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        router.push("/");
+      }, 1500); // wait 1.5s so message is visible
+      return () => clearTimeout(timer);
+    }
+  }, [success, router]);
 
   return (
     <div className="relative mx-auto mt-20 w-full max-w-md rounded-2xl bg-transparent p-6 shadow-xl ring-1 ring-[var(--gold)]">
@@ -56,6 +73,9 @@ export default function Signup() {
           className="rounded-full"
         />
       </div>
+
+      {error && <UserMessage success={false} message={error} />}
+      {success && <UserMessage success={true} message="Verification Link Sent to your email" />}
 
       <form className="my-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
@@ -118,10 +138,6 @@ export default function Signup() {
           <BottomGradient />
         </LabelInputContainer>
 
-        {error && (
-          <p className="mb-4 text-sm text-red-500 font-medium">{error}</p>
-        )}
-
         <button
           className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-lg dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900"
           type="submit"
@@ -132,8 +148,8 @@ export default function Signup() {
         </button>
       </form>
 
-        <div className="mt-4 text-center text-sm text-white">
-       Already have an account?{" "}
+      <div className="mt-4 text-center text-sm text-white">
+        Already have an account?{" "}
         <Link href="/login" className="text-amber-500 hover:underline">
           Login In
         </Link>
@@ -141,7 +157,6 @@ export default function Signup() {
     </div>
   );
 }
-
 
 
 const LabelInputContainer = ({

@@ -63,7 +63,7 @@ export default function AuthMenu() {
         <div className="absolute right-1 mt-6 w-45 bg-white rounded-1xl z-50 ">
           {!isLoggedIn ? (
             <>
-             <Link href="/signUp" >
+             <Link href="/SignUp" >
               <button className="flex items-center gap-2 px-4 py-2 w-full font-bold text-purple-900">
                 <UserPlus className="w-5 h-5" />
                 Sign Up

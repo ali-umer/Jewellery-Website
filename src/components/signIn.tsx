@@ -1,18 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import BottomGradient from "./ui/bottomGradient";
 import Image from "next/image";
 import { loginUser } from "@/hooks/Backend/login";
+import UserMessage from "@/components/userMessages";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  const router = useRouter();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,12 +28,23 @@ export default function SignIn() {
 
     if (!success) {
       setError(loginError?.message || "Something went wrong");
+      setSuccess(false);
     } else {
       console.log("Login successful, userId:", user);
+      setSuccess(true);
     }
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        router.push("/");
+      }, 1500); 
+      return () => clearTimeout(timer);
+    }
+  }, [success, router]);
 
   return (
     <div className="relative mx-auto mt-20 w-full max-w-md rounded-2xl bg-transparent p-6 shadow-xl ring-1 ring-[var(--gold)]">
@@ -42,6 +58,10 @@ export default function SignIn() {
           className="rounded-full"
         />
       </div>
+
+      {/* ✅ Messages */}
+      {error && <UserMessage success={false} message={error} />}
+      {success && <UserMessage success={true} message="Successfully logged in! Redirecting..." />}
 
       {/* Form */}
       <form
@@ -72,8 +92,6 @@ export default function SignIn() {
           />
         </div>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-
         {/* Button with BottomGradient */}
         <button
           type="submit"
@@ -85,7 +103,6 @@ export default function SignIn() {
         </button>
       </form>
 
-      {/* ✅ Link to Sign Up */}
       <div className="mt-4 text-center text-sm text-white">
         Don’t have an account?{" "}
         <Link href="/SignUp" className="text-amber-500 hover:underline">
