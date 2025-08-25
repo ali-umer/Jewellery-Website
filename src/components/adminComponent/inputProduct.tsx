@@ -14,11 +14,13 @@ export default function ProductForm() {
     name: "", 
     description: "", 
     price: "" as number | "", 
-    discount: "" as number | "" 
+    discount: "" as number | "" ,
+    Category :"" as string | ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [createdProductId, setCreatedProductId] = useState<number | null>(null);
+  
   const { addProduct, insertColorsWithImages, loading, error } = useAddProduct();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -38,14 +40,16 @@ export default function ProductForm() {
       const productId = await addProduct({
         name: formData.name,
         description: formData.description,
-        categoryName: "Necklace",
+        categoryName: formData.Category || "",
         price: formData.price || 0,
         discount: formData.discount || 0
       });
 
       setCreatedProductId(productId);
       setSuccess(true);
+      setFormData({ name: "", description: "", price: "", discount: "", Category:"" });
     } catch (err) {
+      // error will already be handled in hook & exposed
       console.error("Failed to add product:", err);
     } finally {
       setIsSubmitting(false);
@@ -62,6 +66,15 @@ export default function ProductForm() {
         Add Product
       </motion.h2>
 
+      {/* 🔴 Show hook error here */}
+      {error && (
+        <UserMessage message={"Category mismatch, Enter Correct Category"} success={false} />
+      )}
+
+
+{
+  success && <UserMessage message={"Must add Pictures in Variety Section for your Product"} success={true} />
+}
       <form onSubmit={handleSubmit} className="space-y-5">
         <InputStringField 
           id="name" 
@@ -83,6 +96,16 @@ export default function ProductForm() {
           placeholder="Enter description" 
           required 
           isTextarea 
+        />
+
+        <InputStringField 
+          id="category" 
+          name="Category" 
+          value={formData.Category} 
+          onChange={handleChange} 
+          label="Category" 
+          placeholder="Enter Category" 
+          required 
         />
 
         <div className="grid grid-cols-2 gap-4">
@@ -136,23 +159,21 @@ export default function ProductForm() {
       {/* Show color/image manager only after successful product creation */}
       {success && createdProductId && (
         <>
-        setTimeout((){
-       <UserMessage message={"Must add Pictures in Variety Section for your Product"} success={true} />
-        }, 2000);
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-8"
-        >
-          <h3 className="text-xl font-semibold text-yellow-500 mb-4">
-            Add Variation
-          </h3>
-          <ProductColorManager 
-            id={createdProductId} 
-            submit={insertColorsWithImages} 
-          />
-        </motion.div>
+        
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-8"
+          >
+            <h3 className="text-xl font-semibold text-yellow-500 mb-4">
+              Add Variation
+            </h3>
+            <ProductColorManager 
+              id={createdProductId} 
+              submit={insertColorsWithImages} 
+            />
+          </motion.div>
         </>
       )}
     </div>

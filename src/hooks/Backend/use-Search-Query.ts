@@ -49,11 +49,16 @@ export function useSearch(query: string) {
           (item: { id: number; Name: string; Colors_Image?: { Images: string }[] }) => ({
             id: item.id,
             Name: item.Name,
-            Image: item.Colors_Image?.[0]?.Images || null,
+            Image: item.Colors_Image?.[0]?.Images[0] || null,
           })
         );
 
-        if (!controller.signal.aborted) setResults(mapped);
+        console.log("Search results:", mapped);
+
+        if (!controller.signal.aborted)
+           setResults(mapped);
+
+
       } catch (err: any) {
         if (err?.name === "AbortError") return; // ignore aborted requests
         setError(err?.message ?? "Something went wrong");

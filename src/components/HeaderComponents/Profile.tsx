@@ -35,17 +35,7 @@ export default function AuthMenu() {
     setMenuOpen(false);
   };
 
-  const handleResetPassword = async () => {
-    const { data } = await supabase.auth.getUser();
-    const email = data?.user?.email;
-    if (email) {
-      await supabase.auth.resetPasswordForEmail(email);
-      alert("Password reset email sent!");
-      setMenuOpen(false);
-    }
-  };
-
-  if (isLoggedIn === null) return null;
+   if (isLoggedIn === null) return null;
 
   return (
     <div className="relative" ref={menuRef} >
@@ -78,15 +68,6 @@ export default function AuthMenu() {
             </>
           ) : (
             <>
-
-             <button
-                onClick={handleResetPassword}
-                className="flex items-center gap-2 px-4 py-2 w-full text-blue-500"
-              >
-                <Key className="w-5 h-5" />
-                Reset Password
-              </button>
-
               <button
                 onClick={handleSignOut}
                 className="flex items-center gap-2 px-4 py-2 w-full text-red-500"

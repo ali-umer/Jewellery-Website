@@ -8,14 +8,5 @@ import CartPage from "@/components/CartComponents/CartPage";
 // Cart Container Component
 
  export default function Cart(){
-   return ( <div className="w-full min-h-screen">
-              <canvas id="stars" className="fixed inset-0 "></canvas>
-                 <StarryComponent />
-                  <TopBar />
-                  <CartPage  />      
-                  
-        
-           </div>
-
-   );    
+   return ( <CartPage  /> );    
 }

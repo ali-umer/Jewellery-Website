@@ -43,10 +43,17 @@ export async function addToCart(productId: number, color: string, quantity: numb
 
 
 export async function UpdateQuantity(Cart_Id: number,quantity: number){
+
+   const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) {
+    console.log(userError);
+    return false;
+  }
 const { data, error } = await supabase
                     .from("Cart")
                     .update({ Quantity: quantity })
                     .eq("id", Cart_Id)
+                    .eq("UserID", user.id)
                     .single();
 
      return error?false:true;               

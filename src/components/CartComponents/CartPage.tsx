@@ -1,31 +1,44 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "@/hooks/Backend/use-Cart";
 import { Loader } from "@/components/loading";
 import UserMessage from "@/components/userMessages";
 import CartContainer from "@/components/CartComponents/CartContainer";
 import { useRouter, usePathname } from "next/navigation";
 import Checkout from "./checkout";
-
+import { checkAuth } from "@/hooks/Backend/login-Checker";
+import { useCartContext } from "@/hooks/Controllers/cartContext";
 export default function CartPage() {
-  const { cartItems, setCartItems, loading, error } = useCart();
+    const { cartItems, setCartItems, loading, error } = useCartContext();
   const [totalPrice, setTotalPrice] = useState(0);
-   //const authChecked = useAuthCheck(); 
   const router = useRouter();
-  const pathname = usePathname();
-/*
-  // 🚀 If not logged in, redirect to login with return URL
-  if (!authChecked) {
-    router.push(`/login?redirectTo=${encodeURIComponent(pathname)}`);
-    return null; // prevent UI flicker
+
+  useEffect(() => {
+  const verifyAuth = async () => {
+    const result = await checkAuth();
+    if (!result) {
+      router.push("/login");
+    }
+  };
+  verifyAuth();
+}, [router]);
+
+  
+  useEffect(() => {
+  if (cartItems.length > 0) {
+    handlePrice();
+  } else {
+    setTotalPrice(0);
   }
-    */
+}, [cartItems]);
+
 
   if (loading) {
     return <Loader />;
   }
 
   if (error) {
+    console.log("Error loading cart:", error);
     return (
       <UserMessage
         message="Something Went Wrong! Try it Later"
@@ -33,7 +46,6 @@ export default function CartPage() {
       />
     );
   }
-
 
   const handlePrice=function(){
   const Amount = cartItems.reduce((sum, item) => {

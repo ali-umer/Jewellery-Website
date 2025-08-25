@@ -1,14 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { deleteProduct } from "@/hooks/Backend/use-Product-Delete";
-import { Trash } from "lucide-react";  // ✅ correct import
+import { Trash } from "lucide-react";
+import UserMessage from "../userMessages"; 
 
 interface SearchResult {
   id: number;
   Name: string;
-  Image: string[];
+  Image: string;
 }
 
 interface UseSearchReturn {
@@ -16,7 +18,7 @@ interface UseSearchReturn {
   loading: boolean;
   error: string | null;
   mode?: "default" | "edit" | "delete";
-  onEdit?: (id: number) => void; // <-- callback for edit
+  onEdit?: (id: number) => void;
 }
 
 export function SearchBarMenu({
@@ -26,18 +28,27 @@ export function SearchBarMenu({
   mode = "default",
   onEdit,
 }: UseSearchReturn) {
+  const [userMessage, setUserMessage] = useState<{ message: string; success: boolean } | null>(null);
+
   const handleDelete = async (id: number) => {
-    try {
-      await deleteProduct(id);
-      console.log(`Deleted product ${id}`);
-      // TODO: trigger refresh or re-fetch after delete
-    } catch (err) {
-      console.error("Failed to delete product", err);
+    const res = await deleteProduct(id);
+
+    if (res) {
+      setUserMessage({ message: "Product deleted successfully", success: true });
+    } else {
+      setUserMessage({ message: "Failed to delete product", success: false });
     }
   };
 
   return (
     <div className="absolute mt-2 w-full bg-black rounded-xl shadow-lg z-50 max-h-96 overflow-y-auto divide-y divide-[var(--gold)]/30">
+      {/* ✅ Show message if present */}
+      {userMessage && (
+        <div className="p-3">
+          <UserMessage message={userMessage.message} success={userMessage.success} />
+        </div>
+      )}
+
       {loading && <div className="p-3 text-gray-400">Loading...</div>}
 
       {!loading &&
@@ -56,9 +67,9 @@ export function SearchBarMenu({
                   href={`/Products/${item.id}`}
                   className="flex items-center gap-3"
                 >
-                  {item.Image?.[0] && (
+                  {item.Image && (
                     <Image
-                      src={item.Image[0]}
+                      src={item.Image}
                       alt={item.Name}
                       width={imageSize}
                       height={imageSize}
@@ -75,7 +86,7 @@ export function SearchBarMenu({
                 {/* Action buttons */}
                 {mode === "edit" && (
                   <button
-                    onClick={() => onEdit?.(item.id)} // <-- notify parent
+                    onClick={() => onEdit?.(item.id)}
                     className="px-3 py-1 text-sm rounded-lg bg-[var(--gold)] text-black font-semibold hover:bg-yellow-500"
                   >
                     Edit
@@ -86,7 +97,7 @@ export function SearchBarMenu({
                     onClick={() => handleDelete(item.id)}
                     className="p-2 rounded-lg text-white hover:bg-red-700 flex items-center justify-center"
                   >
-                    <Trash className="w-5 h-5" /> {/* ✅ trash icon */}
+                    <Trash className="w-5 h-5" />
                   </button>
                 )}
               </div>

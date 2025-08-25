@@ -21,12 +21,8 @@ useIntersectionObserver(categoryRef as React.RefObject<Element>, () => setShowCa
 useIntersectionObserver(footerRef as React.RefObject<Element>, () => setShowFooter(true), 0.5);
 
 return (
-  <div className="flex flex-col min-h-screen w-full">
-      <canvas id="stars" className="fixed inset-0 z-[-1]"></canvas>
-     
-      <StarryComponent />
-         
-      <TopBar />
+<>
+ 
       <HeroSection />
  
       <TopSellers
@@ -43,8 +39,6 @@ return (
       <div className="pt-10" ref={footerRef}>
         {showFooter && <Footer />}
       </div>
-
-  
-    </div>
+</>
   );
 }

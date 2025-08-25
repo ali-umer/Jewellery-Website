@@ -50,8 +50,8 @@ export default function QuickView({
 
   const handleCart = async () => {
     const result=await checkAuth();
-    if (result) {
-      router.push(`/login?redirectTo=${encodeURIComponent(pathname)}`);
+    if (!result) {
+      router.push('/login');
       return;
     }
 

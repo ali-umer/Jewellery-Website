@@ -40,43 +40,54 @@ export async function updateColorVariant(
       const { error: deleteError } = await supabase.storage
         .from("Product_Images") // ✅ bucket name matches
         .remove(removedImages);
-      if (deleteError) throw deleteError;
+      if (deleteError)  return false;
     }
 
     // 5. Upload new files
-    const uploadedPaths: string[] = [];
-    for (const file of newFiles) {
-      const filePath = `product-${productId}/${Date.now()}-${file.name}`;
+    // 5. Upload new files
+const uploadedUrls: string[] = [];
+for (const file of newFiles) {
+  const filePath = `product-${productId}/${Date.now()}-${file.name}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from("Product_Images") // ✅ bucket name matches
-        .upload(filePath, file);
+  const { error: uploadError } = await supabase.storage
+    .from("Product_Images")
+    .upload(filePath, file);
 
-      if (uploadError) throw uploadError;
+  if (uploadError) return false;
 
-      uploadedPaths.push(filePath);
-    }
+  // ✅ Get the public URL instead of storing filePath
+  const { data } = supabase.storage
+    .from("Product_Images")
+    .getPublicUrl(filePath);
+
+  if (data?.publicUrl) {
+    uploadedUrls.push(data.publicUrl);
+  }
+}
+
 
     // 6. Final images = kept old ones + newly uploaded ones
-    const finalImages = [...existingImages, ...uploadedPaths];
+  // 6. Final images = kept old ones + newly uploaded public URLs
+const finalImages = [...existingImages, ...uploadedUrls];
 
-    // 7. Update DB
-    const { error: updateError } = await supabase
-      .from("Colors_Image")
-      .update({
-        Color: color.name,        // ✅ column name matches schema
-        Images: finalImages,      // ✅ Images is array of text
-        Stock: color.stock,       // ❓ schema doesn’t show stock in Colors_Image (only in Products)
-      })
-      .eq("id", color.id)
-      .eq("Product_Id", productId);
+// 7. Update DB
+const { error: updateError } = await supabase
+  .from("Colors_Image")
+  .update({
+    Color: color.name,
+    Images: finalImages,  // ✅ now all are full URLs
+    Stock: color.stock,
+  })
+  .eq("id", color.id)
+  .eq("Product_Id", productId);
 
-    if (updateError) throw updateError;
+    if (updateError) return false;
 
-    return { success: true, color: { ...color, images: finalImages } };
+    return true;
+  
   } catch (err) {
     console.error("Error updating color variant:", err);
-    return { success: false, error: err };
+    return false;
   }
 }
 
@@ -96,13 +107,21 @@ export const addColorVariant = async (
   // Step 1: Upload images first
   for (const img of images) {
     const filePath = `product-${productId}/${Date.now()}-${img.name}`;
+
     const { error: uploadError } = await supabase.storage
-      .from("Product_Images") // ✅ bucket name from your schema
+      .from("Product_Images") 
       .upload(filePath, img);
 
-    if (uploadError) throw uploadError;
+    if (uploadError) return false;
 
-    uploadedPaths.push(filePath);
+    
+    const { data } = supabase.storage
+      .from("Product_Images")
+      .getPublicUrl(filePath);
+
+    if (data?.publicUrl) {
+      uploadedPaths.push(data.publicUrl);
+    }
   }
 
   // Step 2: Insert new Colors_Image row with image paths

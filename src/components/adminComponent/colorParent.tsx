@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ColorImage } from "@/components/adminComponent/colorImage";
 import { Plus } from "lucide-react";
+import UserMessage from "../userMessages";
 
 interface ColorVariant {
   id:string;
@@ -11,8 +12,9 @@ interface ColorVariant {
   images:File[];
 }
 
-export default function ProductColorManager({ id, submit }) {
+export default function ProductColorManager({ id, submit }: { id: number; submit: (productId: number, colors: { Color: string; Stock: number; Images: File[] }[]) => Promise<void>; }) {
   const [colors, setColors] = useState<ColorVariant[]>([]);
+  const [message, setMessage] = useState<string>('');
  
 
   const handleAddColor = () => {
@@ -56,11 +58,13 @@ export default function ProductColorManager({ id, submit }) {
     }));
 
     try {
-      await submit(id, formattedColors);
-      // Optionally show success message or reset form
+        await submit(id, formattedColors);
+        setMessage("Colors and images added successfully!");
+        setColors([]);
+      
     } catch (error) {
       console.error("Failed to submit colors:", error);
-      // Handle error (show toast, etc.)
+     
     }
   };
 
@@ -76,6 +80,8 @@ export default function ProductColorManager({ id, submit }) {
   return (
     <div className="max-w-4xl mx-auto py-8">
       <div className="space-y-6">
+
+      {message && <UserMessage message={message} success={true } /> }
         {colors.map((color) => (
           <ColorImage
                 key={color.id}

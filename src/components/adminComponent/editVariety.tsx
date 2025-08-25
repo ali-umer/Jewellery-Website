@@ -4,11 +4,9 @@ import { useState, useEffect } from "react";
 import { ColorImage } from "@/components/adminComponent/varietyRow";
 import { Plus } from "lucide-react";
 import { getColorVariants } from "@/hooks/Backend/get-Color-Variant";
-import {
-  updateColorVariant,
-  addColorVariant,
-  deleteColorVariant,
+import {  updateColorVariant,  addColorVariant,  deleteColorVariant,
 } from "@/hooks/Backend/update-Color-Variant";
+import UserMessage from '../userMessages';
 
 interface ColorVariant {
   id: number;
@@ -26,6 +24,7 @@ interface ColorParentProps {
 
 export default function ColorParent({ productId }: ColorParentProps) {
   const [colors, setColors] = useState<ColorVariant[]>([]);
+const [message, setMessage] = useState<{ message: string; success: boolean } | null>(null);
 
   // Fetch initial colors
   useEffect(() => {
@@ -94,8 +93,11 @@ export default function ColorParent({ productId }: ColorParentProps) {
         if (color.isNew) {
           setColors(prev => prev.filter(c => c.id !== color.id));
         } else {
-          await deleteColorVariant(productId, color.id);
-          setColors(prev => prev.filter(c => c.id !== color.id));
+          const res=await deleteColorVariant(productId, color.id);
+          if(res){
+            setColors([]);
+            setMessage({ message: "Product Upadtedd successfully", success: true });
+          }
         }
       } else if (color.isNew) {
         // Add to DB
@@ -129,6 +131,11 @@ export default function ColorParent({ productId }: ColorParentProps) {
   return (
     <div className="max-w-5xl mx-auto py-8">
       <div className="space-y-6">
+      {message && (
+          <div className="p-3">
+            <UserMessage message={message.message} success={message.success} />
+          </div>
+        )}
         {colors.filter(c => !c.isDeleted).map(color => (
           <ColorImage
             key={color.id}

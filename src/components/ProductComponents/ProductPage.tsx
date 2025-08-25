@@ -14,7 +14,7 @@ import { useIntersectionObserver } from "@/components/ui/InffiniteScroll";
 import { Loader } from "@/components/loading";
 import AddReview from "@/components/ReviewComponents/ReviewInput";
 import { Eligibility } from "@/hooks/Backend/manage-reviews";
-import { H3Icon } from "@heroicons/react/20/solid";
+import UserMessage from "@/components/userMessages";
 
 export default function ProductPage({ Id }: { Id: number }) {
   const {
@@ -31,6 +31,7 @@ export default function ProductPage({ Id }: { Id: number }) {
   const [showReview, setShowReview] = useState(false);
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [isEligible, setIsEligible] = useState<boolean | null>(null);
+  const [userMessage, setUserMessage] = useState<{message:string,success:boolean}|null>(null);
 
   const reviewRef = useRef<HTMLDivElement>(null);
   const suggestionRef = useRef<HTMLDivElement>(null);
@@ -53,8 +54,16 @@ export default function ProductPage({ Id }: { Id: number }) {
     }
   };
 
-  const handleCart = () => {
-    addToCart(Id, activeColor, quantity);
+  const handleCart = async function(){
+   const result=await addToCart(Id, activeColor, quantity);
+    if(result){
+      setUserMessage({message:"Successfully Added to Cart",success:true});
+    }else{
+      setUserMessage({message:"Failed to Add to Cart",success:false});
+    }
+
+
+
   };
 
   if (isLoading) return <Loader />;
@@ -65,7 +74,9 @@ export default function ProductPage({ Id }: { Id: number }) {
         <div className="md:w-1/2 w-full border-black border-2 rounded-2xl relative overflow-hidden">
           <ImagesSection images={activeImages} />
         </div>
-
+    
+       {userMessage && <UserMessage message={userMessage.message} success={userMessage.success} />}
+      
         <div className="md:w-1/2 w-full flex flex-col border-black border-2 rounded-2xl justify-between gap-6">
           {product && (
             <ProductDetail
@@ -75,6 +86,8 @@ export default function ProductPage({ Id }: { Id: number }) {
               productCard={false}
             />
           )}
+
+
           <ColorSelector
             colors={colors}
             activeColor={activeColor}

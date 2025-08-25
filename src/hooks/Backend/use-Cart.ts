@@ -14,7 +14,7 @@ interface ColorsImage {
   Products: Product; // From the relation
 }
 
-interface FormattedCartItem {
+ export interface FormattedCartItem {
   Cart_Id: number;
   Product_Color_Id: string;
   Color_Name: string;
@@ -47,8 +47,10 @@ const formatCartData = (data: any[]): FormattedCartItem[] => {
   });
 };
 
+
 export const useCart = () => {
   const [cartItems, setCartItems] = useState<FormattedCartItem[]>([]);
+  const [cartCount, setCartCount] = useState<number>(0); // ✅ new state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,7 +59,20 @@ export const useCart = () => {
     setError(null);
 
     try {
-      console.log("[useCart] Fetching cart items...");
+      console.log("[useCart] Fetching user session...");
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+
+      if (userError || !userData?.user) {
+        console.error("[useCart] User not logged in:", userError);
+        setError("User not logged in");
+        setCartItems([]);
+        setCartCount(0); // reset count
+        setLoading(false);
+        return;
+      }
+
+      const userId = userData.user.id;
+      console.log("[useCart] Current User ID:", userId);
 
       const { data, error } = await supabase
         .from("Cart")
@@ -75,12 +90,14 @@ export const useCart = () => {
               Discount
             )
           )
-        `);
+        `)
+        .eq("UserID", userId); // ✅ Only fetch this user's cart
 
       if (error) {
         console.error("[useCart] Supabase query error:", error);
         setError(error.message);
         setCartItems([]);
+        setCartCount(0);
         return;
       }
 
@@ -90,19 +107,25 @@ export const useCart = () => {
         const formatted = formatCartData(data);
         console.log("[useCart] Formatted cart items:", formatted);
         setCartItems(formatted);
+        setCartCount(formatted.length); // ✅ update count
       }
     } catch (err) {
       console.error("[useCart] Unexpected error:", err);
       setCartItems([]);
+      setCartCount(0);
+      setError("Unexpected error fetching cart items");
     } finally {
       setLoading(false);
       console.log("[useCart] Finished fetching cart items");
     }
   };
 
+
+
   useEffect(() => {
     fetchCartItems();
   }, []);
 
-  return { cartItems, setCartItems, loading,error};
+  return { cartItems, setCartItems, cartCount, loading, error };
 };
+
