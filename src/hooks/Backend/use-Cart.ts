@@ -16,7 +16,7 @@ interface ColorsImage {
 
  export interface FormattedCartItem {
   Cart_Id: number;
-  Product_Color_Id: string;
+  Product_Color_Id: number;
   Color_Name: string;
   Image: string;
   Name: string;
@@ -24,6 +24,8 @@ interface ColorsImage {
   Quantity: number;
   Price: number;
   Discount: number;
+  include: boolean ;
+  message?: string;
 }
 
 const formatCartData = (data: any[]): FormattedCartItem[] => {
@@ -43,6 +45,7 @@ const formatCartData = (data: any[]): FormattedCartItem[] => {
       Quantity: item.Quantity || 1,
       Price: product.Price || 0,
       Discount: product.Discount || 0,
+      include: true, 
     };
   });
 };

@@ -55,16 +55,16 @@ export default function QuickView({
       return;
     }
 
+    setUserMessage(null);
     const res = await addToCart(productId, activeColor, quantity);
-
-    if (res) {
+    if (res.success) {
       setUserMessage({
         text: `Successfully! ${name} moved to your Cart`,
         success: true,
       });
     } else {
       setUserMessage({
-        text: `Failed! ${name} not moved to your Cart`,
+        text:res.message,
         success: false,
       });
     }

@@ -1,16 +1,24 @@
 import React from "react";
 import { useCreateOrderFromCart } from "@/hooks/Backend/create-Order";
+import { LargeNumberLike } from "crypto";
 
 
-export default function Checkout({totalPrice }: { totalPrice: number }) {
+export default function Checkout({totalPrice,Check}: { totalPrice: number,Check: () => Promise<void> }) {
 const { createOrder, loading, success, error } = useCreateOrderFromCart();
 
 const handleCreateOrder = async () => {
+ 
   await createOrder();
 };
 
+
+const handleCheckOrder = async () => {
+ await Check();
+  
+};
+
 return (
-  <div className="absolute">
+  <div className="absolute mb-10">
 
     
       <div className="flex justify-between items-center text-lg sm:text-xl font-semibold">
@@ -26,7 +34,20 @@ return (
             : "bg-[var(--gold)] text-black hover:bg-yellow-400"
         }`}
       >
-        {loading ? "Processing..." : "Create Order"}
+        {loading ? "Processing..." : "Checkout"}
+      </button>
+
+
+        <button 
+        onClick={handleCheckOrder}
+        disabled={loading}
+        className={`w-full py-2 mt-2 rounded-lg font-semibold transition-all ${
+          loading
+            ? "bg-gray-500 cursor-not-allowed"
+            : "bg-green text-white hover:bg-yellow-400"
+        }`}
+      >
+        Check Order
       </button>
 
       {/* Messages */}

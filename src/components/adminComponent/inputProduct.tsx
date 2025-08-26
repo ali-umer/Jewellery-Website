@@ -21,7 +21,7 @@ export default function ProductForm() {
   const [success, setSuccess] = useState(false);
   const [createdProductId, setCreatedProductId] = useState<number | null>(null);
   
-  const { addProduct, insertColorsWithImages, loading, error } = useAddProduct();
+  const { addProduct, insertColorWithImages, loading, error } = useAddProduct();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -171,7 +171,7 @@ export default function ProductForm() {
             </h3>
             <ProductColorManager 
               id={createdProductId} 
-              submit={insertColorsWithImages} 
+              submit={insertColorWithImages} 
             />
           </motion.div>
         </>

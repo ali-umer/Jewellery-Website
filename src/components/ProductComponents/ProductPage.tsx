@@ -55,15 +55,9 @@ export default function ProductPage({ Id }: { Id: number }) {
   };
 
   const handleCart = async function(){
+    setUserMessage(null);
    const result=await addToCart(Id, activeColor, quantity);
-    if(result){
-      setUserMessage({message:"Successfully Added to Cart",success:true});
-    }else{
-      setUserMessage({message:"Failed to Add to Cart",success:false});
-    }
-
-
-
+   setUserMessage(result);
   };
 
   if (isLoading) return <Loader />;

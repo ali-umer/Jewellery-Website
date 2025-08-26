@@ -16,6 +16,8 @@ interface CartItemProps {
     Image?: string;
     Description?: string;
     Discount?: number;
+    include: boolean ;
+    message?: string;
   };
   RemoveItem: (id: number) => void;
   priceChange: () => void;
@@ -41,6 +43,21 @@ function CartCardComponent({ item, RemoveItem,priceChange }: CartItemProps) {
   return (
     <div className="relative flex bg-black/80 text-[var--(gold)] rounded-md overflow-hidden shadow-lg hover:scale-[1.02] transition duration-200 min-h-[180px]">
       {/* Product Image */}
+
+      {item.include === false && (
+        <div className="absolute top-0 left-0 w-full h-full bg-red-600 bg-opacity-70 flex flex-col items-center justify-center z-10 p-4">
+          <p className="text-white text-2xl font-bold mb-2 text-center">
+            Low Stock
+          </p>
+          <p className="text-white text-lg text-center">
+            {item.message || "Insufficient stock"}
+          </p>
+  </div>
+
+      )}
+
+      {item.include === true && (
+        <>
       <div className="w-36 md:w-44 flex-shrink-0 md:p-2 p-4">
         {item.Image && (
           <Image
@@ -78,6 +95,8 @@ function CartCardComponent({ item, RemoveItem,priceChange }: CartItemProps) {
         ({item.Discount ? (item.Price - item.Price * (item.Discount / 100)) * quantity  : item.Price * quantity}).toFixed(0)
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 }
