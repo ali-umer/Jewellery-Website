@@ -6,12 +6,14 @@ import {useIntersectionObserver} from "@/components/ui/InffiniteScroll"
 
 interface ProductCardGridProps {
   Display?: string;
+ 
 }
 
 export default function ProductCardGrid({ Display = "" }: ProductCardGridProps) {
-  const { products, getMore } = useCategoryProducts(2 ,1);
+  
+  const { products, getMore } = useCategoryProducts(2,5);
 
-     const lastRef = useRef<HTMLDivElement | null>(null);
+     const lastRef = useRef<HTMLDivElement | null>(null); 
      useIntersectionObserver(lastRef as React.RefObject<Element>, getMore, 1);
 
 

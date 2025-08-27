@@ -11,7 +11,7 @@ export default function CategoryPage() {
   const params = useParams();
   const categoryName = (params.Category_Name)?.toString();
   
-  return (<ProductCardGrid Display={categoryName} />
+  return (<ProductCardGrid Display={categoryName}  />
 
    
   );

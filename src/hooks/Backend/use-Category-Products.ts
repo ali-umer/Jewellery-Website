@@ -11,14 +11,23 @@ type Product = {
   Images: string[];
 };
 
+
 export function useCategoryProducts(categoryId: number, pageSize: number) {
   const [products, setProducts] = useState<Product[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const pageRef = useRef(1);
+  const abortRef = useRef<AbortController | null>(null);
 
   const fetchProducts = useCallback(async () => {
     if (loading || !hasMore) return;
+
+    // cancel any previous request
+    if (abortRef.current) {
+      abortRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortRef.current = controller;
 
     setLoading(true);
 
@@ -42,28 +51,34 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
       )
       .eq("Category_ID", categoryId)
       .eq("Colors_Image.Default", true)
-      .range(from, to);
-
-    console.log("Fetched products:", data);
+      .range(from, to)
+      .abortSignal(controller.signal); // 👈 pass abort signal
 
     if (error) {
-      console.error(error);
+      if (error.name !== "AbortError") {
+       
+      }
       setLoading(false);
       return;
     }
 
     if (data && data.length > 0) {
-      
       const mapped = data.map((p: any): Product => ({
         id: p.id,
         Name: p.Name,
         Price: p.Price,
         Description: p.Description,
-        Discount:p.Discount,
+        Discount: p.Discount,
         Images: p.Colors_Image?.map((c: any) => c.Images).flat() || [],
       }));
 
-      setProducts((prev) => [...prev, ...mapped]);
+      // prevent duplicates by ID
+      setProducts((prev) => {
+        const existing = new Set(prev.map((p) => p.id));
+        const newOnes = mapped.filter((p) => !existing.has(p.id));
+        return [...prev, ...newOnes];
+      });
+
       pageRef.current += 1;
 
       if (data.length < pageSize) {
@@ -78,6 +93,10 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
 
   // Reset when category changes
   useEffect(() => {
+    // cancel any ongoing request on category change
+    if (abortRef.current) {
+      abortRef.current.abort();
+    }
     setProducts([]);
     setHasMore(true);
     setLoading(false);
@@ -91,7 +110,6 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
     getMore: fetchProducts,
   };
 }
-
 
 
 
