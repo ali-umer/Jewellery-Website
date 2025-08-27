@@ -124,11 +124,6 @@ export const useCart = () => {
   };
 
 
-
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
-
-  return { cartItems, setCartItems, cartCount, loading, error };
+  return { cartItems, setCartItems, cartCount, loading, error,fetchCartItems};
 };
 

@@ -9,36 +9,32 @@ interface CartContextType {
   cartCount: number;
   loading: boolean;
   error: string | null;
+  fetchCartItems: () => Promise<void>;
 }
 
-// Create context
-const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Provider that uses your existing hook
+// Create context with default safe values
+const CartContext = createContext<CartContextType>({
+  cartItems: [],
+  setCartItems: () => {},
+  cartCount: 0,
+  loading: false,
+  error: null,
+  fetchCartItems: async () => {},
+});
+
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const { cartItems, setCartItems, cartCount, loading, error } = useCartHook();
+  const { cartItems, setCartItems, cartCount, loading, error, fetchCartItems } =
+    useCartHook();
 
   return (
     <CartContext.Provider
-      value={{ cartItems, setCartItems, cartCount, loading, error }}
+      value={{ cartItems, setCartItems, cartCount, loading, error, fetchCartItems }}
     >
       {children}
     </CartContext.Provider>
   );
 };
 
-// Expose useCart from context
-export const useCartContext = () => {
-  const context = useContext(CartContext);
-  // ✅ instead of throwing, return safe defaults
-  if (!context) {
-    return {
-      cartItems: [],
-      setCartItems: () => {},
-      cartCount: 0,
-      loading: false,
-      error: null,
-    };
-  }
-  return context;
-};
+// Hook to use Cart Context
+export const useCartContext = () => useContext(CartContext);

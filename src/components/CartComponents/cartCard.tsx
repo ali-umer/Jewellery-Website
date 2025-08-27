@@ -92,7 +92,7 @@ function CartCardComponent({ item, RemoveItem,priceChange }: CartItemProps) {
 
         <div className="text-lg font-semibold">
           Rs.{" "}
-        ({item.Discount ? (item.Price - item.Price * (item.Discount / 100)) * quantity  : item.Price * quantity}).toFixed(0)
+          {(item.Discount ? (item.Price - item.Price * (item.Discount / 100)) * quantity  : item.Price * quantity).toFixed(0)}
         </div>
       </div>
       </>

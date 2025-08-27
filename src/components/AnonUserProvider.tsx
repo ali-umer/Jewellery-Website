@@ -7,20 +7,20 @@ export default function AnonUserProvider({ children }: { children: React.ReactNo
 
   useEffect(() => {
     const initAnonUser = async () => {
-      // check current session (safe — doesn’t throw if missing)
       const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) console.error("Error fetching session:", error);
 
+      if (error) {
+        console.error("Error getting session:", error.message);
+        setLoading(false);
+        return;
+      }
+
+      // If no session, create anonymous user
       if (!session) {
-        // no session found → create anonymous user
-        const { data: anonData, error: anonError } = await supabase.auth.signInAnonymously();
+        const { error: anonError } = await supabase.auth.signInAnonymously();
         if (anonError) {
-          console.error("Anon sign-in failed:", anonError.message);
-        } else if (anonData) {
-          console.log("✅ Anonymous user created:", anonData.user.id);
+          console.error("Anonymous sign-in failed:", anonError.message);
         }
-      } else {
-        console.log("ℹ️ Existing session:", session.user.id);
       }
 
       setLoading(false);

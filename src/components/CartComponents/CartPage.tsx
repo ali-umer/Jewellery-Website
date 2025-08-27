@@ -11,9 +11,12 @@ import { useCartContext } from "@/hooks/Controllers/cartContext";
 import {checkOrder} from "@/hooks/Backend/check-Order";
 
 export default function CartPage() {
-  const { cartItems, setCartItems, loading, error } = useCartContext();
+  const { cartItems, setCartItems, loading, error,fetchCartItems } = useCartContext();
   const [totalPrice, setTotalPrice] = useState(0);
 
+  useEffect(() => {
+   fetchCartItems();
+  }, []);
   
   useEffect(() => {
   if (cartItems.length > 0) {
@@ -75,7 +78,7 @@ const CheckOrder = async () => {
   };
 
   return (
-    <div className="w-[95%] md:w-[75%] bg-transparent border-black border-2 mt-16 p-8 mx-auto text-[var(--gold)] max-h-screen">
+    <div className="w-[95%] md:w-[75%] bg-transparent border-black border-2 mt-16 p-8 mx-auto text-[var(--gold)] max-h-screen mb-20 md:mb-40">
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
