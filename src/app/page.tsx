@@ -8,7 +8,7 @@ import Categories from "@/components/CategoryComponent/Categories";
 import Footer from "@/components/Footer/Footer";
 import {useIntersectionObserver} from "@/components/ui/InffiniteScroll";
 
-
+import TestPage from "@/components/anonymous_user";
 
 export default function Home() {
   const [showCategory, setShowCategory] = useState(false);
@@ -20,6 +20,7 @@ useIntersectionObserver(categoryRef as React.RefObject<Element>, () => setShowCa
 
 return (
 <>
+   <TestPage />
  
       <HeroSection />
  
@@ -32,7 +33,7 @@ return (
       <div ref={categoryRef}>
         {showCategory && <Categories />}
       </div>
-
+ 
     
      
        

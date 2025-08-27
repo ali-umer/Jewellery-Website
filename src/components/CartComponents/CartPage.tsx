@@ -13,17 +13,6 @@ import {checkOrder} from "@/hooks/Backend/check-Order";
 export default function CartPage() {
   const { cartItems, setCartItems, loading, error } = useCartContext();
   const [totalPrice, setTotalPrice] = useState(0);
-  const router = useRouter();
-
-  useEffect(() => {
-  const verifyAuth = async () => {
-    const result = await checkAuth();
-    if (!result) {
-      router.push("/login");
-    }
-  };
-  verifyAuth();
-}, [router]);
 
   
   useEffect(() => {

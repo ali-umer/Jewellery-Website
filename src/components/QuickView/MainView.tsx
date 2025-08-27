@@ -49,12 +49,7 @@ export default function QuickView({
   } | null>(null);
 
   const handleCart = async () => {
-    const result=await checkAuth();
-    if (!result) {
-      router.push('/login');
-      return;
-    }
-
+  
     setUserMessage(null);
     const res = await addToCart(productId, activeColor, quantity);
     if (res.success) {
