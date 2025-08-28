@@ -1,12 +1,12 @@
 export function DiscountTag({ discount }: { discount: number }) {
   return (
     <div
-      className="absolute top-21 right-2 z-30"
+      className="absolute md:top-21 md:right-2 top-11 right-6 z-30"
       style={{
         transform: "translate(50%, -50%)",
       }}
     >
-      <div className="relative w-65 h-40">
+      <div className="relative md:w-65 h-40 w-45">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 100 100"

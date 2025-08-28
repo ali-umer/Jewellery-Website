@@ -5,16 +5,27 @@ import { useCategoryProducts } from "@/hooks/Backend/use-Category-Products";
 import {useIntersectionObserver} from "@/components/ui/InffiniteScroll"
 
 interface ProductCardGridProps {
-  Display?: string;
+  Display: string;
+  pageSize:number;
  
 }
 
-export default function ProductCardGrid({ Display = "" }: ProductCardGridProps) {
+export default function ProductCardGrid({ Display,pageSize }: ProductCardGridProps) {
   
-  const { products, getMore } = useCategoryProducts(2,5);
+  const { products, getMore,loading,hasMore} = useCategoryProducts(Display,pageSize);
+
 
      const lastRef = useRef<HTMLDivElement | null>(null); 
-     useIntersectionObserver(lastRef as React.RefObject<Element>, getMore, 1);
+    useIntersectionObserver(
+  lastRef as React.RefObject<Element>,
+  () => {
+    if (!loading && hasMore) {
+      getMore();
+    }
+  },
+  1
+);
+
 
 
       useEffect(()=>{
@@ -29,7 +40,7 @@ export default function ProductCardGrid({ Display = "" }: ProductCardGridProps) 
 
      <div className="w-full px-2 py-6 overflow-x-hidden">
        <div className="mx-auto max-w-screen-2xl px-4">
-         <div className="grid grid-cols-1 min-[500px]:grid-cols-2 min-[800px]:grid-cols-3 lg:grid-cols-4 gap-2 justify-items-center">
+         <div className="grid grid-cols-1 min-[500px]:grid-cols-2 min-[800px]:grid-cols-3 lg:grid-cols-3 gap-2 justify-items-center">
             {products.map((product, index) => {
               const isLast = index === products.length - 1;
               return (
@@ -41,6 +52,8 @@ export default function ProductCardGrid({ Display = "" }: ProductCardGridProps) 
                   <ProductCard
                     Id={product.id}
                     name={product.Name}
+                    Discount={product.Discount}
+                    Description={product.Description}
                     price={product.Price}
                     images={product.Images}
                   />

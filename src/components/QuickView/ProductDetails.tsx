@@ -13,7 +13,7 @@ export default function ProductDetail({name = "",price = 0,description = "",  di
   const discountedPrice = hasDiscount? Math.round(price - (price * discount) / 100) : price;
 
   return (
-    <div className="p-5 rounded-xl bg-transparent shadow-lg space-y-2">
+    <div className="p-3 rounded-xl bg-transparent shadow-lg md:space-y-2 space-y-1.5">
    
       <div className={`${productCard ? "text-center" : ""}`}>
         <h1 className={`font-bold text-[var(--gold)] ${
@@ -24,7 +24,7 @@ export default function ProductDetail({name = "",price = 0,description = "",  di
         {description !== "" && (
           <p
             className={`mt-2 text-white ${
-              productCard ? "text-sm text-left max-w-[90%] mx-auto"  : "text-base"
+              productCard ? "text-medium text-left max-w-[96%] mx-auto"  : "text-base"
             }`}
           >
             {description}
@@ -33,7 +33,7 @@ export default function ProductDetail({name = "",price = 0,description = "",  di
       </div>
 
       <div
-        className={`flex items-baseline gap-3 ${
+        className={`flex items-baseline gap-2 ${
           productCard ? "justify-end" : ""
         }`}
       >

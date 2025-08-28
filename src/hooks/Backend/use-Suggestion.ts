@@ -8,7 +8,7 @@ interface Product {
   Description: string;
   Price: number;
   Images: string[];
-  Category_ID: number;
+  Discount: number;
 }
 
 export function useSuggestion(
@@ -33,7 +33,7 @@ export function useSuggestion(
             Name,
             Description,
             Price,
-            Category_ID,
+            Discount,
             Colors_Image!inner (
               Images,
               Default
@@ -71,7 +71,7 @@ export function useSuggestion(
           Name: prod.Name,
           Description: prod.Description,
           Price: prod.Price,
-          Category_ID: prod.Category_ID,
+          Discount: prod.Discount,
           Images: prod.Colors_Image?.[0]?.Images || [],
         }));
 

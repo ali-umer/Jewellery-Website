@@ -79,6 +79,8 @@ export default function Cards({ProductId,  CategoryId,}: {  ProductId: number;Ca
                 Id={product.id}
                 name={product.Name}
                 price={product.Price}
+                Discount={product.Discount}
+                Description={product.Description}
                 images={product.Images}
               />
             </div>

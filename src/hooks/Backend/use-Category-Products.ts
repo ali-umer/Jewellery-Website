@@ -12,7 +12,7 @@ type Product = {
 };
 
 
-export function useCategoryProducts(categoryId: number, pageSize: number) {
+export function useCategoryProducts(category: string, pageSize: number) {
   const [products, setProducts] = useState<Product[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -30,6 +30,19 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
     abortRef.current = controller;
 
     setLoading(true);
+
+     const{data:Category,error:CategoroyError} = await supabase
+                              .from("Category")
+                              .select("id")
+                              .eq("Name", category)
+                              .limit(1);
+
+
+                    if(CategoroyError){
+                     
+                      setLoading(false);
+                      return;
+                    }
 
     const from = (pageRef.current - 1) * pageSize;
     const to = from + pageSize - 1;
@@ -49,7 +62,7 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
         )
         `
       )
-      .eq("Category_ID", categoryId)
+      .eq("Category_ID", Category[0].id)
       .eq("Colors_Image.Default", true)
       .range(from, to)
       .abortSignal(controller.signal); // 👈 pass abort signal
@@ -89,7 +102,7 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
     }
 
     setLoading(false);
-  }, [categoryId, hasMore, loading, pageSize]);
+  }, [category, hasMore, loading, pageSize]);
 
   // Reset when category changes
   useEffect(() => {
@@ -101,7 +114,7 @@ export function useCategoryProducts(categoryId: number, pageSize: number) {
     setHasMore(true);
     setLoading(false);
     pageRef.current = 1;
-  }, [categoryId]);
+  }, [category]);
 
   return {
     products,

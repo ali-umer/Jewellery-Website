@@ -8,5 +8,6 @@ import CartPage from "@/components/CartComponents/CartPage";
 // Cart Container Component
 
  export default function Cart(){
+  
    return ( <CartPage  /> );    
 }
