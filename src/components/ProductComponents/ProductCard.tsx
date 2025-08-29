@@ -71,27 +71,27 @@ export default function ProductCard({ Id, name, price, images,Discount=0,Descrip
         </CardContainer>
       </div>
 
-      {showQuickView && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex justify-center items-center p-4">
-          <div className="bg-transparent max-w-4xl w-full max-h-[90vh] rounded-xl relative overflow-hidden flex flex-col">
-            <button
-              className="absolute top-4 right-4 text-black text-2xl font-bold z-10 hover:scale-110 transition-transform bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md"
-              onClick={() => setShowQuickView(false)}
-            >
-              &times;
-            </button>
-            <div className="overflow-y-auto flex-grow p-4">
-              <QuickView
-                productId={Id}
-                name={name}
-                price={price}
-                discount={Discount}
-                handleView={setShowQuickView}
-              />
-            </div>
-          </div>
-        </div>
-      )}
+     {showQuickView && (
+  <div className="fixed inset-0 z-50 bg-black/60 flex justify-center items-center p-4">
+    <div className="bg-transparent w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[90vh] rounded-xl relative overflow-hidden flex flex-col">
+      <button
+        className="absolute top-4 right-4 text-black text-2xl font-bold z-10 hover:scale-110 transition-transform bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md"
+        onClick={() => setShowQuickView(false)}
+      >
+        &times;
+      </button>
+      <div className="overflow-y-auto flex-grow p-2 md:p-4">
+        <QuickView
+          productId={Id}
+          name={name}
+          price={price}
+          discount={Discount}
+          description={Description}
+        />
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }

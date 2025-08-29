@@ -41,7 +41,7 @@ export default function ImagesSection({ images }: ImagesSectionProps) {
   }, [images.length]);
 
   return (
-    <div className="flex w-full justify-center items-center h-full gap-4">
+    <div className="flex w-full justify-center items-center h-full gap-2">
       <div className="flex flex-col gap-2 overflow-y-auto h-[38rem] pr-2">
         {images && images.length > 1 &&
           images.map((img, idx) => {
@@ -53,7 +53,7 @@ export default function ImagesSection({ images }: ImagesSectionProps) {
                 ref={(el) => {
                   thumbsRef.current[idx] = el;
                 }}
-                className={`relative w-16 h-16 rounded border-2 cursor-pointer ${
+                className={`relative w-10 h-12 rounded border-2 cursor-pointer ${
                   idx === activeIndex ? "border-var[(--gold)]" : "border-transparent"
                 }`}
               >

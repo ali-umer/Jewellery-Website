@@ -19,7 +19,7 @@ interface QuickViewProps {
   name: string;
   price: number;
   discount: number;
-  handleView: (open: boolean) => void;
+ description:string
 }
 
 export default function QuickView({
@@ -27,7 +27,8 @@ export default function QuickView({
   name,
   price,
   discount,
-  handleView,
+  description
+
 }: QuickViewProps) {
   const {
     quantity,
@@ -67,8 +68,8 @@ export default function QuickView({
 
   return (
     <div
-      className="flex flex-col md:flex-row p-4 md:p-6 rounded-lg max-w-5xl mx-auto shadow-md gap-2 
-                 bg-red-900 w-[95%] md:w-auto min-h-screen md:min-h-fit relative"
+      className="flex flex-col md:flex-row p-4 md:p-3 rounded-lg max-w-5xl mx-auto shadow-md 
+                 bg-red-900 w-[95%] md:w-auto min-h-screen md:min-h-fit relative gap-2"
     >
    
 
@@ -79,8 +80,8 @@ export default function QuickView({
       ) : (
         <>
           <ImagesSection images={activeImages} />
-          <div className="md:w-[54%] p-6 space-y-3 bg-transparent rounded-xl shadow-lg border border-amber-100 flex flex-col justify-center">
-            <DetailsSection name={name} price={price} discount={discount} />
+          <div className="md:w-[60%] p-6 space-y-3 bg-transparent rounded-xl shadow-lg border border-amber-100 flex flex-col justify-center">
+            <DetailsSection name={name} price={price} discount={discount} description={description}/>
             <ColorSelector
               colors={colors}
               activeColor={activeColor}

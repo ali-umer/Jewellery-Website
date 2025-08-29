@@ -3,10 +3,16 @@ import Image from "next/image";
 export function SimpleImageCard({ src, alt }: { src: string; alt: string }) {
  
   return (
-    <div className="w-full sm:w-[28rem] h-[38rem] rounded-xl border border-gray-300 overflow-hidden bg-white">
+    <div className="w-full sm:w-[28rem] md:w-[24rem] h-[28rem] md:h-[38rem] rounded-xl border border-gray-300 overflow-hidden bg-white">
       <div className="relative w-full h-full">
-        {src && <Image src= {src} alt={alt} fill priority className="object-cover" sizes="(max-width: 500px) 100vw, (max-width: 800px) 50vw, (max-width: 1024px) 33vw, 25vw"/>
-}      
+        {src && <Image 
+          src={src} 
+          alt={alt} 
+          fill 
+          priority 
+          className="object-cover" 
+          sizes="(max-width: 500px) 100vw, (max-width: 800px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        />}      
       </div>
     </div>
   );
