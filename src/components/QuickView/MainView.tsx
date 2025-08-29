@@ -70,13 +70,7 @@ export default function QuickView({
       className="flex flex-col md:flex-row p-4 md:p-6 rounded-lg max-w-5xl mx-auto shadow-md gap-2 
                  bg-red-900 w-[95%] md:w-auto min-h-screen md:min-h-fit relative"
     >
-      <button
-        className="absolute top-4 right-4 text-white bg-black bg-opacity-30 hover:bg-opacity-50 
-                   p-2 rounded-full z-50"
-        onClick={() => handleView(false)}
-      >
-        ✕
-      </button>
+   
 
       {isLoading ? (
         <div className="flex items-center justify-center w-full min-h-[400px] bg-red-900 md:min-h-[500px] rounded-lg">
