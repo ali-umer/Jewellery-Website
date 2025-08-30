@@ -8,7 +8,7 @@ export interface OrderProduct {
   name: string;
   price: number;
   quantity: number;
-  image: string | null;
+  image: string;
 }
 
 export function getOrderDetails(orderId: number) {

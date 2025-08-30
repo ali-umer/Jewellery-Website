@@ -29,24 +29,24 @@ export default function ProductRow({ productId, name, image, quantity, price }: 
       {/* Name Column - w-[40%] to match header */}
       <div className="w-[40%]">
         <Link href={`/Products/${productId}`}>
-          <h3 className="font-medium text-gray-900 hover:text-[var(--gold)] transition-colors">
+          <h3 className="font-medium text-[var(--gold)]">
             {name}
           </h3>
         </Link>
       </div>
 
       {/* Price Column - w-[20%] to match header */}
-      <div className="w-[20%] text-gray-600">
+      <div className="w-[20%] text-var[--(gold)]">
         ₹{price.toLocaleString()}
       </div>
 
       {/* Quantity Column - w-[20%] to match header */}
-      <div className="w-[20%] text-center text-gray-600">
+      <div className="w-[20%] text-center text-var[(--gold)]">
         {quantity}
       </div>
 
       {/* Total Column - w-[20%] to match header */}
-      <div className="w-[20%] text-right font-medium text-gray-900">
+      <div className="w-[20%] text-right font-medium text-var[--(gold)]">
         ₹{total.toLocaleString()}
       </div>
     </div>

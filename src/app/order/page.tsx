@@ -8,7 +8,7 @@ export default function Order() {
   const { orders, loading, error } = getOrders();
 
   return (
-    <div className="w-[95%] mx-auto py-8">
+    <div className="w-[80%] mx-auto px-8">
       {loading ? (
         <p className="text-gray-500 text-center">Loading orders...</p>
       ) : error ? (
