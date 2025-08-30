@@ -1,30 +1,53 @@
 import React from "react";
 import { useCreateOrderFromCart } from "@/hooks/Backend/create-Order";
-import { LargeNumberLike } from "crypto";
+import { FormattedCartItem } from "@/hooks/Backend/use-Cart";
 
+interface OrderItem {
+  name: string;
+  price: number;
+  quantity: number;
+  productColorId: number;
+  cartId: number;
+}
 
-export default function Checkout({totalPrice,Check}: { totalPrice: number,Check: () => Promise<void> }) {
-const { createOrder, loading, success, error } = useCreateOrderFromCart();
+export default function Checkout({totalPrice,Check,cartItems
+}: { 
+  totalPrice: number;
+  Check: () => Promise<void>;
+  cartItems: FormattedCartItem[];
+}) {
+  const { createOrder, loading, success, error } = useCreateOrderFromCart();
 
-const handleCreateOrder = async () => {
- 
-  await createOrder();
-};
+  const handleCreateOrder = async () => {
+    const selectedItems = cartItems
+      .filter(item => item.include)
+      .map(item => ({
+        name: item.Name,
+        price: item.Price - (item.Price * item.Discount / 100),
+        quantity: item.Quantity,
+        productColorId: item.Product_Color_Id,
+        cartId: item.Cart_Id
+      }));
 
+    if (selectedItems.length === 0) {
+      console.error("No items selected for order");
+      return;
+    }
 
-const handleCheckOrder = async () => {
- await Check();
-  
-};
+    await createOrder(selectedItems);
+  };
 
-return (
-  <div className="absolute mb-10">
+  const handleCheckOrder = async () => {
+    await Check();
+  };
 
-    
+  return (
+    <div className="absolute mb-10">
       <div className="flex justify-between items-center text-lg sm:text-xl font-semibold">
         <span>Total:</span>
         <span>{totalPrice.toFixed(0)}</span>
       </div>
+      
       <button 
         onClick={handleCreateOrder}
         disabled={loading}
@@ -37,8 +60,7 @@ return (
         {loading ? "Processing..." : "Checkout"}
       </button>
 
-
-        <button 
+      <button 
         onClick={handleCheckOrder}
         disabled={loading}
         className={`w-full py-2 mt-2 rounded-lg font-semibold transition-all ${
@@ -50,7 +72,6 @@ return (
         Check Order
       </button>
 
-      {/* Messages */}
       {success && (
         <p className="text-green-500 text-center font-medium mt-2">
           Order created successfully!
@@ -59,6 +80,6 @@ return (
       {error && (
         <p className="text-red-500 text-center font-medium mt-2">{error.message}</p>
       )}
-  </div>
-);
+    </div>
+  );
 }

@@ -1,12 +1,13 @@
 import { useState, useCallback } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
+
 export function useCreateOrderFromCart() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<{ message: string } | null>(null);
 
-  const createOrder = useCallback(async () => {
+  const createOrder = useCallback(async (selectedItems: any[]) => {
     setLoading(true);
     setSuccess(false);
     setError(null);
@@ -21,12 +22,13 @@ export function useCreateOrderFromCart() {
       setLoading(false);
       return false;
     }
-    
 
-    
     const { data: orderId, error: orderError } = await supabase.rpc(
       "create_order_from_cart",
-      { user_id: user.id }
+      {
+        user_id: user.id,
+        items: selectedItems // 👈 pass array of items here
+      }
     );
 
     if (orderError) {
@@ -42,4 +44,3 @@ export function useCreateOrderFromCart() {
 
   return { createOrder, loading, success, error };
 }
-

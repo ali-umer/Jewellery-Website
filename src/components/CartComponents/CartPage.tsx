@@ -84,7 +84,7 @@ const CheckOrder = async () => {
       ) : (
         <div className="gap-y-3">
           <CartContainer items={cartItems} RemoveItem={RemoveItem} priceChange={handlePrice}/>
-           <Checkout totalPrice={totalPrice} Check={CheckOrder} />
+           <Checkout totalPrice={totalPrice} Check={CheckOrder} cartItems={cartItems}/>
 
         </div>
       )}
